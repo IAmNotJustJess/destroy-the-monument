@@ -1,4 +1,4 @@
-name: Destroy The Monument
+name: Destroy the Monument
 version: '1.0'
 main: IAmNotJustJess.destroyTheMonument.DestroyTheMonument
 api-version: '1.21'
