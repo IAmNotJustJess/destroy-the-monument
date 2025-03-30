@@ -9,9 +9,6 @@ public class Class {
     public Skill passiveSkill;
     public Skill activeSkill;
     public Skill ultimateSkill;
-    public ItemStack helmet;
-    public ItemStack chestplate;
-    public ItemStack leggings;
-    public ItemStack boots;
+    public Loadout loadout;
 
 }
