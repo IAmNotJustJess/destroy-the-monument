@@ -1,10 +1,14 @@
 package IAmNotJustJess.destroyTheMonument.classes.skills;
 
+import IAmNotJustJess.destroyTheMonument.logic.PlayerCharacter;
+import IAmNotJustJess.destroyTheMonument.logic.PlayerCharacterList;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Skill {
 
@@ -23,20 +27,71 @@ public class Skill {
 
     }
 
-    public void Activate(Player caster, Player attacker, Location location) {
+    public void Activate(PlayerCharacter caster, PlayerCharacter attacker, Location location) {
 
         for(Effect effect : effectList) {
-            switch (effect.effectType) {
-                case PUSH_UP -> {
-                    switch (effect.effectApplicationType) {
-                        case APPLY_SELF -> {
-                            caster.getVelocity().add(new org.bukkit.util.Vector(0, effect.strength, 0));
-                        }
-                    }
-
+            switch (effect.effectApplicationType) {
+                case APPLY_SELF -> {
+                    ActivateAbilityOnSelf(caster, effect);
+                }
+                case APPLY_ENEMIES_IN_RANGE -> {
+                    ActivateAbilityOnEnemies(caster, effect, location);
+                }
+                case APPLY_ENEMIES_IN_RANGE_OF_CASTER -> {
+                    ActivateAbilityOnEnemies(caster, effect, caster.getPlayer().getLocation());
+                }
+                case APPLY_TEAMMATES_IN_RANGE -> {
+                    ActivateAbilityOnTeammates(caster, effect, location);
+                }
+                case APPLY_TEAMMATES_IN_RANGE_OF_CASTER -> {
+                    ActivateAbilityOnTeammates(caster, effect, caster.getPlayer().getLocation());
                 }
             }
         }
+    }
 
+    private void ActivateAbilityOnSelf(PlayerCharacter caster, Effect effect) {
+        ActivateAbilityOnPlayer(caster, caster, effect);
+    }
+    private void ActivateAbilityOnEnemies(PlayerCharacter caster, Effect effect, Location location) {
+        for (Entity entity : location.getWorld().getNearbyEntities(location, effect.range, effect.range, effect.range)) {
+
+            if (!(entity instanceof LivingEntity) || !(entity instanceof Player)) return;
+            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity.getUniqueId());
+
+            if(caster.getTeam() == loopedPlayer.getTeam()) return;
+
+            ActivateAbilityOnPlayer(caster, loopedPlayer, effect);
+        }
+    }
+    private void ActivateAbilityOnTeammates(PlayerCharacter caster, Effect effect, Location location) {
+        for (Entity entity : location.getWorld().getNearbyEntities(location, effect.range, effect.range, effect.range)) {
+
+            if (!(entity instanceof Player)) return;
+            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity.getUniqueId());
+
+            if(caster.getTeam() != loopedPlayer.getTeam()) return;
+
+            ActivateAbilityOnPlayer(caster, loopedPlayer, effect);
+        }
+    }
+    private void ActivateAbilityOnPlayer(PlayerCharacter caster, PlayerCharacter affectedPlayer, Effect effect) {
+        switch (effect.effectType) {
+            case PUSH_UP -> {
+                caster.getPlayer().getVelocity().add(new Vector(0, 1, 0).normalize().multiply(effect.strength));
+            }
+            case PUSH_AWAY -> {
+                Vector vector = caster.getPlayer().getLocation().toVector().subtract(affectedPlayer.getPlayer().getLocation().toVector()).normalize().multiply(effect.strength);
+                affectedPlayer.getPlayer().getVelocity().add(vector);
+            }
+            case HEAL_FLAT -> {
+                affectedPlayer.setHealth(affectedPlayer.getHealth() + (int) effect.strength);
+                if(affectedPlayer.getHealth() >= affectedPlayer.getMaxHealth()) affectedPlayer.setHealth(affectedPlayer.getMaxHealth());
+            }
+            case HEAL_PERCENTAGE -> {
+                affectedPlayer.setHealth(affectedPlayer.getHealth() + (int) (affectedPlayer.getMaxHealth() * effect.strength));
+                if(affectedPlayer.getHealth() >= affectedPlayer.getMaxHealth()) affectedPlayer.setHealth(affectedPlayer.getMaxHealth());
+            }
+        }
     }
 }

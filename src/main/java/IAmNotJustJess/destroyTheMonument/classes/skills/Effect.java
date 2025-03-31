@@ -6,6 +6,7 @@ public class Effect {
     public EffectApplicationType effectApplicationType;
     public double longevity;
     public double strength;
+    public double range;
 
     Effect(EffectType effectType, EffectApplicationType effectApplicationType, double longevity, double strength) {
         this.effectType = effectType;

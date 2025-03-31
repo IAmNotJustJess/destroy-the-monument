@@ -1,9 +1,8 @@
 package IAmNotJustJess.destroyTheMonument.classes;
 
 import IAmNotJustJess.destroyTheMonument.classes.skills.Skill;
-import org.bukkit.inventory.ItemStack;
 
-public class Class {
+public class PlayerClass {
 
     public int HP;
     public Skill passiveSkill;
