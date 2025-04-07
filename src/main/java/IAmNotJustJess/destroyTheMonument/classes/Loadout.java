@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public class Loadout {
 
-    public Item helmet;
-    public Item chestplate;
-    public Item leggings;
-    public Item boots;
-    public ArrayList<Item> items;
+    public ItemStack helmet;
+    public ItemStack chestplate;
+    public ItemStack leggings;
+    public ItemStack boots;
+    public ArrayList<ItemStack> items;
     public int blockAmount;
 
-    public Loadout(Item helmet, Item chestplate, Item leggings, Item boots, ArrayList<Item> items, int blockAmount) {
+    public Loadout(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots, ArrayList<ItemStack> items, int blockAmount) {
 
         this.helmet = helmet;
         this.chestplate = chestplate;

@@ -58,6 +58,7 @@ public class Skill {
 
             if (!(entity instanceof LivingEntity) || !(entity instanceof Player)) return;
             PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity.getUniqueId());
+            loopedPlayer.setLastAttacked(caster.getPlayer());
 
             if(caster.getTeam() == loopedPlayer.getTeam()) return;
 
@@ -85,12 +86,23 @@ public class Skill {
                 affectedPlayer.getPlayer().getVelocity().add(vector);
             }
             case HEAL_FLAT -> {
-                affectedPlayer.setHealth(affectedPlayer.getHealth() + (int) effect.strength);
-                if(affectedPlayer.getHealth() >= affectedPlayer.getMaxHealth()) affectedPlayer.setHealth(affectedPlayer.getMaxHealth());
+                affectedPlayer.heal((int) effect.strength);
             }
             case HEAL_PERCENTAGE -> {
-                affectedPlayer.setHealth(affectedPlayer.getHealth() + (int) (affectedPlayer.getMaxHealth() * effect.strength));
-                if(affectedPlayer.getHealth() >= affectedPlayer.getMaxHealth()) affectedPlayer.setHealth(affectedPlayer.getMaxHealth());
+                affectedPlayer.heal((int) (affectedPlayer.getMaxHealth() * effect.strength));
+            }
+            case POTION_EFFECT -> {
+                affectedPlayer.getPlayer().addPotionEffect(effect.potionEffect);
+            }
+            case DAMAGE_DEALT_FLAT -> {
+                affectedPlayer.dealDamage((int) effect.strength);
+            }
+            case DAMAGE_DEALT_PERCENTAGE -> {
+                affectedPlayer.dealDamage((int) (affectedPlayer.getMaxHealth() * effect.strength));
+            }
+            default -> {
+                affectedPlayer.getEffectList().add(effect);
+                affectedPlayer.checkForMultiplierChange();
             }
         }
     }

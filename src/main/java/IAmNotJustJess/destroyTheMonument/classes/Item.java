@@ -2,19 +2,25 @@ package IAmNotJustJess.destroyTheMonument.classes;
 
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
 public class Item {
-    public ItemStack itemStack;
 
-    Item(Material material, int amount, String name, String description) {
+    public static ItemStack createItem(Material material, int amount, String name, String description) {
 
-        itemStack = new ItemStack(material, amount);
-        Objects.requireNonNull(itemStack.getItemMeta()).setUnbreakable(true);
+        ItemStack itemStack = new ItemStack(material, amount);
+        ItemMeta itemMeta = itemStack.getItemMeta();
 
-        itemStack.getItemMeta().setItemName(MiniMessageParser.Deserialize(name));
-        itemStack.getItemMeta().setLore(MiniMessageParser.DeserializeMultiline(description));
+        itemMeta.setUnbreakable(true);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemMeta.setItemName(MiniMessageParser.Deserialize(name));
+        itemMeta.setLore(MiniMessageParser.DeserializeMultiline(description));
+
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
     }
 }
