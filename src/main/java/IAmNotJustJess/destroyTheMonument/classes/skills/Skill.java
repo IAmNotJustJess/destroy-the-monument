@@ -1,7 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.classes.skills;
 
-import IAmNotJustJess.destroyTheMonument.logic.PlayerCharacter;
-import IAmNotJustJess.destroyTheMonument.logic.PlayerCharacterList;
+import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
+import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;

@@ -1,10 +1,9 @@
-package IAmNotJustJess.destroyTheMonument.logic;
+package IAmNotJustJess.destroyTheMonument.player;
 
 import IAmNotJustJess.destroyTheMonument.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.classes.skills.Effect;
+import IAmNotJustJess.destroyTheMonument.team.TeamColour;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ public class PlayerCharacter {
     private int maxHealth;
     private int health;
     private PlayerClass chosenPlayerClass;
-    private int team;
+    private TeamColour team;
     private ArrayList<Effect> effectList;
     private double dealDamageMultiplier = 1;
     private double takeDamageMultiplier = 1;
@@ -23,7 +22,7 @@ public class PlayerCharacter {
     private ArrayList<Player> assistList;
     private Player lastAttacked;
 
-    public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, int team) {
+    public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team) {
         this.player = player;
         this.chosenPlayerClass = chosenPlayerClass;
         this.team = team;
@@ -65,11 +64,11 @@ public class PlayerCharacter {
         this.chosenPlayerClass = chosenPlayerClass;
     }
 
-    public int getTeam() {
+    public TeamColour getTeam() {
         return team;
     }
 
-    public void setTeam(int team) {
+    public void setTeam(TeamColour team) {
         this.team = team;
     }
 

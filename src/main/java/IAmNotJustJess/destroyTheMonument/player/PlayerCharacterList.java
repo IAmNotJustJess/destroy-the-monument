@@ -1,4 +1,4 @@
-package IAmNotJustJess.destroyTheMonument.logic;
+package IAmNotJustJess.destroyTheMonument.player;
 
 import java.util.HashMap;
 import java.util.UUID;
