@@ -1,7 +1,8 @@
-package IAmNotJustJess.destroyTheMonument.classes;
+package IAmNotJustJess.destroyTheMonument.player.classes;
 
-import IAmNotJustJess.destroyTheMonument.classes.skills.Effect;
 import org.bukkit.inventory.ItemStack;
+
+import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 
 import java.util.ArrayList;
 

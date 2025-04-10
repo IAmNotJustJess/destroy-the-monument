@@ -1,7 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
-import IAmNotJustJess.destroyTheMonument.classes.PlayerClass;
-import IAmNotJustJess.destroyTheMonument.classes.skills.Effect;
+import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
+import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
 import org.bukkit.entity.Player;
 
@@ -12,6 +12,7 @@ public class PlayerCharacter {
     private Player player;
     private int maxHealth;
     private int health;
+    private float movementSpeed;
     private PlayerClass chosenPlayerClass;
     private TeamColour team;
     private ArrayList<Effect> effectList;
@@ -19,15 +20,17 @@ public class PlayerCharacter {
     private double takeDamageMultiplier = 1;
     private int flatDealDamageIncrease = 0;
     private int flatTakeDamageIncrease = 0;
+    private int shards = 0;
     private ArrayList<Player> assistList;
     private Player lastAttacked;
 
-    public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team) {
+    public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team, float movementSpeed) {
         this.player = player;
         this.chosenPlayerClass = chosenPlayerClass;
         this.team = team;
         this.maxHealth = chosenPlayerClass.HP;
         this.health = this.maxHealth;
+        this.movementSpeed = movementSpeed;
         this.effectList = new ArrayList<Effect>();
         this.assistList = new ArrayList<Player>();
     }
@@ -100,6 +103,9 @@ public class PlayerCharacter {
                     case DAMAGE_OVER_TIME_PERCENTAGE -> {
                         this.dealDamage((int) effect.strength * this.maxHealth);
                     }
+                    default -> {
+                        break;
+                    }
                 }
             }
 
@@ -121,16 +127,19 @@ public class PlayerCharacter {
         for(Effect effect : this.getEffectList()) {
             switch(effect.effectType) {
                 case DAMAGE_INCREASE_FLAT -> {
-                    flatDealDamageIncrease += (int) effect.strength;
+                    this.flatDealDamageIncrease += (int) effect.strength;
                 }
                 case DAMAGE_VULNERABILITY_FLAT -> {
-                    flatTakeDamageIncrease += (int) effect.strength;
+                    this.flatTakeDamageIncrease += (int) effect.strength;
                 }
                 case DAMAGE_INCREASE_MULTIPLIER -> {
-                    flatDealDamageIncrease *= effect.strength;
+                    this.dealDamageMultiplier *= effect.strength;
                 }
                 case DAMAGE_VULNERABILITY_MULTIPLIER -> {
-                    flatTakeDamageIncrease *= effect.strength;
+                    this.takeDamageMultiplier *= effect.strength;
+                }
+                default -> {
+                    break;
                 }
             }
         }
@@ -157,7 +166,8 @@ public class PlayerCharacter {
     }
 
     public void dealDamage(int damageAmount) {
-        this.setHealth(this.getHealth() - (damageAmount + this.flatTakeDamageIncrease) * this.flatDealDamageIncrease);
+        damageAmount = (int) Math.round((damageAmount + this.flatTakeDamageIncrease) * this.takeDamageMultiplier);
+        this.setHealth(this.getHealth() - damageAmount);
         if(this.getHealth() <= 0) this.kill();
     }
 

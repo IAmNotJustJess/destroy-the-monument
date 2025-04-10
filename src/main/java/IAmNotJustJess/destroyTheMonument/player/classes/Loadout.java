@@ -1,4 +1,4 @@
-package IAmNotJustJess.destroyTheMonument.classes;
+package IAmNotJustJess.destroyTheMonument.player.classes;
 
 import org.bukkit.inventory.ItemStack;
 

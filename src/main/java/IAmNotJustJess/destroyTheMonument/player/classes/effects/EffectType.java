@@ -1,10 +1,10 @@
-package IAmNotJustJess.destroyTheMonument.classes.skills;
+package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 
 public enum EffectType {
     DAMAGE_INCREASE_FLAT,
     DAMAGE_INCREASE_MULTIPLIER,
-    DAMAGE_DEALT_FLAT,
-    DAMAGE_DEALT_PERCENTAGE,
+    DEAL_DAMAGE_FLAT,
+    DEAL_DAMAGE_PERCENTAGE,
     DAMAGE_VULNERABILITY_FLAT,
     DAMAGE_VULNERABILITY_MULTIPLIER,
     DAMAGE_OVER_TIME_FLAT,

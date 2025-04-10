@@ -1,4 +1,4 @@
-package IAmNotJustJess.destroyTheMonument.classes.skills;
+package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 
 public enum EffectApplicationType {
     APPLY_SELF,

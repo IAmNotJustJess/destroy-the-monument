@@ -1,4 +1,4 @@
-package IAmNotJustJess.destroyTheMonument.classes.skills;
+package IAmNotJustJess.destroyTheMonument.player.classes.skills;
 
 public enum SkillType {
     PASSIVE,

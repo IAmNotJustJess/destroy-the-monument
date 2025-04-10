@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ArenaInstance {
-    public HashMap<Location, TeamColour> monumentList;
-    public ArrayList<Player> playerList;
-    public HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
+    private HashMap<Location, TeamColour> monumentList;
+    private HashMap<TeamColour, Integer> monumentCount;
+    private ArrayList<Player> playerList;
+    private HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
+    private int timer;
+    private String timerString;
 }

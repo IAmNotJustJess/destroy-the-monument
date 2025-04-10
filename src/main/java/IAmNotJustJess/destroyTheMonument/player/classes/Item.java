@@ -1,12 +1,10 @@
-package IAmNotJustJess.destroyTheMonument.classes;
+package IAmNotJustJess.destroyTheMonument.player.classes;
 
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Objects;
 
 public class Item {
 

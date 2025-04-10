@@ -1,7 +1,9 @@
-package IAmNotJustJess.destroyTheMonument.classes.skills;
+package IAmNotJustJess.destroyTheMonument.player.classes.skills;
 
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
+import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -94,10 +96,10 @@ public class Skill {
             case POTION_EFFECT -> {
                 affectedPlayer.getPlayer().addPotionEffect(effect.potionEffect);
             }
-            case DAMAGE_DEALT_FLAT -> {
+            case DEAL_DAMAGE_FLAT -> {
                 affectedPlayer.dealDamage((int) effect.strength);
             }
-            case DAMAGE_DEALT_PERCENTAGE -> {
+            case DEAL_DAMAGE_PERCENTAGE -> {
                 affectedPlayer.dealDamage((int) (affectedPlayer.getMaxHealth() * effect.strength));
             }
             default -> {
