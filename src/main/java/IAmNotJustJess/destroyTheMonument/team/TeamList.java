@@ -1,9 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.team;
 
-import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
-
 import java.util.HashMap;
-import java.util.UUID;
 
 public class TeamList {
 
