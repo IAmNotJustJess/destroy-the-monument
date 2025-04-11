@@ -24,6 +24,14 @@ public class Upgrade {
         this.name = name;
     }
 
+    public int getMaxLevels() {
+        return maxLevels;
+    }
+
+    public void setMaxLevels(int maxLevels) {
+        this.maxLevels = maxLevels;
+    }
+
     public List<String> getDescription() {
         String string = description;
         for(int i = 0; i < descriptionTextReplacementList.size(); i++) {
@@ -38,7 +46,7 @@ public class Upgrade {
         this.description = description;
     }
 
-    Upgrade(String name, String description, int maxLevels, UpgradeAffection upgradeAffection) {
+    public Upgrade(String name, String description, int maxLevels, UpgradeAffection upgradeAffection) {
         this.name = name;
         this.description = name;
         this.maxLevels = maxLevels;

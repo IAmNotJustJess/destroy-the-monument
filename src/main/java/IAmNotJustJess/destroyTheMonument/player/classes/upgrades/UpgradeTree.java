@@ -6,7 +6,7 @@ public class UpgradeTree {
     private HashMap<UpgradeTreeLocation, Upgrade> upgradeTree;
     private HashMap<UpgradeTreeLocation, Integer> boughtLevels;
 
-    UpgradeTree() {
+    public UpgradeTree() {
         this.upgradeTree = new HashMap<UpgradeTreeLocation, Upgrade>();
         this.boughtLevels = new HashMap<UpgradeTreeLocation, Integer>();
 
