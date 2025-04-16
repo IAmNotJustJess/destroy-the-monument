@@ -11,6 +11,8 @@ public class Upgrade {
     private String description;
     private int maxLevels;
     private UpgradeAffection upgradeAffection;
+    private int maxStacks;
+    private int stackCount;
     public ArrayList<ArrayList<String>> descriptionTextReplacementList;
     public ArrayList<ArrayList<Double>> strengthLevels;
     public ArrayList<Integer> shardPricesLevels;
@@ -46,14 +48,32 @@ public class Upgrade {
         this.description = description;
     }
 
-    public Upgrade(String name, String description, int maxLevels, UpgradeAffection upgradeAffection) {
+    public Upgrade(String name, String description, int maxLevels, UpgradeAffection upgradeAffection, int maxStacks) {
         this.name = name;
         this.description = name;
         this.maxLevels = maxLevels;
         this.upgradeAffection = upgradeAffection;
+        this.maxStacks = maxStacks;
+        this.stackCount = 0;
         this.descriptionTextReplacementList = new ArrayList<ArrayList<String>>();
         this.strengthLevels = new ArrayList<ArrayList<Double>>();
         this.shardPricesLevels = new ArrayList<Integer>();
         this.effectsLevels = new ArrayList<ArrayList<Effect>>();
+    }
+
+    public int getStackCount() {
+        return stackCount;
+    }
+
+    public void setStackCount(int stackCount) {
+        this.stackCount = stackCount;
+    }
+
+    public int getMaxStacks() {
+        return maxStacks;
+    }
+
+    public void setMaxStacks(int maxStacks) {
+        this.maxStacks = maxStacks;
     }
 }

@@ -87,6 +87,8 @@ public class PlayerCharacter {
 
         for(Effect effect : this.getEffectList()) {
 
+            if(effect.longevity == -1) continue;
+
             effect.longevity -= 1;
 
             if(effect.longevity % effect.tickEveryServerTicks == 0) {

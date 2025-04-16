@@ -13,4 +13,11 @@ public class Weapon {
     public int damage;
     public ArrayList<Effect> effects;
 
+    Weapon(String name, ItemStack item, int damage) {
+        this.name = name;
+        this.item = item;
+        this.damage = damage;
+        this.effects = new ArrayList<>();
+    }
+
 }

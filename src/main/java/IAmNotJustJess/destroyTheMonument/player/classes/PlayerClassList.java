@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class PlayerClassList {
-    private static HashMap<UUID, PlayerClass> list = new HashMap<>();
+    private static final HashMap<UUID, PlayerClass> list = new HashMap<>();
 
     public static HashMap<UUID, PlayerClass> getList() {
         return list;

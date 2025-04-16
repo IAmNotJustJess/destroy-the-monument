@@ -1,6 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.arena;
 
-public enum ArenaStates {
+public enum ArenaState {
     LOBBY,
     COUNTDOWN,
     STARTING,
