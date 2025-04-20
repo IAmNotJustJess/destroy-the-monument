@@ -3,14 +3,18 @@ package IAmNotJustJess.destroyTheMonument.arena;
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
+import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import org.bukkit.Bukkit;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +29,7 @@ public class ArenaInstance {
     private int timer;
     private String timerString;
     private ArenaState arenaState;
-    private int repeatingTaskID;
+    private BukkitTask tickTask;
 
     public void sendMessageGlobally(TextComponent textComponent) {
         for(Player player : playerList) {
@@ -41,24 +45,71 @@ public class ArenaInstance {
         }
     }
 
-    public void arenaTick() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
+    public void sendTitleGlobally(TextComponent title, TextComponent subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
+        Title titleMessage = Title.title(title, subtitle, Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
+        for(Player player : playerList) {
 
-            }
-        }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L);
+            Audience audience = (Audience) player;
+            audience.showTitle(titleMessage);
+        }
+    }
+
+    public void sendTitleToATeam(TeamColour teamColour, TextComponent title, TextComponent subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
+        Title titleMessage = Title.title(title, subtitle, Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
+        for(Player player : playersInTeamsList.get(teamColour)) {
+
+            Audience audience = (Audience) player;
+            audience.showTitle(titleMessage);
+        }
+    }
+
+    public void sendExplanation() {
+
+        ArrayList<String> messages = new ArrayList<>();
+
+        messages.add("Witaj na Destroy the Monument!");
+        messages.add("Twoim zadaniem jest zniszczenie monumentów przeciwnika!");
+        messages.add("Zniszcząc wszystkie monumenty wygrasz arenę!");
+        messages.add("Po końcu czasu, drużyna z większą ilością monumentów wygrywa!");
+        messages.add("Powodzenia!");
+
+        ArrayList<String> titles = new ArrayList<>();
+        ArrayList<String> subtitles = new ArrayList<>();
+
+        titles.add("Witaj na");
+        subtitles.add("Destroy the Monument");
+        titles.add("Twoje zadanie:");
+        subtitles.add("Niszcz monumenty!");
+        titles.add("Wygrasz");
+        subtitles.add("Zniszcząc je wszystkie!");
+        titles.add("Lub");
+        subtitles.add("Mając ich więcej.");
+        titles.add("Powodzenia!");
+        subtitles.add("Przyda się :P");
+
+        for(int i = 0; i < messages.size(); i++) {
+            int finalI = i;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    sendTitleGlobally(Component.text(titles.get(finalI)), Component.text(subtitles.get(finalI)), 0L, 5000L, 0L);
+                    sendMessageGlobally(Component.text(messages.get(finalI)));
+                }
+            }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i);
+        }
+
     }
 
     public void startCountdown() {
 
-        repeatingTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(JavaPlugin.getPlugin(DestroyTheMonument.class), new Runnable(){
+        tickTask = new BukkitRunnable() {
             @Override
             public void run() {
                 timer -= 1;
+                timerString = MinutesTimerConverter.convert(timer);
                 if(timer <= 0) advanceState();
             }
-        }, 0L, 20L);
+        }.runTaskTimerAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 0L, 20L);
     };
 
     public void addPlayerToArena(Player player) {
@@ -80,6 +131,9 @@ public class ArenaInstance {
             advanceState();
         } else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio >= ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
             timer = ArenaSettings.arenaCutDownCountdownInSeconds;
+        } else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio < ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
+            timer = -1;
+            tickTask.cancel();
         }
     }
 
@@ -92,7 +146,7 @@ public class ArenaInstance {
             }
             case COUNTDOWN ->  {
                 this.arenaState = ArenaState.STARTING;
-                Bukkit.getScheduler().cancelTask(repeatingTaskID);
+                tickTask.cancel();
             }
             case STARTING -> {
                 this.arenaState = ArenaState.RUNNING;
@@ -101,7 +155,7 @@ public class ArenaInstance {
             }
             case RUNNING -> {
                 this.arenaState = ArenaState.ENDING;
-                Bukkit.getScheduler().cancelTask(repeatingTaskID);
+                tickTask.cancel();
             }
             case ENDING -> {
                 this.arenaState = ArenaState.CLEARING;
