@@ -4,11 +4,14 @@ import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
 import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
+import IAmNotJustJess.destroyTheMonument.utility.RandomElementPicker;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
+import org.bukkit.GameRule;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,7 +24,7 @@ import java.util.HashMap;
 public class ArenaInstance {
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
     private HashMap<TeamColour, Integer> monumentCount;
-    private HashMap<TeamColour, Location> spawnLocations;
+    private HashMap<TeamColour, ArrayList<Location>> spawnLocations;
     private ArrayList<TeamColour> teamColours;
     private ArrayList<Player> playerList;
     private HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
@@ -88,14 +91,15 @@ public class ArenaInstance {
         subtitles.add("Przyda się :P");
 
         for(int i = 0; i < messages.size(); i++) {
-            int finalI = i;
+            final int[] finalI = {i};
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    sendTitleGlobally(Component.text(titles.get(finalI)), Component.text(subtitles.get(finalI)), 0L, 5000L, 0L);
-                    sendMessageGlobally(Component.text(messages.get(finalI)));
+                    sendTitleGlobally(Component.text(titles.get(finalI[0])), Component.text(subtitles.get(finalI[0])), 0L, 5000L, 0L);
+                    sendMessageGlobally(Component.text(messages.get(finalI[0])));
+                    if(finalI[0] == messages.size() - 1) startCountdown();;
                 }
-            }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i);
+            }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 100L * i);
         }
 
     }
@@ -137,6 +141,14 @@ public class ArenaInstance {
         }
     }
 
+    private void teleportPlayersToArena() {
+        for (TeamColour teamColour : teamColours) {
+            for (Player player : playersInTeamsList.get(teamColour)) {
+                player.teleport(RandomElementPicker.getRandomElement(spawnLocations.get(teamColour)));
+            }
+        }
+    }
+
     public void advanceState() {
         switch (arenaState) {
             case LOBBY -> {
@@ -151,7 +163,15 @@ public class ArenaInstance {
             case STARTING -> {
                 this.arenaState = ArenaState.RUNNING;
                 timer = (int) (ArenaSettings.arenaLengthInMinutes * 60);
-                startCountdown();
+                teleportPlayersToArena();
+                World world = RandomElementPicker.getRandomElement(playerList).getWorld();
+                world.setGameRule(GameRule.DO_INSOMNIA, false);
+                world.setGameRule(GameRule.MAX_ENTITY_CRAMMING, 0);
+                world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                world.setGameRule(GameRule.DO_ENTITY_DROPS, false);
+                world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+                sendExplanation();
+                // startCountdown();
             }
             case RUNNING -> {
                 this.arenaState = ArenaState.ENDING;
