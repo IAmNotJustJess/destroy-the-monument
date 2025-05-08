@@ -24,6 +24,10 @@ public class UpgradeTree {
         return this.boughtLevels.get(location);
     }
 
+    public Upgrade getUpgrade(UpgradeTreeLocation location) {
+        return this.upgradeTree.get(location);
+    }
+
     public void setUpgrade(UpgradeTreeLocation location, Upgrade upgrade) {
         upgradeTree.put(location, upgrade);
     }

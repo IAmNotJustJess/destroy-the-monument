@@ -1,4 +1,4 @@
-package IAmNotJustJess.destroyTheMonument.player.classes;
+package IAmNotJustJess.destroyTheMonument.player.classes.items;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -10,10 +10,10 @@ public class Weapon {
 
     public String name;
     public ItemStack item;
-    public int damage;
+    public Integer damage;
     public ArrayList<Effect> effects;
 
-    Weapon(String name, ItemStack item, int damage) {
+    Weapon(String name, ItemStack item, Integer damage) {
         this.name = name;
         this.item = item;
         this.damage = damage;

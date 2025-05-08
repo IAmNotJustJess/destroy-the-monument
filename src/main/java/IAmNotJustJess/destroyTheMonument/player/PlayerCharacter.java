@@ -2,7 +2,9 @@ package IAmNotJustJess.destroyTheMonument.player;
 
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
+import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
+import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationCoverter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class PlayerCharacter {
     private int shards = 0;
     private ArrayList<Player> assistList;
     private Player lastAttacked;
+    private int baseMaxHealth;
+    private int baseMovementSpeed;
 
     public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team, float movementSpeed) {
         this.player = player;
@@ -31,8 +35,8 @@ public class PlayerCharacter {
         this.maxHealth = chosenPlayerClass.HP;
         this.health = this.maxHealth;
         this.movementSpeed = movementSpeed;
-        this.effectList = new ArrayList<Effect>();
-        this.assistList = new ArrayList<Player>();
+        this.effectList = new ArrayList<>();
+        this.assistList = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -84,6 +88,10 @@ public class PlayerCharacter {
     }
 
     public void readThroughEffectList() {
+
+        for(int i = 0; i < 8; i++) {
+            Upgrade upgrade = chosenPlayerClass.upgradeTree.getUpgrade(UpgradeTreeLocationCoverter.convertIntegerToLocation(i));
+        }
 
         for(Effect effect : this.getEffectList()) {
 

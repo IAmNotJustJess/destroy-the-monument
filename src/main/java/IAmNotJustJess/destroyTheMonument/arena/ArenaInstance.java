@@ -164,7 +164,7 @@ public class ArenaInstance {
                 this.arenaState = ArenaState.RUNNING;
                 timer = (int) (ArenaSettings.arenaLengthInMinutes * 60);
                 teleportPlayersToArena();
-                World world = RandomElementPicker.getRandomElement(playerList).getWorld();
+                World world = playerList.getFirst().getWorld();
                 world.setGameRule(GameRule.DO_INSOMNIA, false);
                 world.setGameRule(GameRule.MAX_ENTITY_CRAMMING, 0);
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
