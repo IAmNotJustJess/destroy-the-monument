@@ -3,8 +3,10 @@ package IAmNotJustJess.destroyTheMonument.player;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
+import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
+import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
-import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationCoverter;
+import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -26,17 +28,20 @@ public class PlayerCharacter {
     private ArrayList<Player> assistList;
     private Player lastAttacked;
     private int baseMaxHealth;
-    private int baseMovementSpeed;
+    private float baseMovementSpeed;
 
     public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team, float movementSpeed) {
         this.player = player;
         this.chosenPlayerClass = chosenPlayerClass;
         this.team = team;
         this.maxHealth = chosenPlayerClass.HP;
-        this.health = this.maxHealth;
+        this.health = maxHealth;
+        this.baseMaxHealth = maxHealth;
         this.movementSpeed = movementSpeed;
+        this.baseMovementSpeed = movementSpeed;
         this.effectList = new ArrayList<>();
         this.assistList = new ArrayList<>();
+        this.shards = 0;
     }
 
     public Player getPlayer() {
@@ -87,11 +92,143 @@ public class PlayerCharacter {
         this.effectList = effectList;
     }
 
-    public void readThroughEffectList() {
+    public int buyUpgrade(UpgradeTreeLocation location) {
+        Upgrade upgrade = chosenPlayerClass.upgradeTree.getUpgrade(location);
+        if(upgrade.getCurrentLevel() == upgrade.getMaxLevels()) return 1;
+        if(shards < upgrade.shardPricesLevels.get(upgrade.getCurrentLevel() + 1)) return 2;
+
+        shards -= upgrade.shardPricesLevels.get(upgrade.getCurrentLevel() + 1);
+        upgrade.setCurrentLevel(upgrade.getCurrentLevel() + 1);
+
+        switch(upgrade.getUpgradeAffection()) {
+            case MAX_HP -> {
+                switch(upgrade.getUpgradeType()) {
+                    case FLAT -> {
+                        maxHealth += upgrade.strengthLevels.get(upgrade.getCurrentLevel()).getFirst();
+                    }
+                    case PERCENTAGE -> {
+                        maxHealth += (int) (upgrade.strengthLevels.get(upgrade.getCurrentLevel()).getFirst() * baseMaxHealth);
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public void onEnemyKill() { // dodac wiecej efektow, dodanie flat/percentage ma tez dodac do bazowego!
 
         for(int i = 0; i < 8; i++) {
-            Upgrade upgrade = chosenPlayerClass.upgradeTree.getUpgrade(UpgradeTreeLocationCoverter.convertIntegerToLocation(i));
+            UpgradeTreeLocation location = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
+            Upgrade upgrade = chosenPlayerClass.upgradeTree.getUpgrade(location);
+            if (upgrade.getCurrentLevel() == 0) continue;
+            if (upgrade.getUpgradeType() != UpgradeType.STACKING_FLAT_PER_KILL) continue;
+
+            upgrade.setStackCount(upgrade.getStackCount() + 1);
+
+            double value = upgrade.strengthLevels.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount());
+            switch(upgrade.getUpgradeAffection()) {
+                case MAX_HP -> {
+                    maxHealth += (int) value;
+                }
+                case MOVEMENT_SPEED -> {
+                    movementSpeed += (int) value;
+                }
+                case ULTIMATE_STRENGTH -> {
+                    for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                        chosenPlayerClass.ultimateSkill.effectList.get(integer).strength += value;
+                    }
+                }
+                case ULTIMATE_LONGEVITY -> {
+                    for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                        chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity += (int) value;
+                    }
+                }
+                case ACTIVE_STRENGTH -> {
+                    for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                        chosenPlayerClass.activeSkill.effectList.get(integer).strength += value;
+                    }
+                }
+                case ACTIVE_LONGEVITY -> {
+                    for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                        chosenPlayerClass.activeSkill.effectList.get(integer).longevity += (int) value;
+                    }
+                }
+                case PASSIVE_STRENGTH -> {
+                    for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                        chosenPlayerClass.passiveSkill.effectList.get(integer).strength += value;
+                    }
+                }
+                case PASSIVE_LONGEVITY -> {
+                    for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                        chosenPlayerClass.passiveSkill.effectList.get(integer).longevity += (int) value;
+                    }
+                }
+                case MAIN_WEAPON_DAMAGE -> {
+                    chosenPlayerClass.loadout.mainWeapon.damage += (int) value;
+                }
+                default -> {}
+            }
         }
+    }
+
+    public void onDeath() { // edit dla percentage potrzebny :)
+
+        for(int i = 0; i < 8; i++) {
+            UpgradeTreeLocation location = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
+            Upgrade upgrade = chosenPlayerClass.upgradeTree.getUpgrade(location);
+            if(upgrade.getCurrentLevel() == 0) continue;
+            if(upgrade.getUpgradeType() != UpgradeType.STACKING_FLAT_PER_KILL) continue;
+
+            for(int j = upgrade.getStackCount() - 1; j > 0; j--) {
+                double value = upgrade.strengthLevels.get(upgrade.getCurrentLevel()).get(j);
+                switch(upgrade.getUpgradeAffection()) {
+                    case MAX_HP -> {
+                        maxHealth -= (int) value;
+                    }
+                    case MOVEMENT_SPEED -> {
+                        movementSpeed -= (int) value;
+                    }
+                    case ULTIMATE_STRENGTH -> {
+                        for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                            chosenPlayerClass.ultimateSkill.effectList.get(integer).strength -= value;
+                        }
+                    }
+                    case ULTIMATE_LONGEVITY -> {
+                        for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                            chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity -= (int) value;
+                        }
+                    }
+                    case ACTIVE_STRENGTH -> {
+                        for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                            chosenPlayerClass.activeSkill.effectList.get(integer).strength -= value;
+                        }
+                    }
+                    case ACTIVE_LONGEVITY -> {
+                        for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                            chosenPlayerClass.activeSkill.effectList.get(integer).longevity -= (int) value;
+                        }
+                    }
+                    case PASSIVE_STRENGTH -> {
+                        for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                            chosenPlayerClass.passiveSkill.effectList.get(integer).strength -= value;
+                        }
+                    }
+                    case PASSIVE_LONGEVITY -> {
+                        for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                            chosenPlayerClass.passiveSkill.effectList.get(integer).longevity -= (int) value;
+                        }
+                    }
+                    default -> {}
+                }
+            }
+
+            upgrade.setStackCount(0);
+        }
+
+    }
+
+    public void readThroughEffectList() {
 
         for(Effect effect : this.getEffectList()) {
 
@@ -114,7 +251,6 @@ public class PlayerCharacter {
                         this.dealDamage((int) effect.strength * this.maxHealth);
                     }
                     default -> {
-                        break;
                     }
                 }
             }
@@ -188,5 +324,33 @@ public class PlayerCharacter {
 
     public void kill() {
 
+    }
+
+    public float getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    public void setMovementSpeed(float movementSpeed) {
+        this.movementSpeed = movementSpeed;
+    }
+
+    public double getDealDamageMultiplier() {
+        return dealDamageMultiplier;
+    }
+
+    public void setDealDamageMultiplier(double dealDamageMultiplier) {
+        this.dealDamageMultiplier = dealDamageMultiplier;
+    }
+
+    public int getFlatDealDamageIncrease() {
+        return flatDealDamageIncrease;
+    }
+
+    public void setFlatDealDamageIncrease(int flatDealDamageIncrease) {
+        this.flatDealDamageIncrease = flatDealDamageIncrease;
+    }
+
+    public int getShards() {
+        return shards;
     }
 }

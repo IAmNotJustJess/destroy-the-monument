@@ -4,6 +4,8 @@ import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 
+import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -11,25 +13,37 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class Skill {
 
-    public String name;
+    private String name;
+    private String description;
+    private ArrayList<String> descriptionTextReplacementList;
     public SkillType type;
     public double cooldown;
+    public double baseCooldown;
     public ArrayList<Effect> effectList;
+    public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingEffect;
 
-    Skill(String name, SkillType type, double cooldown, Effect effect) {
+    Skill(String name, String description, ArrayList<String> descriptionTextReplacementList, SkillType type, double cooldown, Effect effect) {
 
         this.name = name;
+        this.description = description;
+        this.descriptionTextReplacementList = descriptionTextReplacementList;
         this.type = type;
         this.cooldown = cooldown;
-        this.effectList = new ArrayList<Effect>();
+        this.baseCooldown = cooldown;
+        this.effectList = new ArrayList<>();
+        this.upgradeAffectingEffect = new HashMap<>();
         this.effectList.add(effect);
 
     }
+    
 
-    public void Activate(PlayerCharacter caster, PlayerCharacter attacker, Location location) {
+    public void Activate(PlayerCharacter caster, Location location) {
 
         for(Effect effect : effectList) {
             switch (effect.effectApplicationType) {
@@ -56,10 +70,10 @@ public class Skill {
         ActivateAbilityOnPlayer(caster, caster, effect);
     }
     private void ActivateAbilityOnEnemies(PlayerCharacter caster, Effect effect, Location location) {
-        for (Entity entity : location.getWorld().getNearbyEntities(location, effect.range, effect.range, effect.range)) {
+        for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, effect.range, effect.range, effect.range)) {
 
-            if (!(entity instanceof LivingEntity) || !(entity instanceof Player)) return;
-            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity.getUniqueId());
+            if (!(entity instanceof Player)) return;
+            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity);
             loopedPlayer.setLastAttacked(caster.getPlayer());
 
             if(caster.getTeam() == loopedPlayer.getTeam()) return;
@@ -68,10 +82,10 @@ public class Skill {
         }
     }
     private void ActivateAbilityOnTeammates(PlayerCharacter caster, Effect effect, Location location) {
-        for (Entity entity : location.getWorld().getNearbyEntities(location, effect.range, effect.range, effect.range)) {
+        for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, effect.range, effect.range, effect.range)) {
 
             if (!(entity instanceof Player)) return;
-            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity.getUniqueId());
+            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity);
 
             if(caster.getTeam() != loopedPlayer.getTeam()) return;
 
@@ -107,5 +121,33 @@ public class Skill {
                 affectedPlayer.checkForMultiplierChange();
             }
         }
+    }
+
+    public List<String> getDescription() {
+        String string = description;
+        for(int i = 0; i < descriptionTextReplacementList.size(); i++) {
+            string = string.replaceAll("<"+i+">", descriptionTextReplacementList.get(i));
+        }
+        return MiniMessageParser.DeserializeMultiline(string);
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return MiniMessageParser.Deserialize(name);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<String> getDescriptionTextReplacementList() {
+        return descriptionTextReplacementList;
+    }
+
+    public void setDescriptionTextReplacementList(ArrayList<String> descriptionTextReplacementList) {
+        this.descriptionTextReplacementList = descriptionTextReplacementList;
     }
 }
