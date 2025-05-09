@@ -13,28 +13,37 @@ public class Effect {
     public PotionEffect potionEffect;
     public double baseStrength;
     public double baseLongevity;
+    public double baseStrengthBeforeStacks;
+    public double baseLongevityBeforeStacks;
+    public long delay;
 
-    Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity) {
+    Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity, long delay) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
         this.longevity = longevity;
         this.baseLongevity = longevity;
+        this.baseLongevityBeforeStacks = longevity;
         this.strength = strength;
-        this.baseLongevity = strength;
+        this.baseStrength = strength;
+        this.baseStrengthBeforeStacks = strength;
         this.range = range;
         this.tickEveryServerTicks = tickEveryServerTicks;
+        this.delay = delay;
         this.potionEffect = null;
     }
 
-    Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity, PotionEffect potionEffect) {
+    Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity, long delay, PotionEffect potionEffect) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
         this.longevity = longevity;
-        this.baseStrength = longevity;
+        this.baseLongevity = longevity;
+        this.baseLongevityBeforeStacks = longevity;
         this.strength = strength;
         this.baseStrength = strength;
+        this.baseStrengthBeforeStacks = strength;
         this.range = range;
         this.tickEveryServerTicks = tickEveryServerTicks;
+        this.delay = delay;
         this.potionEffect = potionEffect;
     }
 }

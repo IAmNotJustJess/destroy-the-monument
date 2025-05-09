@@ -1,5 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.player.classes.skills;
 
+import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
@@ -8,8 +9,9 @@ import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLoca
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -23,8 +25,10 @@ public class Skill {
     private String description;
     private ArrayList<String> descriptionTextReplacementList;
     public SkillType type;
+    public boolean active;
     public double cooldown;
     public double baseCooldown;
+    public double baseCooldownBeforeStacks;
     public ArrayList<Effect> effectList;
     public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingEffect;
 
@@ -36,33 +40,50 @@ public class Skill {
         this.type = type;
         this.cooldown = cooldown;
         this.baseCooldown = cooldown;
+        this.baseCooldownBeforeStacks = cooldown;
         this.effectList = new ArrayList<>();
         this.upgradeAffectingEffect = new HashMap<>();
+        this.active = false;
         this.effectList.add(effect);
 
     }
-    
+
+    public void useSkill(PlayerCharacter caster, Location location) {
+        active = true;
+        if (Objects.requireNonNull(type) == SkillType.ACTIVE) {
+            Activate(caster, location);
+        }
+    }
 
     public void Activate(PlayerCharacter caster, Location location) {
 
+        active = false;
         for(Effect effect : effectList) {
-            switch (effect.effectApplicationType) {
-                case APPLY_SELF -> {
-                    ActivateAbilityOnSelf(caster, effect);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    switch (effect.effectApplicationType) {
+                        case APPLY_SELF -> {
+                            ActivateAbilityOnSelf(caster, effect);
+                        }
+                        case APPLY_ENEMIES_IN_RANGE -> {
+                            ActivateAbilityOnEnemies(caster, effect, location);
+                        }
+                        case APPLY_ENEMIES_IN_RANGE_OF_CASTER -> {
+                            ActivateAbilityOnEnemies(caster, effect, caster.getPlayer().getLocation());
+                        }
+                        case APPLY_TEAMMATES_IN_RANGE -> {
+                            ActivateAbilityOnTeammates(caster, effect, location);
+                        }
+                        case APPLY_TEAMMATES_IN_RANGE_OF_CASTER -> {
+                            ActivateAbilityOnTeammates(caster, effect, caster.getPlayer().getLocation());
+                        }
+                    }
                 }
-                case APPLY_ENEMIES_IN_RANGE -> {
-                    ActivateAbilityOnEnemies(caster, effect, location);
-                }
-                case APPLY_ENEMIES_IN_RANGE_OF_CASTER -> {
-                    ActivateAbilityOnEnemies(caster, effect, caster.getPlayer().getLocation());
-                }
-                case APPLY_TEAMMATES_IN_RANGE -> {
-                    ActivateAbilityOnTeammates(caster, effect, location);
-                }
-                case APPLY_TEAMMATES_IN_RANGE_OF_CASTER -> {
-                    ActivateAbilityOnTeammates(caster, effect, caster.getPlayer().getLocation());
-                }
-            }
+            }.runTaskLaterAsynchronously(JavaPlugin.getProvidingPlugin(DestroyTheMonument.class), effect.delay);
+
+
         }
     }
 

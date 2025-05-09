@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class UpgradeTreeLocationConverter {
 
-    private static final HashMap<Integer, UpgradeTreeLocation> mapOfUpgrades = new HashMap<>();
-    private static final HashMap<UpgradeTreeLocation, Integer> mapOfIntegers = new HashMap<>();
+    private static HashMap<Integer, UpgradeTreeLocation> mapOfUpgrades = new HashMap<>();
+    private static HashMap<UpgradeTreeLocation, Integer> mapOfIntegers = new HashMap<>();
 
     private static void addToMap() {
         if(!mapOfUpgrades.isEmpty()) return;
