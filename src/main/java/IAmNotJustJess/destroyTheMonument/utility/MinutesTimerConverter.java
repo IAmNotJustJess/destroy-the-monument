@@ -13,10 +13,10 @@ public class MinutesTimerConverter {
         formatOne = Integer.toString(minutes);
         formatTwo = Integer.toString(seconds);
 
-        if(formatOne.length() == 1) formatOne = "0"+formatOne;
-        if(formatTwo.length() == 1) formatTwo = "0"+formatTwo;
+        if(formatOne.length() == 1) formatOne = "0" + formatOne;
+        if(formatTwo.length() == 1) formatTwo = "0" + formatTwo;
 
-        output = formatOne+":"+formatTwo;
+        output = formatOne+ ":" + formatTwo;
 
         return output;
     }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
-import org.checkerframework.checker.units.qual.A;
 
 public class Upgrade {
     private String name;
@@ -17,9 +16,10 @@ public class Upgrade {
     private int maxStacks;
     private int stackCount;
     public ArrayList<ArrayList<String>> descriptionTextReplacementList;
-    public ArrayList<ArrayList<Double>> strengthLevels;
-    public ArrayList<Integer> shardPricesLevels;
-    public ArrayList<ArrayList<Effect>> effectsLevels;
+    public ArrayList<ArrayList<Double>> strengthPerLevelList;
+    public ArrayList<Integer> shardPricesPerLevelList;
+    public ArrayList<ArrayList<Effect>> effectsPerLevelList;
+    public ArrayList<ArrayList<UpgradeSpecialEffectProperty>> effectsSpecialPropertiesPerLevelList;
 
     public String getName() {
         return MiniMessageParser.Deserialize(this.name);
@@ -38,15 +38,17 @@ public class Upgrade {
         this.maxLevels = maxLevels;
         for(int i = helper; i > maxLevels; i--) {
             this.descriptionTextReplacementList.removeLast();
-            this.strengthLevels.removeLast();
-            this.shardPricesLevels.removeLast();
-            this.effectsLevels.removeLast();
+            this.strengthPerLevelList.removeLast();
+            this.shardPricesPerLevelList.removeLast();
+            this.effectsPerLevelList.removeLast();
+            this.effectsSpecialPropertiesPerLevelList.removeLast();
         }
         for(int i = helper; i < maxLevels; i++) {
             this.descriptionTextReplacementList.add(new ArrayList<>());
-            this.strengthLevels.add(new ArrayList<>());
-            this.shardPricesLevels.add(0);
-            this.effectsLevels.add(new ArrayList<>());
+            this.strengthPerLevelList.add(new ArrayList<>());
+            this.shardPricesPerLevelList.add(0);
+            this.effectsPerLevelList.add(new ArrayList<>());
+            this.effectsSpecialPropertiesPerLevelList.add(new ArrayList<>());
         }
     }
 
@@ -72,14 +74,16 @@ public class Upgrade {
         this.maxStacks = maxStacks;
         this.stackCount = 0;
         this.descriptionTextReplacementList = new ArrayList<>();
-        this.strengthLevels = new ArrayList<>();
-        this.shardPricesLevels = new ArrayList<>();
-        this.effectsLevels = new ArrayList<>();
+        this.strengthPerLevelList = new ArrayList<>();
+        this.shardPricesPerLevelList = new ArrayList<>();
+        this.effectsPerLevelList = new ArrayList<>();
+        this.effectsSpecialPropertiesPerLevelList = new ArrayList<>();
         for(int i = 0; i < maxLevels; i++) {
             this.descriptionTextReplacementList.add(new ArrayList<>());
-            this.shardPricesLevels.add(0);
-            this.strengthLevels.add(new ArrayList<>());
-            this.effectsLevels.add(new ArrayList<>());
+            this.shardPricesPerLevelList.add(0);
+            this.strengthPerLevelList.add(new ArrayList<>());
+            this.effectsPerLevelList.add(new ArrayList<>());
+            this.effectsSpecialPropertiesPerLevelList.add(new ArrayList<>());
         }
     }
 
