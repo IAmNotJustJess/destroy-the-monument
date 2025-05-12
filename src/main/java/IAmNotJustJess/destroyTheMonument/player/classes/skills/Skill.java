@@ -27,7 +27,7 @@ public class Skill {
     public double cooldownAfterUpgrades;
     public double baseCooldown;
     public ArrayList<Effect> effectList;
-    public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingEffect;
+    public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingWhichEffectList;
     public BukkitTask cooldownTask;
 
     Skill(String name, String description, ArrayList<String> descriptionTextReplacementList, SkillType type, double cooldown, Effect effect) {
@@ -41,7 +41,7 @@ public class Skill {
         this.baseCooldown = cooldown;
         this.currentCooldown = 0;
         this.effectList = new ArrayList<>();
-        this.upgradeAffectingEffect = new HashMap<>();
+        this.upgradeAffectingWhichEffectList = new HashMap<>();
         this.active = false;
         this.effectList.add(effect);
 

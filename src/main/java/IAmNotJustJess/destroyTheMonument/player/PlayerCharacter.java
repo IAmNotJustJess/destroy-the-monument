@@ -144,16 +144,16 @@ public class PlayerCharacter {
                     updatePlayerSpeed();
                 }
 
-                case ULTIMATE_STRENGTH -> {
+                case ULTIMATE_EFFECT_STRENGTH -> {
                     switch (upgrade.getUpgradeType()) {
                         case FLAT -> {
-                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).strength += value;
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).strengthAfterUpgrades += value;
                             }
                         }
                         case PERCENTAGE -> {
-                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).strength += (value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseStrength);
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).strengthAfterUpgrades += (value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseStrength);
                             }
@@ -161,18 +161,35 @@ public class PlayerCharacter {
                     }
                 }
 
-                case ULTIMATE_LONGEVITY -> {
+                case ULTIMATE_EFFECT_LONGEVITY -> {
                     switch (upgrade.getUpgradeType()) {
                         case FLAT -> {
-                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity += (int) value;
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).longevityAfterUpgrades += (int) value;
                             }
                         }
                         case PERCENTAGE -> {
-                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseLongevity);
                                 chosenPlayerClass.ultimateSkill.effectList.get(integer).longevityAfterUpgrades += (int) (value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseLongevity);
+                            }
+                        }
+                    }
+                }
+
+                case ULTIMATE_EFFECT_RANGE -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.ultimateSkill.effectList.get(integer).range += value;
+                                chosenPlayerClass.ultimateSkill.effectList.get(integer).rangeAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.ultimateSkill.effectList.get(integer).range += value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseRange;
+                                chosenPlayerClass.ultimateSkill.effectList.get(integer).rangeAfterUpgrades += value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseRange;
                             }
                         }
                     }
@@ -191,20 +208,20 @@ public class PlayerCharacter {
                     }
                 }
 
-                case ULTIMATE_EFFECT -> {
+                case ULTIMATE_ADD_NEW_EFFECT -> {
                     chosenPlayerClass.ultimateSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
                 }
 
-                case ACTIVE_STRENGTH -> {
+                case ACTIVE_EFFECT_STRENGTH -> {
                     switch (upgrade.getUpgradeType()) {
                         case FLAT -> {
-                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.activeSkill.effectList.get(integer).strength += value;
                                 chosenPlayerClass.activeSkill.effectList.get(integer).strengthAfterUpgrades += value;
                             }
                         }
                         case PERCENTAGE -> {
-                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.activeSkill.effectList.get(integer).strength += (value * chosenPlayerClass.activeSkill.effectList.get(integer).baseStrength);
                                 chosenPlayerClass.activeSkill.effectList.get(integer).strengthAfterUpgrades += (value * chosenPlayerClass.activeSkill.effectList.get(integer).baseStrength);
                             }
@@ -212,18 +229,35 @@ public class PlayerCharacter {
                     }
                 }
 
-                case ACTIVE_LONGEVITY -> {
+                case ACTIVE_EFFECT_LONGEVITY -> {
                     switch (upgrade.getUpgradeType()) {
                         case FLAT -> {
-                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.activeSkill.effectList.get(integer).longevity += (int) value;
                                 chosenPlayerClass.activeSkill.effectList.get(integer).longevityAfterUpgrades += (int) value;
                             }
                         }
                         case PERCENTAGE -> {
-                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.activeSkill.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.activeSkill.effectList.get(integer).baseLongevity);
                                 chosenPlayerClass.activeSkill.effectList.get(integer).longevityAfterUpgrades += (int) (value * chosenPlayerClass.activeSkill.effectList.get(integer).baseLongevity);
+                            }
+                        }
+                    }
+                }
+
+                case ACTIVE_EFFECT_RANGE -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.activeSkill.effectList.get(integer).range += value;
+                                chosenPlayerClass.activeSkill.effectList.get(integer).rangeAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.activeSkill.effectList.get(integer).range += value * chosenPlayerClass.activeSkill.effectList.get(integer).baseRange;
+                                chosenPlayerClass.activeSkill.effectList.get(integer).rangeAfterUpgrades += value * chosenPlayerClass.activeSkill.effectList.get(integer).baseRange;
                             }
                         }
                     }
@@ -242,20 +276,20 @@ public class PlayerCharacter {
                     }
                 }
 
-                case ACTIVE_EFFECT -> {
+                case ACTIVE_ADD_NEW_EFFECT -> {
                     chosenPlayerClass.activeSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
                 }
 
-                case PASSIVE_STRENGTH -> {
+                case PASSIVE_EFFECT_STRENGTH -> {
                     switch (upgrade.getUpgradeType()) {
                         case FLAT -> {
-                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).strength += value;
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).strengthAfterUpgrades += value;
                             }
                         }
                         case PERCENTAGE -> {
-                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).strength += value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseStrength;
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).strengthAfterUpgrades += value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseStrength;
                             }
@@ -263,18 +297,35 @@ public class PlayerCharacter {
                     }
                 }
 
-                case PASSIVE_LONGEVITY -> {
+                case PASSIVE_EFFECT_LONGEVITY -> {
                     switch (upgrade.getUpgradeType()) {
                         case FLAT -> {
-                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).longevity += (int) value;
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).longevityAfterUpgrades += (int) value;
                             }
                         }
                         case PERCENTAGE -> {
-                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseLongevity);
                                 chosenPlayerClass.passiveSkill.effectList.get(integer).longevityAfterUpgrades += (int) (value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseLongevity);
+                            }
+                        }
+                    }
+                }
+
+                case PASSIVE_EFFECT_RANGE -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.passiveSkill.effectList.get(integer).range += value;
+                                chosenPlayerClass.passiveSkill.effectList.get(integer).rangeAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.passiveSkill.effectList.get(integer).range += value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseRange;
+                                chosenPlayerClass.passiveSkill.effectList.get(integer).rangeAfterUpgrades += value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseRange;
                             }
                         }
                     }
@@ -293,7 +344,7 @@ public class PlayerCharacter {
                     }
                 }
 
-                case PASSIVE_EFFECT -> {
+                case PASSIVE_ADD_NEW_EFFECT -> {
                     chosenPlayerClass.passiveSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
                 }
 
@@ -323,9 +374,60 @@ public class PlayerCharacter {
                     }
                 }
 
-                case MAIN_WEAPON_EFFECT -> {
+                case MAIN_WEAPON_ADD_NEW_EFFECT -> {
                     for(Effect effect : upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel())) {
                         chosenPlayerClass.loadout.mainWeapon.addEffect(effect, upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).getFirst());
+                    }
+                }
+
+                case MAIN_WEAPON_EFFECT_STRENGTH -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).strength += value;
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).strengthAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).strength += value * chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).baseStrength;
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).strengthAfterUpgrades += value * chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).baseStrength;
+                            }
+                        }
+                    }
+                }
+
+                case MAIN_WEAPON_EFFECT_LONGEVITY -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).longevity += (int) value;
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).longevityAfterUpgrades += (int) value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).baseLongevity);
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).longevityAfterUpgrades += (int) (value * chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).baseLongevity);
+                            }
+                        }
+                    }
+                }
+
+                case MAIN_WEAPON_EFFECT_RANGE -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).range += value;
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).rangeAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).range += value * chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).baseRange;
+                                chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).rangeAfterUpgrades += (int) (value * chosenPlayerClass.loadout.mainWeapon.effectList.get(integer).baseRange);
+                            }
+                        }
                     }
                 }
 
@@ -355,9 +457,60 @@ public class PlayerCharacter {
                     }
                 }
 
-                case SECONDARY_WEAPON_EFFECT -> {
+                case SECONDARY_WEAPON_ADD_NEW_EFFECT -> {
                     for(Effect effect : upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel())) {
                         chosenPlayerClass.loadout.secondaryWeapon.addEffect(effect, upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).getFirst());
+                    }
+                }
+
+                case SECONDARY_WEAPON_EFFECT_STRENGTH -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).strength += value;
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).strengthAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).strength += value * chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).baseStrength;
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).strengthAfterUpgrades += value * chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).baseStrength;
+                            }
+                        }
+                    }
+                }
+
+                case SECONDARY_WEAPON_EFFECT_LONGEVITY -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).longevity += (int) value;
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).longevityAfterUpgrades += (int) value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).baseLongevity);
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).longevityAfterUpgrades += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).baseLongevity);
+                            }
+                        }
+                    }
+                }
+
+                case SECONDARY_WEAPON_EFFECT_RANGE -> {
+                    switch (upgrade.getUpgradeType()) {
+                        case FLAT -> {
+                            for(Integer integer : chosenPlayerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).range += value;
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).rangeAfterUpgrades += value;
+                            }
+                        }
+                        case PERCENTAGE -> {
+                            for(Integer integer : chosenPlayerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(location)) {
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).range += value * chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).baseRange;
+                                chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).rangeAfterUpgrades += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.effectList.get(integer).baseRange);
+                            }
+                        }
                     }
                 }
             }
@@ -413,30 +566,30 @@ public class PlayerCharacter {
                         updatePlayerSpeed();
                     }
 
-                    case ULTIMATE_STRENGTH -> {
+                    case ULTIMATE_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
                             case STACKING_FLAT_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.ultimateSkill.effectList.get(integer).strength += value;
                                 }
                             }
                             case STACKING_PERCENTAGE_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.ultimateSkill.effectList.get(integer).strength += (value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseStrength);
                                 }
                             }
                         }
                     }
 
-                    case ULTIMATE_LONGEVITY -> {
+                    case ULTIMATE_EFFECT_LONGEVITY -> {
                         switch (upgradeType) {
                             case STACKING_FLAT_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity += (int) value;
                                 }
                             }
                             case STACKING_PERCENTAGE_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.ultimateSkill.effectList.get(integer).baseLongevity);
                                 }
                             }
@@ -454,34 +607,34 @@ public class PlayerCharacter {
                         }
                     }
 
-                    case ULTIMATE_EFFECT -> {
+                    case ULTIMATE_ADD_NEW_EFFECT -> {
                         chosenPlayerClass.ultimateSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
                     }
 
-                    case ACTIVE_STRENGTH -> {
+                    case ACTIVE_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
                             case STACKING_FLAT_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.activeSkill.effectList.get(integer).strength += value;
                                 }
                             }
                             case STACKING_PERCENTAGE_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.activeSkill.effectList.get(integer).strength += (value * chosenPlayerClass.activeSkill.effectList.get(integer).baseStrength);
                                 }
                             }
                         }
                     }
 
-                    case ACTIVE_LONGEVITY -> {
+                    case ACTIVE_EFFECT_LONGEVITY -> {
                         switch (upgradeType) {
                             case STACKING_FLAT_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.activeSkill.effectList.get(integer).longevity += (int) value;
                                 }
                             }
                             case STACKING_PERCENTAGE_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.activeSkill.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.activeSkill.effectList.get(integer).baseLongevity);
                                 }
                             }
@@ -499,34 +652,34 @@ public class PlayerCharacter {
                         }
                     }
 
-                    case ACTIVE_EFFECT -> {
+                    case ACTIVE_ADD_NEW_EFFECT -> {
                         chosenPlayerClass.activeSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
                     }
 
-                    case PASSIVE_STRENGTH -> {
+                    case PASSIVE_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
                             case STACKING_FLAT_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.passiveSkill.effectList.get(integer).strength += value;
                                 }
                             }
                             case STACKING_PERCENTAGE_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.passiveSkill.effectList.get(integer).strength += value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseStrength;
                                 }
                             }
                         }
                     }
 
-                    case PASSIVE_LONGEVITY -> {
+                    case PASSIVE_EFFECT_LONGEVITY -> {
                         switch (upgradeType) {
                             case STACKING_FLAT_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.passiveSkill.effectList.get(integer).longevity += (int) value;
                                 }
                             }
                             case STACKING_PERCENTAGE_PER_KILL -> {
-                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
+                                for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingWhichEffectList.get(location)) {
                                     chosenPlayerClass.passiveSkill.effectList.get(integer).longevity += (int) (value * chosenPlayerClass.passiveSkill.effectList.get(integer).baseLongevity);
                                 }
                             }
@@ -544,7 +697,7 @@ public class PlayerCharacter {
                         }
                     }
 
-                    case PASSIVE_EFFECT -> {
+                    case PASSIVE_ADD_NEW_EFFECT -> {
                         chosenPlayerClass.passiveSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
                     }
 
@@ -570,7 +723,7 @@ public class PlayerCharacter {
                         }
                     }
 
-                    case MAIN_WEAPON_EFFECT -> {
+                    case MAIN_WEAPON_ADD_NEW_EFFECT -> {
                         chosenPlayerClass.loadout.mainWeapon.addEffect(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()), upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
                     }
 
@@ -596,7 +749,7 @@ public class PlayerCharacter {
                         }
                     }
 
-                    case SECONDARY_WEAPON_EFFECT -> {
+                    case SECONDARY_WEAPON_ADD_NEW_EFFECT -> {
                         chosenPlayerClass.loadout.secondaryWeapon.addEffect(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()), upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
                     }
                 }
@@ -612,55 +765,27 @@ public class PlayerCharacter {
         chosenPlayerClass.activeSkill.effectList.removeIf(effect -> effect.removeOnDeath);
         chosenPlayerClass.passiveSkill.effectList.removeIf(effect -> effect.removeOnDeath);
 
+        chosenPlayerClass.loadout.mainWeapon.cooldown = chosenPlayerClass.loadout.mainWeapon.cooldownAfterUpgrades;
+        chosenPlayerClass.loadout.mainWeapon.damage = chosenPlayerClass.loadout.mainWeapon.damageAfterUpgrades;
+        chosenPlayerClass.loadout.secondaryWeapon.cooldown = chosenPlayerClass.loadout.secondaryWeapon.cooldownAfterUpgrades;
+        chosenPlayerClass.loadout.secondaryWeapon.damage = chosenPlayerClass.loadout.secondaryWeapon.damageAfterUpgrades;
+
+        maxHealth = maxHealthAfterUpgrades;
+        movementSpeed = movementSpeedAfterUpgrades;
+        updatePlayerSpeed();
+
+        chosenPlayerClass.passiveSkill.cooldown = chosenPlayerClass.passiveSkill.cooldownAfterUpgrades;
+        for(Effect effect : chosenPlayerClass.passiveSkill.effectList) {
+            effect.longevity = effect.longevityAfterUpgrades;
+            effect.strength = effect.strengthAfterUpgrades;
+        }
+
         for(int i = 0; i < 8; i++) {
             UpgradeTreeLocation location = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
             ArrayList<Upgrade> upgradeList = chosenPlayerClass.upgradeTree.getUpgrade(location);
             for(Upgrade upgrade : upgradeList) {
                 if(upgrade.getCurrentLevel() == 0) continue;
-                if(upgrade.getUpgradeType() != UpgradeType.STACKING_FLAT_PER_KILL) continue;
-
-                for(int j = upgrade.getStackCount() - 1; j > 0; j--) {
-                    double value = upgrade.strengthPerLevelList.get(upgrade.getCurrentLevel()).get(j);
-                    switch(upgrade.getUpgradeAffection()) {
-                        case MAX_HP -> {
-                            maxHealth -= (int) value;
-                        }
-                        case MOVEMENT_SPEED -> {
-                            movementSpeed -= (int) value;
-                        }
-                        case ULTIMATE_STRENGTH -> {
-                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
-                                chosenPlayerClass.ultimateSkill.effectList.get(integer).strength -= value;
-                            }
-                        }
-                        case ULTIMATE_LONGEVITY -> {
-                            for(Integer integer : chosenPlayerClass.ultimateSkill.upgradeAffectingEffect.get(location)) {
-                                chosenPlayerClass.ultimateSkill.effectList.get(integer).longevity -= (int) value;
-                            }
-                        }
-                        case ACTIVE_STRENGTH -> {
-                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
-                                chosenPlayerClass.activeSkill.effectList.get(integer).strength -= value;
-                            }
-                        }
-                        case ACTIVE_LONGEVITY -> {
-                            for(Integer integer : chosenPlayerClass.activeSkill.upgradeAffectingEffect.get(location)) {
-                                chosenPlayerClass.activeSkill.effectList.get(integer).longevity -= (int) value;
-                            }
-                        }
-                        case PASSIVE_STRENGTH -> {
-                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
-                                chosenPlayerClass.passiveSkill.effectList.get(integer).strength -= value;
-                            }
-                        }
-                        case PASSIVE_LONGEVITY -> {
-                            for(Integer integer : chosenPlayerClass.passiveSkill.upgradeAffectingEffect.get(location)) {
-                                chosenPlayerClass.passiveSkill.effectList.get(integer).longevity -= (int) value;
-                            }
-                        }
-                        default -> {}
-                    }
-                }
+                if(upgrade.getUpgradeType() != UpgradeType.STACKING_FLAT_PER_KILL || upgrade.getUpgradeType() != UpgradeType.STACKING_PERCENTAGE_PER_KILL) continue;
                 upgrade.setStackCount(0);
             }
         }

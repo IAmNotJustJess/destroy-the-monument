@@ -19,15 +19,18 @@ public class Effect {
     public EffectApplicationType effectApplicationType;
     public double strength;
     public double range;
-    public int tickEveryServerTicks;
     public int longevity;
+    public int tickEveryServerTicks;
     public PotionEffect potionEffect;
+    public long delay;
+    public double rangeAfterUpgrades;
+    public double baseRange;
     public double strengthAfterUpgrades;
     public double baseStrength;
-    public double longevityAfterUpgrades;
-    public double baseLongevity;
+    public int longevityAfterUpgrades;
+    public int baseLongevity;
     public boolean removeOnDeath;
-    public long delay;
+
 
     Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath) {
         this.effectType = effectType;
@@ -39,6 +42,8 @@ public class Effect {
         this.strengthAfterUpgrades = strength;
         this.baseStrength = strength;
         this.range = range;
+        this.rangeAfterUpgrades = range;
+        this.baseRange = range;
         this.tickEveryServerTicks = tickEveryServerTicks;
         this.removeOnDeath = removeOnDeath;
         this.delay = delay;
@@ -55,6 +60,8 @@ public class Effect {
         this.strengthAfterUpgrades = strength;
         this.baseStrength = strength;
         this.range = range;
+        this.rangeAfterUpgrades = range;
+        this.baseRange = range;
         this.tickEveryServerTicks = tickEveryServerTicks;
         this.removeOnDeath = removeOnDeath;
         this.delay = delay;

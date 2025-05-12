@@ -36,7 +36,7 @@ public class Weapon {
     public double cooldownAfterUpgrades;
     public double baseCooldown;
     public ArrayList<Effect> effectList;
-    public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingEffectList;
+    public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingWhichEffectList;
     public ArrayList<UpgradeSpecialEffectProperty> specialEffectPropertyList;
     public BukkitTask cooldownTask;
 
@@ -49,7 +49,7 @@ public class Weapon {
         this.damageAfterUpgrades = damage;
         this.baseDamage = damage;
         this.effectList = new ArrayList<>();
-        this.upgradeAffectingEffectList = new HashMap<>();
+        this.upgradeAffectingWhichEffectList = new HashMap<>();
         this.specialEffectPropertyList = new ArrayList<>();
         this.currentCooldown = cooldown;
         this.cooldownAfterUpgrades = cooldown;
