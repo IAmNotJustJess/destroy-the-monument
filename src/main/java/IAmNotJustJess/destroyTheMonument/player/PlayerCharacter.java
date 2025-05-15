@@ -1,16 +1,19 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
 import IAmNotJustJess.destroyTheMonument.arena.ArenaSettings;
+import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfig;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PlayerCharacter {
 
@@ -26,7 +29,7 @@ public class PlayerCharacter {
     private int flatDealDamageIncrease = 0;
     private int flatTakeDamageIncrease = 0;
     private int shards = 0;
-    private ArrayList<Player> assistList;
+    private HashSet<Player> assistList;
     private Player lastAttacked;
     private int maxHealthAfterUpgrades;
     private float movementSpeedAfterUpgrades;
@@ -45,7 +48,7 @@ public class PlayerCharacter {
         this.baseMovementSpeed = movementSpeed;
         this.movementSpeedAfterUpgrades = movementSpeed;
         this.effectList = new ArrayList<>();
-        this.assistList = new ArrayList<>();
+        this.assistList = new HashSet<>();
         this.shards = 0;
     }
 
@@ -106,10 +109,39 @@ public class PlayerCharacter {
         Upgrade firstUpgrade = chosenPlayerClass.upgradeTree.getUpgrade(location).getFirst();
         ArrayList<Upgrade> upgradeList = chosenPlayerClass.upgradeTree.getUpgrade(location);
 
-        if(firstUpgrade.getCurrentLevel() == firstUpgrade.getMaxLevels()) return 1;
-        if(shards < firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel() + 1)) return 2;
+        if(firstUpgrade.getCurrentLevel() == firstUpgrade.getMaxLevels()) {
+            player.sendMessage(MiniMessageParser.Deserialize(
+                            MessagesConfig.upgradesConfiguration.getString("maxed-out")
+                                    .replace("<upgrade>", firstUpgrade.getName())
+                                    .replace("<maxLevel>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getMaxLevels()))
+                                    )
+                    )
+            );
+            return 1;
+        }
+        if(shards < firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel())) {
+            player.sendMessage(MiniMessageParser.Deserialize(
+                    MessagesConfig.upgradesConfiguration.getString("insufficient-shards")
+                            .replace("<cost>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel()))
+                            )
+                            .replace("<upgrade>", firstUpgrade.getName())
+                    )
+            );
+            return 2;
+        }
 
-        shards -= firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel() + 1);
+        shards -= firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel());
+
+        player.sendMessage(MiniMessageParser.Deserialize(
+                MessagesConfig.upgradesConfiguration.getString("bought")
+                        .replace("<cost>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel()))
+                        )
+                        .replace("<totalShards>", String.valueOf((shards)))
+                        .replace("<upgrade>", firstUpgrade.getName())
+                        .replace("<level>", String.valueOf(firstUpgrade.getCurrentLevel() + 1))
+        ));
+
+
         firstUpgrade.setCurrentLevel(firstUpgrade.getCurrentLevel() + 1);
 
         for(Upgrade upgrade : upgradeList) {
@@ -521,14 +553,15 @@ public class PlayerCharacter {
         return 0;
     }
 
-    public void onAssist() {
-        
-        this.shards += ArenaSettings.shardsPerAssist;
-    }
-
     public void onEnemyKill() {
 
         this.shards += ArenaSettings.shardsPerKill;
+        player.sendMessage(MiniMessageParser.Deserialize(
+                MessagesConfig.playerMessagesConfiguration.getString("assist-shards")
+                        .replace("<player>", player.getName())
+                        .replace("<award>", String.valueOf(ArenaSettings.shardsPerKill))
+                        .replace("<totalShards>", String.valueOf(this.shards))
+        ));
 
         for(int i = 0; i < 8; i++) {
             UpgradeTreeLocation location = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
@@ -901,7 +934,18 @@ public class PlayerCharacter {
         }
     }
 
-    public void onDeath() {
+    public void onAssist() {
+
+        this.shards += ArenaSettings.shardsPerAssist;
+        player.sendMessage(MiniMessageParser.Deserialize(
+                MessagesConfig.playerMessagesConfiguration.getString("assist-shards")
+                        .replace("<player>", player.getName())
+                        .replace("<award>", String.valueOf(ArenaSettings.shardsPerAssist))
+                        .replace("<totalShards>", String.valueOf(this.shards))
+        ));
+    }
+
+    public void onDeathLogic() {
 
         chosenPlayerClass.loadout.mainWeapon.effectList.removeIf(effect -> effect.removeOnDeath);
         chosenPlayerClass.loadout.secondaryWeapon.effectList.removeIf(effect -> effect.removeOnDeath);
@@ -999,7 +1043,7 @@ public class PlayerCharacter {
         }
     }
 
-    public ArrayList<Player> getAssistList() {
+    public HashSet<Player> getAssistList() {
         return assistList;
     }
 
@@ -1007,7 +1051,7 @@ public class PlayerCharacter {
         if(!this.assistList.contains(player)) this.assistList.add(player);
     }
 
-    public void setAssistList(ArrayList<Player> assistList) {
+    public void setAssistList(HashSet<Player> assistList) {
         this.assistList = assistList;
     }
 
@@ -1015,8 +1059,11 @@ public class PlayerCharacter {
         return lastAttacked;
     }
 
-    public void setLastAttacked(Player lastAttacked) {
-        this.lastAttacked = lastAttacked;
+    public void setLastAttacked(PlayerCharacter lastAttacked) {
+        if(lastAttacked.getTeam() == this.getTeam()) return;
+        if(lastAttacked.getLastAttacked() != null) assistList.add(lastAttacked.getPlayer());
+        assistList.remove(lastAttacked.getPlayer());
+        this.lastAttacked = lastAttacked.getPlayer();
     }
 
     public void dealDamage(int damageAmount) {

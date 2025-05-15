@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MiniMessageParser {
+
     public static String Deserialize(String string) {
         return LegacyComponentSerializer.legacyAmpersand().serialize(MiniMessage.miniMessage().deserialize(string));
     }

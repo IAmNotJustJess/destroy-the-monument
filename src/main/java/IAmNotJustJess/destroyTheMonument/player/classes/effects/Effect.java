@@ -101,11 +101,11 @@ public class Effect {
     private void activateAbilityOnEnemies(PlayerCharacter caster, Location location) {
         for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, range, range, range)) {
 
-            if (!(entity instanceof Player)) return;
+            if (!(entity instanceof Player)) continue;
             PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity);
-            loopedPlayer.setLastAttacked(caster.getPlayer());
+            loopedPlayer.setLastAttacked(caster);
 
-            if(caster.getTeam() == loopedPlayer.getTeam()) return;
+            if(caster.getTeam() == loopedPlayer.getTeam()) continue;
 
             activateAbilityOnPlayer(caster, loopedPlayer);
         }
@@ -114,10 +114,10 @@ public class Effect {
     private void activateAbilityOnTeammates(PlayerCharacter caster, Location location) {
         for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, range, range, range)) {
 
-            if (!(entity instanceof Player)) return;
+            if (!(entity instanceof Player)) continue;
             PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity);
 
-            if(caster.getTeam() != loopedPlayer.getTeam()) return;
+            if(caster.getTeam() != loopedPlayer.getTeam()) continue;
 
             activateAbilityOnPlayer(caster, loopedPlayer);
         }
@@ -126,7 +126,7 @@ public class Effect {
     private void activateAbilityOnPlayer(PlayerCharacter caster, PlayerCharacter affectedPlayer) {
         switch (effectType) {
             case PUSH_UP -> {
-                caster.getPlayer().getVelocity().add(new Vector(0, 1, 0).normalize().multiply(strength));
+                affectedPlayer.getPlayer().getVelocity().add(new Vector(0, 1, 0).normalize().multiply(strength));
             }
             case PUSH_AWAY -> {
                 Vector vector = caster.getPlayer().getLocation().toVector().subtract(affectedPlayer.getPlayer().getLocation().toVector()).normalize().multiply(strength);
