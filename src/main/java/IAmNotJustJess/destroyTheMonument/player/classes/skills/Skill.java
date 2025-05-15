@@ -17,8 +17,8 @@ import java.util.List;
 
 public class Skill {
 
-    private String name;
-    private String description;
+    public String name;
+    public String description;
     private ArrayList<String> descriptionTextReplacementList;
     public SkillType type;
     private double currentCooldown;

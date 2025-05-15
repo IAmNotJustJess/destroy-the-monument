@@ -1,0 +1,7 @@
+# Do not change if you do not know what you are doing!
+file-version: 1
+
+insufficient-shards: "<#cc2b2b>You don't have enough shards <#e65555>(<cost>) <#cc2b2b>to buy <#e65555><upgrade><#cc2b2b>!"
+bought: "<#14db4c>Successfully upgraded <#6de38e><upgrade> <#14db4c>to level <#6de38e><level><#14db4c>!
+<newline><#19a0e3>-<cost> Shards <#1a5775>(<totalShards> Total)"
+maxed-out: "<#d9d775><upgrade> <#dbd814>is already at its' maximum level <#d9d775>(<maxLevel>)<#dbd814>!"

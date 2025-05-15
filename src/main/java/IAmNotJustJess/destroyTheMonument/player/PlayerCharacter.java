@@ -81,7 +81,7 @@ public class PlayerCharacter {
     }
 
     public void setChosenClass(PlayerClass chosenPlayerClass) {
-        this.chosenPlayerClass = chosenPlayerClass;
+        this.chosenPlayerClass = (PlayerClass) chosenPlayerClass.clone();
     }
 
     public TeamColour getTeam() {
@@ -1045,10 +1045,6 @@ public class PlayerCharacter {
 
     public HashSet<Player> getAssistList() {
         return assistList;
-    }
-
-    public void addAssist(Player player) {
-        if(!this.assistList.contains(player)) this.assistList.add(player);
     }
 
     public void setAssistList(HashSet<Player> assistList) {

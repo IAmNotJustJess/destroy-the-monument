@@ -1,9 +1,14 @@
 package IAmNotJustJess.destroyTheMonument.player.classes;
 
+import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
+import com.google.gson.Gson;
 
-public class PlayerClass {
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class PlayerClass implements Cloneable {
 
     public int HP;
     public float movementSpeed;
@@ -21,6 +26,12 @@ public class PlayerClass {
         this.ultimateSkill = ultimateSkill;
         this.loadout = loadout;
         this.upgradeTree = upgradeTree;
+    }
+
+    @Override
+    public Object clone(){
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(this), PlayerClass.class);
     }
 
 }
