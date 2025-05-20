@@ -1,9 +1,10 @@
 package IAmNotJustJess.destroyTheMonument;
 
 import IAmNotJustJess.destroyTheMonument.arena.ArenaSettings;
-import IAmNotJustJess.destroyTheMonument.configuration.GlobalGameRulesSettings;
-import IAmNotJustJess.destroyTheMonument.configuration.MainConfig;
-import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfig;
+import IAmNotJustJess.destroyTheMonument.configuration.GlobalGameRulesConfiguration;
+import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
+import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
+import IAmNotJustJess.destroyTheMonument.configuration.TeamConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DestroyTheMonument extends JavaPlugin {
@@ -11,13 +12,12 @@ public final class DestroyTheMonument extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        MainConfig.setConfig();
-        MessagesConfig.setConfig();
+        MainConfiguration.setConfig();
+        MessagesConfiguration.setConfig();
+        TeamConfiguration.setConfig();
 
-        GlobalGameRulesSettings.setConfig();
+        GlobalGameRulesConfiguration.setConfig();
         ArenaSettings.loadSettings();
-
-        // Plugin startup logic
     }
 
     @Override

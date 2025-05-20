@@ -1,40 +1,41 @@
 # Do not change if you do not know what you are doing!
 file-version: 1
 
-# How many players per team are allowed in, maximum player count is doubled.
-max-players-per-team: 16
+rules:
+  # How many players per team are allowed in, maximum player count is doubled.
+  max-players-per-team: 16
 
-# How many seconds must pass before the arena starts.
-rena-begin-countdowna: 60
+  # How many seconds must pass before the arena starts.
+  rena-begin-countdowna: 60
 
-# The percentage of players required to start the countdown. (0-1)
-arena-start-countdown-percentage-requirement: 0.125
+  # The percentage of players required to start the countdown. (0-1)
+  arena-start-countdown-percentage-requirement: 0.125
 
-# The amount of seconds the countdown will be cut to when the percentage of players is met.
-arena-cut-countdown-to: 10
+  # The amount of seconds the countdown will be cut to when the percentage of players is met.
+  arena-cut-countdown-to: 10
 
-# The percentage of players required to cut down on the countdown. (0-1)
-arena=cut-countdown-percentage-requirement: 0.5
+  # The percentage of players required to cut down on the countdown. (0-1)
+  arena=cut-countdown-percentage-requirement: 0.5
 
-# The length of the arena in minutes.
-arena-length-in-minutes: 60.0
+  # The length of the arena in minutes.
+  arena-length-in-minutes: 60.0
 
-# Amount of shards awarded to the player who killed an enemy.
-shards-awarded-per-kill: 50
+  # Amount of shards awarded to the player who killed an enemy.
+  shards-awarded-per-kill: 50
 
-# Amount of shards awarded to the player who has assisted in killing an enemy.
-shards-awarded-per-assist: 10
+  # Amount of shards awarded to the player who has assisted in killing an enemy.
+  shards-awarded-per-assist: 10
 
-# Total pool of shards awarded for destroying the monument.
-# This amount is divided by the amount of monuments present on the map.
-# (Note: the last stack of shards is never given, as it ends the arena!)
-total-monument-destruction-shard-pool: 1500
+  # Total pool of shards awarded for destroying the monument.
+  # This amount is divided by the amount of monuments present on the map.
+  # (Note: the last stack of shards is never given, as it ends the arena!)
+  total-monument-destruction-shard-pool: 1500
 
-# Amount of shards given to players every minute of playtime.
-shards-awarded-per-minute-played: 2
+  # Amount of shards given to players every minute of playtime.
+  shards-awarded-per-minute-played: 2
 
-# The additional amount of shards, the per minute award is raised every X amount of minutes.
-shards-award-per-minute-boost: 2
+  # The additional amount of shards, the per minute award is raised every X amount of minutes.
+  shards-award-per-minute-boost: 2
 
-# The time interval between each boost of shards occurs.
-shards-boost-every-minutes: 10
+  # The time interval between each boost of shards occurs.
+  shards-boost-every-minutes: 10

@@ -1,0 +1,131 @@
+file-version: 1
+
+teams:
+  white:
+    name: "<#e9ecec>White"
+    team-colour: WHITE
+    block-type: WHITE_WOOL
+    armour-colour:
+      r: 233
+      g: 236
+      b: 236
+  light-gray:
+    name: "<#8e8e86>Light Gray"
+    team-colour: LIGHT_GRAY
+    block-type: LIGHT_GRAY_WOOL
+    armour-colour:
+      r: 142
+      g: 142
+      b: 134
+  gray:
+    name: "<#3e4447>Light Gray"
+    team-colour: GRAY
+    block-type: GRAY_WOOL
+    armour-colour:
+      r: 62
+      g: 68
+      b: 71
+  black:
+    name: "<#141519>Black"
+    team-colour: BLACK
+    block-type: BLACK_WOOL
+    armour-colour:
+      r: 20
+      g: 21
+      b: 25
+  brown:
+    name: "<#724728>Brown"
+    team-colour: BROWN
+    block-type: BROWN_WOOL
+    armour-colour:
+      r: 114
+      g: 71
+      b: 40
+  red:
+    name: "<#a02722>Red"
+    team-colour: RED
+    block-type: RED_WOOL
+    armour-colour:
+      r: 160
+      g: 39
+      b: 34
+  orange:
+    name: "<#f07613>Orange"
+    team-colour: ORANGE
+    block-type: ORANGE_WOOL
+    armour-colour:
+      r: 240
+      g: 118
+      b: 19
+  yellow:
+    name: "<#f8c527>Yellow"
+    team-colour: YELLOW
+    block-type: YELLOW_WOOL
+    armour-colour:
+      r: 248
+      g: 197
+      b: 39
+  lime:
+    name: "<#70b919>Lime"
+    team-colour: LIME
+    block-type: LIME_WOOL
+    armour-colour:
+      r: 112
+      g: 185
+      b: 25
+  green:
+    name: "<#546d1b>Green"
+    team-colour: GREEN
+    block-type: GREEN_WOOL
+    armour-colour:
+      r: 84
+      g: 109
+      b: 27
+  cyan:
+    name: "<#158991>Cyan"
+    team-colour: CYAN
+    block-type: CYAN_WOOL
+    armour-colour:
+      r: 21
+      g: 137
+      b: 145
+  light-blue:
+    name: "<#3aafd9>Light Blue"
+    team-colour: LIGHT_BLUE
+    block-type: LIGHT_BLUE_WOOL
+    armour-colour:
+      r: 58
+      g: 175
+      b: 217
+  blue:
+    name: "<#35399d>Blue"
+    team-colour: BLUE
+    block-type: BLUE_WOOL
+    armour-colour:
+      r: 53
+      g: 57
+      b: 157
+  purple:
+    name: "<#792aac>Purple"
+    team-colour: PURPLE
+    block-type: PURPLE_WOOL
+    armour-colour:
+      r: 121
+      g: 42
+      b: 172
+  magenta:
+    name: "<#bd44b3>Magenta"
+    team-colour: MAGENTA
+    block-type: MAGENTA_WOOL
+    armour-colour:
+      r: 189
+      g: 68
+      b: 179
+  pink:
+    name: "<#ed8dac>Pink"
+    team-colour: PINK
+    block-type: PINK_WOOL
+    armour-colour:
+      r: 237
+      g: 141
+      b: 172
