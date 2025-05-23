@@ -1,12 +1,11 @@
 package IAmNotJustJess.destroyTheMonument.player.classes;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.ArrayList;
 
 public class PlayerClassList {
-    private static final HashMap<UUID, PlayerClass> list = new HashMap<>();
+    private static final ArrayList<PlayerClass> list = new ArrayList<>();
 
-    public static HashMap<UUID, PlayerClass> getList() {
+    public static ArrayList<PlayerClass> getList() {
         return list;
     }
 }

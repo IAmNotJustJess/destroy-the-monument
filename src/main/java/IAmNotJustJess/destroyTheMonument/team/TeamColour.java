@@ -1,6 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.team;
 
 public enum TeamColour {
+    NONE,
     WHITE,
     LIGHT_GRAY,
     GRAY,

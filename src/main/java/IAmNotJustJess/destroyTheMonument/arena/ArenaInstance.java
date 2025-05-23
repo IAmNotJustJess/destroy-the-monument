@@ -23,11 +23,12 @@ import java.util.HashMap;
 
 public class ArenaInstance {
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
-    private HashMap<TeamColour, Integer> monumentCount;
+    private HashMap<TeamColour, Integer> monumentRemainingCount;
     private HashMap<TeamColour, ArrayList<Location>> spawnLocations;
     private ArrayList<TeamColour> teamColours;
     private ArrayList<Player> playerList;
     private HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
+    private ArrayList<Location> playerPlacedBlocksLocations;
     private Location lobbyLocation;
     private int timer;
     private String timerString;
@@ -97,7 +98,7 @@ public class ArenaInstance {
                 public void run() {
                     sendTitleGlobally(Component.text(titles.get(finalI[0])), Component.text(subtitles.get(finalI[0])), 0L, 5000L, 0L);
                     sendMessageGlobally(Component.text(messages.get(finalI[0])));
-                    if(finalI[0] == messages.size() - 1) startCountdown();;
+                    if(finalI[0] == messages.size() - 1) startCountdown();
                 }
             }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 100L * i);
         }
@@ -189,10 +190,30 @@ public class ArenaInstance {
     public ArenaInstance() {
         this.playerList = new ArrayList<>();
         this.teamColours = new ArrayList<>();
-        this.monumentCount = new HashMap<>();
+        this.monumentRemainingCount = new HashMap<>();
         this.monumentList = new HashMap<>();
+        this.playerPlacedBlocksLocations = new ArrayList<>();
         this.playersInTeamsList = new HashMap<>();
         this.spawnLocations = new HashMap<>();
         this.arenaState = ArenaState.LOBBY;
+    }
+    public HashMap<TeamColour, Integer> getMonumentRemainingCount() {
+        return monumentRemainingCount;
+    }
+
+    public HashMap<TeamColour, ArrayList<Location>> getMonumentList() {
+        return monumentList;
+    }
+
+    public ArrayList<Location> getPlayerPlacedBlocksLocations() {
+        return playerPlacedBlocksLocations;
+    }
+
+    public Location getLobbyLocation() {
+        return lobbyLocation;
+    }
+
+    public void setLobbyLocation(Location lobbyLocation) {
+        this.lobbyLocation = lobbyLocation;
     }
 }

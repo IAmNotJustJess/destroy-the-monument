@@ -1,5 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
+import IAmNotJustJess.destroyTheMonument.arena.ArenaInstance;
+import IAmNotJustJess.destroyTheMonument.arena.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.arena.ArenaSettings;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
@@ -1074,6 +1076,10 @@ public class PlayerCharacter {
     }
 
     public void kill() {
+
+    }
+
+    public void joinArena(Integer id) {
 
     }
 
