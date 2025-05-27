@@ -2,3 +2,5 @@
 file-version: 1
 
 assist-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Assisted in killing <player>) <#1a5775>(<totalShards> Total)"
+
+breaking-own-monument: "<#6e1818>Action disallowed! <#cc2b2b>You cannot destroy your own monument!"

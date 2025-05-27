@@ -1,7 +1,9 @@
 package IAmNotJustJess.destroyTheMonument.arena;
 
+import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +25,11 @@ public class ArenaListener implements Listener {
             if(teamColour == PlayerCharacterList.getList().get(event.getPlayer()).getTeam()
             && arenaInstance.getMonumentList().get(teamColour).contains(location)) {
                 event.setCancelled(true);
-                return; // add message disallowing
+                event.getPlayer().sendMessage(MiniMessageParser.Deserialize(
+                        MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-own-monument")
+                    )
+                );
+                return;
             }
             if(arenaInstance.getMonumentList().get(teamColour).contains(location)) {
                 return; // add monument breaking logic
