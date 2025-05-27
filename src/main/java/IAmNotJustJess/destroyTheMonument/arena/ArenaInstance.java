@@ -9,6 +9,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
+import org.bukkit.GameMode;
 import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -92,17 +93,29 @@ public class ArenaInstance {
         subtitles.add("Przyda się :P");
 
         for(int i = 0; i < messages.size(); i++) {
-            final int[] finalI = {i};
+            int finalI = i;
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    sendTitleGlobally(Component.text(titles.get(finalI[0])), Component.text(subtitles.get(finalI[0])), 0L, 5000L, 0L);
-                    sendMessageGlobally(Component.text(messages.get(finalI[0])));
-                    if(finalI[0] == messages.size() - 1) startCountdown();
+                    sendTitleGlobally(Component.text(titles.get(finalI)), Component.text(subtitles.get(finalI)), 0L, 5050L, 0L);
+                    sendMessageGlobally(Component.text(messages.get(finalI)));
+                    if(finalI == messages.size() - 1) {
+                        startCountdown();
+                        for(Player player : playerList) {
+                            player.setGameMode(GameMode.SURVIVAL);
+                        }
+                    }
                 }
             }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 100L * i);
         }
+    }
 
+    public void endArena() {
+        for(Player player : playerList) {
+            player.setGameMode(GameMode.SPECTATOR);
+        }
+
+        TeamColour winner = TeamColour.NONE;
     }
 
     public void startCountdown() {

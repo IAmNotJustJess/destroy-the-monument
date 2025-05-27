@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -64,7 +65,7 @@ public class Weapon {
 
     public void useWeapon(PlayerCharacter caster, Location location) {
         switch(weaponType) {
-            case MAIN_MELEE, MAIN_RANGED, SECONDARY_MELEE, SECONDARY_RANGED -> {
+            case MAIN_MELEE, SECONDARY_MELEE -> {
                 return;
             }
         }
@@ -114,6 +115,7 @@ public class Weapon {
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemMeta.setItemName(MiniMessageParser.Deserialize(name));
+        itemMeta.getPersistentDataContainer().set(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "damage"), PersistentDataType.STRING, weaponType.name());
         itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "dtm.attackSpeed"), cooldown, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
         itemMeta.setLore(MiniMessageParser.DeserializeMultiline(descriptionBeforeChanges));
         itemStack.setItemMeta(itemMeta);
