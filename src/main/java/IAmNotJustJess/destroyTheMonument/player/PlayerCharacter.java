@@ -37,6 +37,10 @@ public class PlayerCharacter {
     private float movementSpeedAfterUpgrades;
     private int baseMaxHealth;
     private float baseMovementSpeed;
+    private long totalDamageDealt;
+    private long totalDamageTaken;
+    private int totalKills;
+    private int totalMonumentsBroken;
 
     public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team, float movementSpeed) {
         this.player = player;
@@ -52,6 +56,10 @@ public class PlayerCharacter {
         this.effectList = new ArrayList<>();
         this.assistList = new HashSet<>();
         this.shards = 0;
+        this.totalDamageDealt = 0;
+        this.totalDamageTaken = 0;
+        this.totalKills = 0;
+        this.totalMonumentsBroken = 0;
     }
 
     public Player getPlayer() {
@@ -977,6 +985,21 @@ public class PlayerCharacter {
         for(Effect effect : chosenPlayerClass.passiveSkill.effectList) {
             effect.longevity = effect.longevityAfterUpgrades;
             effect.strength = effect.strengthAfterUpgrades;
+            effect.range = effect.rangeAfterUpgrades;
+        }
+
+        chosenPlayerClass.activeSkill.cooldown = chosenPlayerClass.activeSkill.cooldownAfterUpgrades;
+        for(Effect effect : chosenPlayerClass.activeSkill.effectList) {
+            effect.longevity = effect.longevityAfterUpgrades;
+            effect.strength = effect.strengthAfterUpgrades;
+            effect.range = effect.rangeAfterUpgrades;
+        }
+
+        chosenPlayerClass.ultimateSkill.cooldown = chosenPlayerClass.ultimateSkill.cooldownAfterUpgrades;
+        for(Effect effect : chosenPlayerClass.ultimateSkill.effectList) {
+            effect.longevity = effect.longevityAfterUpgrades;
+            effect.strength = effect.strengthAfterUpgrades;
+            effect.range = effect.rangeAfterUpgrades;
         }
 
         for(int i = 0; i < 8; i++) {
@@ -1092,31 +1115,39 @@ public class PlayerCharacter {
 
     }
 
-    public float getMovementSpeed() {
-        return movementSpeed;
-    }
-
-    public void setMovementSpeed(float movementSpeed) {
-        this.movementSpeed = movementSpeed;
-    }
-
-    public double getDealDamageMultiplier() {
-        return dealDamageMultiplier;
-    }
-
-    public void setDealDamageMultiplier(double dealDamageMultiplier) {
-        this.dealDamageMultiplier = dealDamageMultiplier;
-    }
-
-    public int getFlatDealDamageIncrease() {
-        return flatDealDamageIncrease;
-    }
-
-    public void setFlatDealDamageIncrease(int flatDealDamageIncrease) {
-        this.flatDealDamageIncrease = flatDealDamageIncrease;
-    }
-
     public int getShards() {
         return shards;
+    }
+
+    public long getTotalDamageDealt() {
+        return totalDamageDealt;
+    }
+
+    public void setTotalDamageDealt(long totalDamageDealt) {
+        this.totalDamageDealt = totalDamageDealt;
+    }
+
+    public long getTotalDamageTaken() {
+        return totalDamageTaken;
+    }
+
+    public void setTotalDamageTaken(long totalDamageTaken) {
+        this.totalDamageTaken = totalDamageTaken;
+    }
+
+    public int getTotalKills() {
+        return totalKills;
+    }
+
+    public void setTotalKills(int totalKills) {
+        this.totalKills = totalKills;
+    }
+
+    public int getTotalMonumentsBroken() {
+        return totalMonumentsBroken;
+    }
+
+    public void setTotalMonumentsBroken(int totalMonumentsBroken) {
+        this.totalMonumentsBroken = totalMonumentsBroken;
     }
 }

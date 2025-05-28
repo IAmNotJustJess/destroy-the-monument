@@ -118,6 +118,7 @@ public class ArenaInstance {
     }
 
     public void breakMonument(Player breaker, TeamColour brokenTeamColour, Location location) {
+
         int remainingMonuments = monumentRemainingCount.get(brokenTeamColour) - 1;
         monumentRemainingCount.put(brokenTeamColour, remainingMonuments);
         if(remainingMonuments == 0) {
