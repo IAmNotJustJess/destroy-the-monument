@@ -3,6 +3,7 @@ file-version: 1
 teams:
   white:
     name: "<#e9ecec>White"
+    text-colour: "<#e9ecec>"
     team-colour: WHITE
     block-type: WHITE_WOOL
     armour-colour:
@@ -12,6 +13,7 @@ teams:
   light-gray:
     name: "<#8e8e86>Light Gray"
     team-colour: LIGHT_GRAY
+    text-colour: "<#8e8e86>"
     block-type: LIGHT_GRAY_WOOL
     armour-colour:
       r: 142
@@ -20,6 +22,7 @@ teams:
   gray:
     name: "<#3e4447>Light Gray"
     team-colour: GRAY
+    text-colour: "<#3e4447>"
     block-type: GRAY_WOOL
     armour-colour:
       r: 62
@@ -28,6 +31,7 @@ teams:
   black:
     name: "<#141519>Black"
     team-colour: BLACK
+    text-colour: "<#141519>"
     block-type: BLACK_WOOL
     armour-colour:
       r: 20
@@ -36,6 +40,7 @@ teams:
   brown:
     name: "<#724728>Brown"
     team-colour: BROWN
+    text-colour: "<#724728>"
     block-type: BROWN_WOOL
     armour-colour:
       r: 114
@@ -44,6 +49,7 @@ teams:
   red:
     name: "<#a02722>Red"
     team-colour: RED
+    text-colour: "<#a02722>"
     block-type: RED_WOOL
     armour-colour:
       r: 160
@@ -52,6 +58,7 @@ teams:
   orange:
     name: "<#f07613>Orange"
     team-colour: ORANGE
+    text-colour: "<#f07613>"
     block-type: ORANGE_WOOL
     armour-colour:
       r: 240
@@ -60,6 +67,7 @@ teams:
   yellow:
     name: "<#f8c527>Yellow"
     team-colour: YELLOW
+    text-colour: "<#f8c527>"
     block-type: YELLOW_WOOL
     armour-colour:
       r: 248
@@ -68,6 +76,7 @@ teams:
   lime:
     name: "<#70b919>Lime"
     team-colour: LIME
+    text-colour: "<#70b919>"
     block-type: LIME_WOOL
     armour-colour:
       r: 112
@@ -76,6 +85,7 @@ teams:
   green:
     name: "<#546d1b>Green"
     team-colour: GREEN
+    text-colour: "<#546d1b>"
     block-type: GREEN_WOOL
     armour-colour:
       r: 84
@@ -84,6 +94,7 @@ teams:
   cyan:
     name: "<#158991>Cyan"
     team-colour: CYAN
+    text-colour: "<#158991>"
     block-type: CYAN_WOOL
     armour-colour:
       r: 21
@@ -92,6 +103,7 @@ teams:
   light-blue:
     name: "<#3aafd9>Light Blue"
     team-colour: LIGHT_BLUE
+    text-colour: "<#3aafd9>"
     block-type: LIGHT_BLUE_WOOL
     armour-colour:
       r: 58
@@ -100,6 +112,7 @@ teams:
   blue:
     name: "<#35399d>Blue"
     team-colour: BLUE
+    text-colour: "<#35399d>"
     block-type: BLUE_WOOL
     armour-colour:
       r: 53
@@ -108,6 +121,7 @@ teams:
   purple:
     name: "<#792aac>Purple"
     team-colour: PURPLE
+    text-colour: "<#792aac>"
     block-type: PURPLE_WOOL
     armour-colour:
       r: 121
@@ -116,6 +130,7 @@ teams:
   magenta:
     name: "<#bd44b3>Magenta"
     team-colour: MAGENTA
+    text-colour: "<#bd44b3>"
     block-type: MAGENTA_WOOL
     armour-colour:
       r: 189
@@ -124,6 +139,7 @@ teams:
   pink:
     name: "<#ed8dac>Pink"
     team-colour: PINK
+    text-colour: "<#ed8dac>"
     block-type: PINK_WOOL
     armour-colour:
       r: 237

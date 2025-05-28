@@ -34,6 +34,7 @@ IAmNotJustJess\destroyTheMonument\utility\UpgradeTreeLocationConverter.class
 IAmNotJustJess\destroyTheMonument\utility\MinutesTimerConverter.class
 IAmNotJustJess\destroyTheMonument\arena\ArenaInstance$1.class
 IAmNotJustJess\destroyTheMonument\utility\MiniMessageParser.class
+IAmNotJustJess\destroyTheMonument\arena\ArenaListener.class
 IAmNotJustJess\destroyTheMonument\DestroyTheMonument.class
 IAmNotJustJess\destroyTheMonument\configuration\MainConfiguration.class
 IAmNotJustJess\destroyTheMonument\player\classes\effects\Effect$1.class
