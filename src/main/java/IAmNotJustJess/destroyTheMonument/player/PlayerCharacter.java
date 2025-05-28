@@ -1,7 +1,5 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
-import IAmNotJustJess.destroyTheMonument.arena.ArenaInstance;
-import IAmNotJustJess.destroyTheMonument.arena.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.arena.ArenaSettings;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
@@ -12,6 +10,8 @@ import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class PlayerCharacter {
         ArrayList<Upgrade> upgradeList = chosenPlayerClass.upgradeTree.getUpgrade(location);
 
         if(firstUpgrade.getCurrentLevel() == firstUpgrade.getMaxLevels()) {
-            player.sendMessage(MiniMessageParser.Deserialize(
+            player.sendMessage(MiniMessageParser.deserializeToString(
                             MessagesConfiguration.upgradesMessagesConfiguration.getString("maxed-out")
                                     .replace("<upgrade>", firstUpgrade.getName())
                                     .replace("<maxLevel>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getMaxLevels()))
@@ -122,7 +122,7 @@ public class PlayerCharacter {
             return 1;
         }
         if(shards < firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel())) {
-            player.sendMessage(MiniMessageParser.Deserialize(
+            player.sendMessage(MiniMessageParser.deserializeToString(
                     MessagesConfiguration.upgradesMessagesConfiguration.getString("insufficient-shards")
                             .replace("<cost>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel()))
                             )
@@ -134,7 +134,7 @@ public class PlayerCharacter {
 
         shards -= firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel());
 
-        player.sendMessage(MiniMessageParser.Deserialize(
+        player.sendMessage(MiniMessageParser.deserializeToString(
                 MessagesConfiguration.upgradesMessagesConfiguration.getString("bought")
                         .replace("<cost>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel()))
                         )
@@ -555,12 +555,21 @@ public class PlayerCharacter {
         return 0;
     }
 
-    public void onEnemyKill() {
+    public void addShards(int shards, String message) {
+        Audience audience = (Audience) player;
+        this.shards += shards;
+        audience.sendMessage(MiniMessageParser.deserializeToComponent(message
+                .replace("<award>", String.valueOf(shards))
+                .replace("<totalShards>", String.valueOf(this.shards))
+        ));
+    }
+
+    public void onEnemyKill(Player enemy) {
 
         this.shards += ArenaSettings.shardsPerKill;
-        player.sendMessage(MiniMessageParser.Deserialize(
+        player.sendMessage(MiniMessageParser.deserializeToString(
                 MessagesConfiguration.playerMessagesConfiguration.getString("assist-shards")
-                        .replace("<player>", player.getName())
+                        .replace("<player>", enemy.getName())
                         .replace("<award>", String.valueOf(ArenaSettings.shardsPerKill))
                         .replace("<totalShards>", String.valueOf(this.shards))
         ));
@@ -936,12 +945,12 @@ public class PlayerCharacter {
         }
     }
 
-    public void onAssist() {
+    public void onAssist(Player enemy) {
 
         this.shards += ArenaSettings.shardsPerAssist;
-        player.sendMessage(MiniMessageParser.Deserialize(
+        player.sendMessage(MiniMessageParser.deserializeToString(
                 MessagesConfiguration.playerMessagesConfiguration.getString("assist-shards")
-                        .replace("<player>", player.getName())
+                        .replace("<player>", enemy.getName())
                         .replace("<award>", String.valueOf(ArenaSettings.shardsPerAssist))
                         .replace("<totalShards>", String.valueOf(this.shards))
         ));

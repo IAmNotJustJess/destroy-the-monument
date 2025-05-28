@@ -48,7 +48,7 @@ public class Upgrade {
     }
 
     public String getName() {
-        return MiniMessageParser.Deserialize(this.name);
+        return MiniMessageParser.deserializeToString(this.name);
     }
 
     public void setName(String name) {
@@ -83,7 +83,7 @@ public class Upgrade {
         for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
             string = string.replaceAll("<"+i+">", descriptionTextReplacementList.get(currentLevel).get(i));
         }
-        return MiniMessageParser.DeserializeMultiline(string);
+        return MiniMessageParser.deserializeMultilineToString(string);
     }
 
     public void setDescription(String description) {

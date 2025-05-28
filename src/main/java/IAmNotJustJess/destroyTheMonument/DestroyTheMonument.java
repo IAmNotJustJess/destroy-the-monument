@@ -21,7 +21,7 @@ public final class DestroyTheMonument extends JavaPlugin {
         GlobalGameRulesConfiguration.setConfig();
         ArenaSettings.loadSettings();
 
-        Bukkit.getServer().getPluginManager().registerEvent(ArenaListener.class, this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ArenaListener(), this);
 
     }
 

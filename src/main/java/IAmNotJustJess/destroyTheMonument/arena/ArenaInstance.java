@@ -1,8 +1,12 @@
 package IAmNotJustJess.destroyTheMonument.arena;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
+import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
+import IAmNotJustJess.destroyTheMonument.team.Team;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
+import IAmNotJustJess.destroyTheMonument.team.TeamList;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
 import IAmNotJustJess.destroyTheMonument.utility.RandomElementPicker;
 import net.kyori.adventure.audience.Audience;
@@ -21,6 +25,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ArenaInstance {
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
@@ -42,6 +47,14 @@ public class ArenaInstance {
             audience.sendMessage(textComponent);
         }
     }
+    public void sendMessageGlobally(String string) {
+        List<String> stringListToSend = MiniMessageParser.deserializeMultilineToString(string);
+        for(Player player : playerList) {
+            for(String stringInList : stringListToSend) {
+                player.sendMessage(stringInList);
+            }
+        }
+    }
 
     public void sendMessageToATeam(TeamColour teamColour, TextComponent textComponent) {
         for(Player player : playersInTeamsList.get(teamColour)) {
@@ -50,8 +63,26 @@ public class ArenaInstance {
         }
     }
 
+    public void sendMessageToATeam(TeamColour teamColour, String string) {
+        List<String> stringListToSend = MiniMessageParser.deserializeMultilineToString(string);
+        for(Player player : playersInTeamsList.get(teamColour)) {
+            for(String stringInList : stringListToSend) {
+                player.sendMessage(stringInList);
+            }
+        }
+    }
+
     public void sendTitleGlobally(TextComponent title, TextComponent subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
         Title titleMessage = Title.title(title, subtitle, Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
+        for(Player player : playerList) {
+
+            Audience audience = (Audience) player;
+            audience.showTitle(titleMessage);
+        }
+    }
+
+    public void sendTitleGlobally(String title, String subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
+        Title titleMessage = Title.title(MiniMessageParser.deserializeToComponent(title), MiniMessageParser.deserializeToComponent(subtitle), Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
         for(Player player : playerList) {
 
             Audience audience = (Audience) player;
@@ -68,37 +99,75 @@ public class ArenaInstance {
         }
     }
 
+    public void sendTitleToATeam(TeamColour teamColour, String title, String subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
+        Title titleMessage = Title.title(MiniMessageParser.deserializeToComponent(title), MiniMessageParser.deserializeToComponent(subtitle), Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
+        for(Player player : playersInTeamsList.get(teamColour)) {
+
+            Audience audience = (Audience) player;
+            audience.showTitle(titleMessage);
+        }
+    }
+
+    public TeamColour getOppositeTeam(TeamColour team) {
+        for(TeamColour teamColour : teamColours) {
+            if(teamColour != team) {
+                return teamColour;
+            }
+        }
+        return null;
+    }
+
+    public void breakMonument(Player breaker, TeamColour brokenTeamColour, Location location) {
+        int remainingMonuments = monumentRemainingCount.get(brokenTeamColour) - 1;
+        monumentRemainingCount.put(brokenTeamColour, remainingMonuments);
+        if(remainingMonuments == 0) {
+            endArena(getOppositeTeam(brokenTeamColour));
+            return;
+        }
+
+        Team breakerTeam = PlayerCharacterList.getPlayerTeam(breaker);
+        Team brokenTeam = TeamList.list.get(brokenTeamColour);
+
+        String titleBreakerTeam = MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-enemy-monument-title-to-friendlies");
+        String subtitleBreakerTeam = MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-enemy-monument-subtitle-to-friendlies");
+        String titleBrokenTeam = MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-enemy-monument-title-to-enemy");
+        String subtitleBrokenTeam = MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-enemy-monument-subtitle-to-enemy");
+
+        String breakingMessage = MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-enemy-monument-message")
+                .replace("<teamColour>", breakerTeam.textColour)
+                .replace("<player>", breaker.getName())
+                .replace("<enemyTeamColour>", brokenTeam.textColour)
+                .replace("<enemyTeam>", breakerTeam.name)
+                .replace("<remainingMonuments>", String.valueOf(remainingMonuments))
+                .replace("<x>", String.valueOf(location.getBlockX()))
+                .replace("<y>", String.valueOf(location.getBlockY()))
+                .replace("<z>", String.valueOf(location.getBlockZ()));
+
+        sendTitleToATeam(breakerTeam.teamColour, titleBreakerTeam, subtitleBreakerTeam, 500L, 4000L, 500L);
+        sendTitleToATeam(brokenTeamColour, titleBrokenTeam, subtitleBrokenTeam, 500L, 4000L, 500L);
+        sendMessageGlobally(breakingMessage);
+
+        for(Player player : playersInTeamsList.get(breakerTeam.teamColour)) {
+
+            int shards = ArenaSettings.totalMonumentDestructionShardPool / monumentList.get(breakerTeam.teamColour).size();
+            String message = MessagesConfiguration.playerMessagesConfiguration.getString("monument-broken-shards");
+            PlayerCharacterList.getList().get(player).addShards(shards, message);
+        }
+    } // ostatnie zmiany tutaj
+
     public void sendExplanation() {
 
-        ArrayList<String> messages = new ArrayList<>();
-
-        messages.add("Witaj na Destroy the Monument!");
-        messages.add("Twoim zadaniem jest zniszczenie monumentów przeciwnika!");
-        messages.add("Zniszcząc wszystkie monumenty wygrasz arenę!");
-        messages.add("Po końcu czasu, drużyna z większą ilością monumentów wygrywa!");
-        messages.add("Powodzenia!");
-
-        ArrayList<String> titles = new ArrayList<>();
-        ArrayList<String> subtitles = new ArrayList<>();
-
-        titles.add("Witaj na");
-        subtitles.add("Destroy the Monument");
-        titles.add("Twoje zadanie:");
-        subtitles.add("Niszcz monumenty!");
-        titles.add("Wygrasz");
-        subtitles.add("Zniszcząc je wszystkie!");
-        titles.add("Lub");
-        subtitles.add("Mając ich więcej.");
-        titles.add("Powodzenia!");
-        subtitles.add("Przyda się :P");
+        List<String> messages = List.of(MessagesConfiguration.arenaMessagesConfiguration.getString("starting-tips-messages").split("<newline>"));
+        List<String> titles = List.of(MessagesConfiguration.arenaMessagesConfiguration.getString("starting-tips-titles").split("<newline>"));
+        List<String> subtitles = List.of(MessagesConfiguration.arenaMessagesConfiguration.getString("starting-tips-subtitles").split("<newline>"));
 
         for(int i = 0; i < messages.size(); i++) {
             int finalI = i;
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    sendTitleGlobally(Component.text(titles.get(finalI)), Component.text(subtitles.get(finalI)), 0L, 5050L, 0L);
-                    sendMessageGlobally(Component.text(messages.get(finalI)));
+                    sendTitleGlobally(titles.get(finalI), subtitles.get(finalI), 0L, 5050L, 0L);
+                    sendMessageGlobally(messages.get(finalI));
                     if(finalI == messages.size() - 1) {
                         startCountdown();
                         for(Player player : playerList) {
@@ -110,7 +179,7 @@ public class ArenaInstance {
         }
     }
 
-    public void endArena() {
+    public void endArena(TeamColour teamColour) {
         for(Player player : playerList) {
             player.setGameMode(GameMode.SPECTATOR);
         }
@@ -147,9 +216,11 @@ public class ArenaInstance {
         double playerRatio = (double) playerList.size() / (ArenaSettings.maxPlayersPerTeam * teamColours.size());
         if(arenaState == ArenaState.LOBBY && playerRatio >= ArenaSettings.startCountdownPlayerPercentageRequirement) {
             advanceState();
-        } else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio >= ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
+        }
+        else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio >= ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
             timer = ArenaSettings.arenaCutDownCountdownInSeconds;
-        } else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio < ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
+        }
+        else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio < ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
             timer = -1;
             tickTask.cancel();
         }

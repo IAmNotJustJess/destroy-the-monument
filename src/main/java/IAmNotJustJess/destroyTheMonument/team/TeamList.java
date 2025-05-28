@@ -15,6 +15,7 @@ public class TeamList {
         for(Object teamObject : TeamConfiguration.teamConfiguration.getList("teams")) {
             String teamString = (String) teamObject;
             String teamName = TeamConfiguration.teamConfiguration.getString("settings."+teamString+".name");
+            String teamTextColour = TeamConfiguration.teamConfiguration.getString("settings."+teamString+".text-colour");
             TeamColour teamColour = TeamColour.valueOf(TeamConfiguration.teamConfiguration.getString("settings."+teamString+".team-colour"));
             Material teamBlockType = Material.valueOf(TeamConfiguration.teamConfiguration.getString("settings."+teamString+".block-type"));
             Color teamArmourColor = Color.fromRGB(
@@ -22,10 +23,8 @@ public class TeamList {
                 TeamConfiguration.teamConfiguration.getInt("settings."+teamString+".armour-colour.g"),
                 TeamConfiguration.teamConfiguration.getInt("settings."+teamString+".armour-colour.b")
             );
-            Team team = new Team(teamName, teamColour, teamBlockType, teamArmourColor);
+            Team team = new Team(teamName, teamTextColour, teamColour, teamBlockType, teamArmourColor);
             list.put(teamColour, team);
         }
-
     }
-
 }

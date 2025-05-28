@@ -3,4 +3,32 @@ file-version: 1
 
 assist-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Assisted in killing <player>) <#1a5775>(<totalShards> Total)"
 
+victory-title: "<teamColour>Victory!"
+defeat-title: "<teamColour>Defeat!"
+tie-title: "<teamColour>Tie!"
+end-screen-subtitle: "<teamColour1><remainingMonuments1><#ffffff>:<teamColour2><remainingMonuments2>"
+
 breaking-own-monument: "<#6e1818>Action disallowed! <#cc2b2b>You cannot destroy your own monument!"
+
+breaking-enemy-monument-title-to-friendlies: "<#14db4c>You did it!"
+breaking-enemy-monument-subtitle-to-friendlies: "<enemyTeam> <#ffffff>lost a monument!"
+breaking-enemy-monument-title-to-enemy: "<#cc2b2b>Uh oh!"
+breaking-enemy-monument-subtitle-to-enemy: "<#e65555>You've lost a monument!"
+breaking-enemy-monument-message: "<teamColour><player> <#ffffff>has destroyed the monument at <enemyTeamColour><x><#ffffff>, <enemyTeamColour><y><#ffffff>, <enemyTeamColour><z><#ffffff>!<newline>
+<enemyTeam> Team <#ffffff>has <enemyTeamColour><remainingMonuments> <#ffffff>monuments left!"
+
+starting-tips-messages: "Welcome to Destroy the Monument!<newline>
+Your main task is to destroy your opponent's monuments!<newline>
+If you manage to break them all, you'll win!<newline>
+When the timer runs out, the team with more monuments standing wins!<newline>
+Good luck and let the show begin!"
+starting-tips-titles: "Welcome to<newline>
+Your task:<newline>
+To win<newline>
+or<newline>
+Good Luck!"
+starting-tips-subtitles: "Destroy the Monument<newline>
+Destroy opponent's monuments!<newline>
+Break them all!<newline>
+Have more of them standing!<newline>
+You'll need it!"

@@ -114,10 +114,10 @@ public class Weapon {
         assert itemMeta != null;
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setItemName(MiniMessageParser.Deserialize(name));
+        itemMeta.setItemName(MiniMessageParser.deserializeToString(name));
         itemMeta.getPersistentDataContainer().set(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "damage"), PersistentDataType.STRING, weaponType.name());
         itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "dtm.attackSpeed"), cooldown, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
-        itemMeta.setLore(MiniMessageParser.DeserializeMultiline(descriptionBeforeChanges));
+        itemMeta.setLore(MiniMessageParser.deserializeMultilineToString(descriptionBeforeChanges));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

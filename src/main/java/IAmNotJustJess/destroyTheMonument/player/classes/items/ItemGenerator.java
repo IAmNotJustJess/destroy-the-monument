@@ -16,8 +16,8 @@ public class ItemGenerator {
         assert itemMeta != null;
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setItemName(MiniMessageParser.Deserialize(name));
-        itemMeta.setLore(MiniMessageParser.DeserializeMultiline(description));
+        itemMeta.setItemName(MiniMessageParser.deserializeToString(name));
+        itemMeta.setLore(MiniMessageParser.deserializeMultilineToString(description));
 
         itemStack.setItemMeta(itemMeta);
         return itemStack;

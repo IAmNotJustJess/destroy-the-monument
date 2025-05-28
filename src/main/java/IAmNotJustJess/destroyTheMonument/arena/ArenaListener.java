@@ -25,14 +25,16 @@ public class ArenaListener implements Listener {
             if(teamColour == PlayerCharacterList.getList().get(event.getPlayer()).getTeam()
             && arenaInstance.getMonumentList().get(teamColour).contains(location)) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(MiniMessageParser.Deserialize(
+                event.getPlayer().sendMessage(MiniMessageParser.deserializeToString(
                         MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-own-monument")
                     )
                 );
                 return;
             }
             if(arenaInstance.getMonumentList().get(teamColour).contains(location)) {
-                return; // add monument breaking logic
+                event.setCancelled(true);
+                arenaInstance.breakMonument(event.getPlayer(), teamColour, event.getBlock().getLocation());
+                return;
             }
         }
         arenaInstance.getPlayerPlacedBlocksLocations().remove(location);

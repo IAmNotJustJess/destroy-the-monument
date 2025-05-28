@@ -121,7 +121,7 @@ public class Skill {
         for(int i = 0; i < descriptionTextReplacementList.size(); i++) {
             string = string.replaceAll("<"+i+">", descriptionTextReplacementList.get(i));
         }
-        return MiniMessageParser.DeserializeMultiline(string);
+        return MiniMessageParser.deserializeMultilineToString(string);
     }
 
     public void setDescription(String description) {
@@ -129,7 +129,7 @@ public class Skill {
     }
 
     public String getName() {
-        return MiniMessageParser.Deserialize(name);
+        return MiniMessageParser.deserializeToString(name);
     }
 
     public void setName(String name) {
