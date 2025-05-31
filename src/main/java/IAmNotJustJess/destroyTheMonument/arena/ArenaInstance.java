@@ -13,10 +13,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
-import org.bukkit.GameMode;
-import org.bukkit.GameRule;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -126,6 +123,13 @@ public class ArenaInstance {
             return;
         }
 
+        location.getWorld().spawnParticle(Particle.BLOCK, location, 25, 1, 1, 1, 0.25, location.getBlock().getBlockData());
+        location.getWorld().spawnParticle(Particle.LAVA, location, 3, 0.1, 0.1, 0.1, 0.25, location.getBlock().getBlockData());
+        location.getWorld().spawnParticle(Particle.POOF, location, 15, 0.1, 0.1, 0.1, 0.25, location.getBlock().getBlockData());
+        location.getWorld().strikeLightningEffect(location);
+
+        location.getBlock().setType(Material.AIR);
+
         Team breakerTeam = PlayerCharacterList.getPlayerTeam(breaker);
         Team brokenTeam = TeamList.list.get(brokenTeamColour);
 
@@ -149,12 +153,17 @@ public class ArenaInstance {
         sendMessageGlobally(breakingMessage);
 
         for(Player player : playersInTeamsList.get(breakerTeam.teamColour)) {
-
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 3, 1);
+            player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1, 1);
             int shards = ArenaSettings.totalMonumentDestructionShardPool / monumentList.get(breakerTeam.teamColour).size();
             String message = MessagesConfiguration.playerMessagesConfiguration.getString("monument-broken-shards");
             PlayerCharacterList.getList().get(player).addShards(shards, message);
         }
-    } // ostatnie zmiany tutaj
+
+        for(Player player : playersInTeamsList.get(brokenTeamColour)) {
+            player.playSound(player.getLocation(), Sound.ENTITY_WITHER_DEATH, SoundCategory.MASTER, 3, 1);
+        }
+    }
 
     public void sendExplanation() {
 
