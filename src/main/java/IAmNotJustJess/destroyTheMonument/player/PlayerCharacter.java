@@ -1,5 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
+import IAmNotJustJess.destroyTheMonument.arena.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.arena.ArenaSettings;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
@@ -15,8 +16,12 @@ import net.kyori.adventure.text.TextComponent;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class PlayerCharacter {
 
@@ -34,6 +39,7 @@ public class PlayerCharacter {
     private int shards = 0;
     private HashSet<Player> assistList;
     private Player lastAttacked;
+    private Instant lastAttackedDate;
     private int maxHealthAfterUpgrades;
     private float movementSpeedAfterUpgrades;
     private int baseMaxHealth;
@@ -1095,6 +1101,7 @@ public class PlayerCharacter {
         if(lastAttacked.getLastAttacked() != null) assistList.add(lastAttacked.getPlayer());
         assistList.remove(lastAttacked.getPlayer());
         this.lastAttacked = lastAttacked.getPlayer();
+        this.lastAttackedDate = Instant.now();
     }
 
     public void dealDamage(int damageAmount) {
@@ -1110,6 +1117,30 @@ public class PlayerCharacter {
 
     public void kill() {
         player.setGameMode(GameMode.SPECTATOR);
+
+        String message;
+
+        if(lastAttackedDate.until(Instant.now(), ChronoUnit.SECONDS) > 15) {
+            assistList.add(lastAttacked);
+            lastAttacked = null;
+            lastAttackedDate = null;
+        }
+        if(!Objects.isNull(lastAttacked)) {
+            PlayerCharacter lastAttackedPlayer = PlayerCharacterList.getList().get(lastAttacked);
+            lastAttackedPlayer.onEnemyKill(player);
+            message = MessagesConfiguration.arenaMessagesConfiguration.getString("player-killed-message");
+        }
+        else {
+            message = MessagesConfiguration.arenaMessagesConfiguration.getString("player-died");
+        }
+
+        message = message.replace()
+
+        ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).sendMessageGlobally();
+
+        for(Player player : getAssistList()) {
+            PlayerCharacterList.getList().get(player).onAssist(player);
+        }
     }
 
     public void joinArena(Integer id) {

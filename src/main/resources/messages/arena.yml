@@ -18,11 +18,9 @@ breaking-enemy-monument-message: "<teamColour><player> <#ffffff>has destroyed th
 <enemyTeam> Team <#ffffff>has <enemyTeamColour><remainingMonuments> <#ffffff>monuments left!"
 
 player-killed-title: "<#cc2b2b>You died!"
-player-killed-subtitle: "<#e65555>Respawning in <transition:#cc2b2b:#dbd814:#14db4c:<phase>><seconds></transition>..."
-player-killed-message: "<teamColour><player> <#ffffff>has destroyed the monument at <enemyTeamColour><x><#ffffff>, <enemyTeamColour><y><#ffffff>, <enemyTeamColour><z><#ffffff>!<newline>
-<enemyTeam> Team <#ffffff>has <enemyTeamColour><remainingMonuments> <#ffffff>monuments left!"
-player-died: "<teamColour><player> <#ffffff>has destroyed the monument at <enemyTeamColour><x><#ffffff>, <enemyTeamColour><y><#ffffff>, <enemyTeamColour><z><#ffffff>!<newline>
-<enemyTeam> Team <#ffffff>has <enemyTeamColour><remainingMonuments> <#ffffff>monuments left!"
+player-killed-subtitle: "<#ffffff>Respawning in <transition:#cc2b2b:#dbd814:#14db4c:<phase>><seconds></transition>..."
+player-killed-message: "<teamColour><player> <#ffffff>has been killed by <enemyTeamColour><enemyPlayer><#ffffff>!"
+player-died: "<teamColour><player> <#ffffff>has died!"
 
 starting-tips-messages: "Welcome to <#19a0e3>Destroy the Monument<#ffffff>!<newline>
 Your main task is to <#cc2b2b>destroy <#ffffff>your <#cc2b2b>opponent's monuments<#ffffff>!<newline>
