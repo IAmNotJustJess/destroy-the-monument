@@ -12,6 +12,7 @@ import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -1108,7 +1109,7 @@ public class PlayerCharacter {
     }
 
     public void kill() {
-
+        player.setGameMode(GameMode.SPECTATOR);
     }
 
     public void joinArena(Integer id) {
