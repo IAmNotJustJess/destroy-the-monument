@@ -6,6 +6,7 @@ import IAmNotJustJess.destroyTheMonument.configuration.GlobalGameRulesConfigurat
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.configuration.TeamConfiguration;
+import mc.obliviate.inventory.InventoryAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +14,8 @@ public final class DestroyTheMonument extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        new InventoryAPI(this).init();
 
         MainConfiguration.setConfig();
         MessagesConfiguration.setConfig();
