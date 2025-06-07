@@ -39,3 +39,6 @@ rules:
 
   # The time interval between each boost of shards occurs.
   shards-boost-every-minutes: 10
+
+  # Time between respawns (in seconds)
+  player-respawn-interval: 10

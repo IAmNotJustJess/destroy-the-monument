@@ -9,6 +9,7 @@ import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
+import IAmNotJustJess.destroyTheMonument.team.TeamList;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
@@ -1134,17 +1135,16 @@ public class PlayerCharacter {
             message = MessagesConfiguration.arenaMessagesConfiguration.getString("player-died");
         }
 
-        message = message.replace()
+        message = message.replace("<teamColour>", TeamList.list.get(team).textColour)
+                .replace("<player>", player.getDisplayName())
+                .replace("<enemyTeamColour>", lastAttacked.getDisplayName())
+                .replace("<enemyPlayer>", TeamList.list.get(PlayerCharacterList.getList().get(lastAttacked).team).textColour);
 
-        ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).sendMessageGlobally();
+        ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).sendMessageGlobally(message);
 
         for(Player player : getAssistList()) {
             PlayerCharacterList.getList().get(player).onAssist(player);
         }
-    }
-
-    public void joinArena(Integer id) {
-
     }
 
     public int getShards() {

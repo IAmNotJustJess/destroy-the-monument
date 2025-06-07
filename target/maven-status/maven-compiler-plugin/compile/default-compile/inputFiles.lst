@@ -3,11 +3,13 @@ C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\de
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\arena\ArenaManager.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\arena\ArenaSettings.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\arena\ArenaState.java
+C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\commands\GuiDebugCommand.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\configuration\GlobalGameRulesConfiguration.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\configuration\MainConfiguration.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\configuration\MessagesConfiguration.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\configuration\TeamConfiguration.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\DestroyTheMonument.java
+C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\gui\TestGui.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\classes\effects\Effect.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\classes\effects\EffectApplicationType.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\classes\effects\EffectType.java
@@ -27,10 +29,12 @@ C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\de
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\classes\upgrades\UpgradeType.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\PlayerCharacter.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\PlayerCharacterList.java
+C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\player\PlayerCharacterListener.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\team\Team.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\team\TeamColour.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\team\TeamList.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\utility\MiniMessageParser.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\utility\MinutesTimerConverter.java
+C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\utility\NumberConverters.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\utility\RandomElementPicker.java
 C:\Users\barte\IdeaProjects\destroy-the-monument\src\main\java\IAmNotJustJess\destroyTheMonument\utility\UpgradeTreeLocationConverter.java

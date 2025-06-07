@@ -17,18 +17,23 @@ breaking-enemy-monument-subtitle-to-enemy: "<#e65555>You've lost a monument!"
 breaking-enemy-monument-message: "<teamColour><player> <#ffffff>has destroyed the monument at <enemyTeamColour><x><#ffffff>, <enemyTeamColour><y><#ffffff>, <enemyTeamColour><z><#ffffff>!<newline>
 <enemyTeam> Team <#ffffff>has <enemyTeamColour><remainingMonuments> <#ffffff>monuments left!"
 
-starting-tips-messages: "Welcome to Destroy the Monument!<newline>
-Your main task is to destroy your opponent's monuments!<newline>
-If you manage to break them all, you'll win!<newline>
-When the timer runs out, the team with more monuments standing wins!<newline>
-Good luck and let the show begin!"
+player-killed-title: "<#cc2b2b>You died!"
+player-killed-subtitle: "<#ffffff>Respawning in <transition:#cc2b2b:#dbd814:#14db4c:<phase>><seconds></transition>..."
+player-killed-message: "<teamColour><player> <#ffffff>has been killed by <enemyTeamColour><enemyPlayer><#ffffff>!"
+player-died: "<teamColour><player> <#ffffff>has died!"
+
+starting-tips-messages: "Welcome to <#19a0e3>Destroy the Monument<#ffffff>!<newline>
+Your main task is to <#cc2b2b>destroy <#ffffff>your <#cc2b2b>opponent's monuments<#ffffff>!<newline>
+If you manage to <#cc2b2b>break them all<#ffffff>, you'll <#14db4c>win<#ffffff>!<newline>
+When the timer runs out, the <#dbd814>team with more monuments standing <#14db4c>wins<#ffffff>!<newline>
+<#19a0e3>Good luck and let the show begin!"
 starting-tips-titles: "Welcome to<newline>
-Your task:<newline>
-To win<newline>
-or<newline>
-Good Luck!"
-starting-tips-subtitles: "Destroy the Monument<newline>
-Destroy opponent's monuments!<newline>
-Break them all!<newline>
-Have more of them standing!<newline>
-You'll need it!"
+<#ffffff>Your task:<newline>
+To <#14db4c>win<newline>
+<#ffffff>or<newline>
+<#19a0e3>Good Luck!"
+starting-tips-subtitles: "<#19a0e3>Destroy the Monument<newline>
+<#cc2b2b>Destroy opponent's monuments<#ffffff>!<newline>
+<#cc2b2b>Break them all!<newline>
+<#14db4c>Have more of them standing!<newline>
+<#19a0e3>You'll need it!"

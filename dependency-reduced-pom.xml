@@ -6,7 +6,7 @@
   <name>DestroyTheMonument</name>
   <version>1.0</version>
   <build>
-    <defaultGoal>clean package</defaultGoal>
+    <defaultGoal>install</defaultGoal>
     <resources>
       <resource>
         <filtering>true</filtering>
@@ -24,7 +24,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -35,16 +35,21 @@
               <artifactSet>
                 <includes>
                   <include>dev.dejvokep:boosted-yaml</include>
+                  <include>xyz.xenondevs.*</include>
                 </includes>
               </artifactSet>
             </configuration>
           </execution>
         </executions>
         <configuration>
+          <transformers>
+            <transformer />
+          </transformers>
           <relocations>
             <relocation>
               <pattern>dev.dejvokep.boostedyaml.*</pattern>
-              <shadedPattern>plugin.dtm.libraries</shadedPattern>
+              <pattern>xyz.xenondevs.invui.*</pattern>
+              <shadedPattern>plugin.dtm.*</shadedPattern>
             </relocation>
           </relocations>
         </configuration>
@@ -53,10 +58,6 @@
   </build>
   <repositories>
     <repository>
-      <id>xenondevs</id>
-      <url>https://repo.xenondevs.xyz/releases</url>
-    </repository>
-    <repository>
       <id>spigotmc-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
@@ -64,15 +65,12 @@
       <id>sonatype</id>
       <url>https://oss.sonatype.org/content/groups/public/</url>
     </repository>
+    <repository>
+      <id>xenondevs</id>
+      <url>https://repo.xenondevs.xyz/releases</url>
+    </repository>
   </repositories>
   <dependencies>
-    <dependency>
-      <groupId>xyz.xenondevs.invui</groupId>
-      <artifactId>invui</artifactId>
-      <version>1.44</version>
-      <type>pom</type>
-      <scope>compile</scope>
-    </dependency>
     <dependency>
       <groupId>net.kyori</groupId>
       <artifactId>adventure-text-serializer-legacy</artifactId>
@@ -101,6 +99,13 @@
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.13.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>xyz.xenondevs.invui</groupId>
+      <artifactId>invui</artifactId>
+      <version>1.45</version>
+      <type>pom</type>
       <scope>compile</scope>
     </dependency>
   </dependencies>

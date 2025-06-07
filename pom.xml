@@ -17,7 +17,7 @@
     </properties>
 
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -31,12 +31,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.3</version>
+                <version>3.6.0</version>
                 <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                    </transformers>
                     <relocations>
                         <relocation>
                             <pattern>dev.dejvokep.boostedyaml.*</pattern>
-                            <shadedPattern>plugin.dtm.libraries</shadedPattern>
+                            <pattern>xyz.xenondevs.invui.*</pattern>
+                            <shadedPattern>plugin.dtm.*</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -50,6 +54,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>dev.dejvokep:boosted-yaml</include>
+                                    <include>xyz.xenondevs.invui:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -78,16 +83,9 @@
             <id>xenondevs</id>
             <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
-
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>xyz.xenondevs.invui</groupId>
-            <artifactId>invui</artifactId>
-            <version>1.45</version>
-            <type>pom</type>
-        </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-legacy</artifactId>
@@ -118,6 +116,12 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>invui</artifactId>
+            <version>1.45</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 </project>

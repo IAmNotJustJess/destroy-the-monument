@@ -2,6 +2,7 @@ IAmNotJustJess\destroyTheMonument\player\classes\effects\Effect$2.class
 IAmNotJustJess\destroyTheMonument\arena\ArenaInstance.class
 IAmNotJustJess\destroyTheMonument\configuration\MessagesConfiguration.class
 IAmNotJustJess\destroyTheMonument\player\classes\upgrades\UpgradeTree.class
+IAmNotJustJess\destroyTheMonument\player\PlayerCharacterListener.class
 IAmNotJustJess\destroyTheMonument\player\classes\items\Weapon$1$1.class
 IAmNotJustJess\destroyTheMonument\arena\ArenaInstance$3.class
 IAmNotJustJess\destroyTheMonument\player\PlayerCharacter$1.class
@@ -16,12 +17,14 @@ IAmNotJustJess\destroyTheMonument\player\classes\items\ItemGenerator.class
 IAmNotJustJess\destroyTheMonument\arena\ArenaState.class
 IAmNotJustJess\destroyTheMonument\player\classes\effects\Effect.class
 IAmNotJustJess\destroyTheMonument\player\classes\upgrades\UpgradeTreeLocation.class
+IAmNotJustJess\destroyTheMonument\commands\GuiDebugCommand.class
 IAmNotJustJess\destroyTheMonument\player\classes\effects\EffectType.class
 IAmNotJustJess\destroyTheMonument\player\PlayerCharacterList.class
 IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill$3.class
 IAmNotJustJess\destroyTheMonument\arena\ArenaInstance$2.class
 IAmNotJustJess\destroyTheMonument\player\classes\items\Weapon$2.class
 IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill$2$1.class
+IAmNotJustJess\destroyTheMonument\utility\NumberConverters.class
 IAmNotJustJess\destroyTheMonument\player\classes\upgrades\UpgradeAffection.class
 IAmNotJustJess\destroyTheMonument\player\PlayerCharacter.class
 IAmNotJustJess\destroyTheMonument\team\TeamColour.class
@@ -36,6 +39,7 @@ IAmNotJustJess\destroyTheMonument\arena\ArenaInstance$1.class
 IAmNotJustJess\destroyTheMonument\utility\MiniMessageParser.class
 IAmNotJustJess\destroyTheMonument\arena\ArenaListener.class
 IAmNotJustJess\destroyTheMonument\DestroyTheMonument.class
+IAmNotJustJess\destroyTheMonument\gui\TestGui.class
 IAmNotJustJess\destroyTheMonument\configuration\MainConfiguration.class
 IAmNotJustJess\destroyTheMonument\player\classes\effects\Effect$1.class
 IAmNotJustJess\destroyTheMonument\player\classes\Loadout.class
