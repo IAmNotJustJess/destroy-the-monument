@@ -1,14 +1,17 @@
 package IAmNotJustJess.destroyTheMonument.arena;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
+import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
 import IAmNotJustJess.destroyTheMonument.team.TeamColour;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class ArenaListener implements Listener {
 
@@ -46,6 +49,15 @@ public class ArenaListener implements Listener {
         ArenaInstance arenaInstance = ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(event.getPlayer()));
         Location location = event.getBlock().getLocation();
         arenaInstance.getPlayerPlacedBlocksLocations().add(location);
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageByEntityEvent event) {
+        if(!(event.getDamager() instanceof Player damager) ||
+        !(event.getEntity() instanceof Player victim)) return;
+
+        PlayerCharacter damagerPlayerCharacter = PlayerCharacterList.getList().get(damager);
+        PlayerCharacter victimPlayerCharacter = PlayerCharacterList.getList().get(victim);
     }
 
     public ArenaListener() {
