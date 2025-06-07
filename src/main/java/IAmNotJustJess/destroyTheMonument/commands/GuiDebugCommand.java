@@ -12,6 +12,7 @@ public class GuiDebugCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player player) {
             TestGui.openTestGUI(player);
+            return true;
         }
         return false;
     }

@@ -35,7 +35,7 @@
               <artifactSet>
                 <includes>
                   <include>dev.dejvokep:boosted-yaml</include>
-                  <include>xyz.xenondevs.*</include>
+                  <include>xyz.xenondevs.invui:*</include>
                 </includes>
               </artifactSet>
             </configuration>

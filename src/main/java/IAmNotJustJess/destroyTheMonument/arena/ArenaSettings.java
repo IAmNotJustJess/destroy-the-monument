@@ -1,6 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.arena;
 
-import IAmNotJustJess.destroyTheMonument.configuration.GlobalGameRulesConfiguration;
+import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 
 public class ArenaSettings {
     public static int maxPlayersPerTeam = 16;
@@ -17,8 +17,8 @@ public class ArenaSettings {
     public static int boostShardsEveryTimeInMinutes = 10;
 
     public static void loadSettings() {
-        maxPlayersPerTeam = GlobalGameRulesConfiguration.globalGameRulesConfiguration.getInt("max-players-per-team");
-        arenaBeginCountdownInSeconds = GlobalGameRulesConfiguration.globalGameRulesConfiguration.getInt("arena-begin-countdown");
-        startCountdownPlayerPercentageRequirement = GlobalGameRulesConfiguration.globalGameRulesConfiguration.getInt("arena-start-countdown-percentage-requirement");
+        maxPlayersPerTeam = MainConfiguration.globalGameRulesConfiguration.getInt("max-players-per-team");
+        arenaBeginCountdownInSeconds = MainConfiguration.globalGameRulesConfiguration.getInt("arena-begin-countdown");
+        startCountdownPlayerPercentageRequirement = MainConfiguration.globalGameRulesConfiguration.getInt("arena-start-countdown-percentage-requirement");
     }
 }

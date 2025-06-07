@@ -1,0 +1,6 @@
+file-version: 1
+
+upgrade-unavailable-colour: "<#cc2b2b>"
+upgrade-not-enough-shards: ""
+upgrade-available: ""
+upgrade-maxed: ""
