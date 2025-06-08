@@ -1,6 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.commands;
 
-import IAmNotJustJess.destroyTheMonument.gui.TestGui;
+import IAmNotJustJess.destroyTheMonument.guis.TestGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -2,7 +2,7 @@ package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
-import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterList;
+import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -102,7 +102,7 @@ public class Effect {
         for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, range, range, range)) {
 
             if (!(entity instanceof Player)) continue;
-            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity);
+            PlayerCharacter loopedPlayer = PlayerCharacterManager.getList().get(entity);
             loopedPlayer.setLastAttacked(caster);
 
             if(caster.getTeam() == loopedPlayer.getTeam()) continue;
@@ -115,7 +115,7 @@ public class Effect {
         for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, range, range, range)) {
 
             if (!(entity instanceof Player)) continue;
-            PlayerCharacter loopedPlayer = PlayerCharacterList.getList().get(entity);
+            PlayerCharacter loopedPlayer = PlayerCharacterManager.getList().get(entity);
 
             if(caster.getTeam() != loopedPlayer.getTeam()) continue;
 

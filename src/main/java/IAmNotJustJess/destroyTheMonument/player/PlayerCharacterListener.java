@@ -1,11 +1,10 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
-import IAmNotJustJess.destroyTheMonument.arena.ArenaManager;
+import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public class PlayerCharacterListener implements Listener {
 

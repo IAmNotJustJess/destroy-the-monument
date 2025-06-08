@@ -1,26 +1,24 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
-import IAmNotJustJess.destroyTheMonument.arena.ArenaManager;
-import IAmNotJustJess.destroyTheMonument.arena.ArenaSettings;
+import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
+import IAmNotJustJess.destroyTheMonument.arenas.ArenaSettings;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
-import IAmNotJustJess.destroyTheMonument.team.TeamColour;
-import IAmNotJustJess.destroyTheMonument.team.TeamList;
+import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
+import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -1127,7 +1125,7 @@ public class PlayerCharacter {
             lastAttackedDate = null;
         }
         if(!Objects.isNull(lastAttacked)) {
-            PlayerCharacter lastAttackedPlayer = PlayerCharacterList.getList().get(lastAttacked);
+            PlayerCharacter lastAttackedPlayer = PlayerCharacterManager.getList().get(lastAttacked);
             lastAttackedPlayer.onEnemyKill(player);
             message = MessagesConfiguration.arenaMessagesConfiguration.getString("player-killed-message");
         }
@@ -1135,15 +1133,15 @@ public class PlayerCharacter {
             message = MessagesConfiguration.arenaMessagesConfiguration.getString("player-died");
         }
 
-        message = message.replace("<teamColour>", TeamList.list.get(team).textColour)
+        message = message.replace("<teamColour>", TeamManager.list.get(team).textColour)
                 .replace("<player>", player.getDisplayName())
                 .replace("<enemyTeamColour>", lastAttacked.getDisplayName())
-                .replace("<enemyPlayer>", TeamList.list.get(PlayerCharacterList.getList().get(lastAttacked).team).textColour);
+                .replace("<enemyPlayer>", TeamManager.list.get(PlayerCharacterManager.getList().get(lastAttacked).team).textColour);
 
         ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).sendMessageGlobally(message);
 
         for(Player player : getAssistList()) {
-            PlayerCharacterList.getList().get(player).onAssist(player);
+            PlayerCharacterManager.getList().get(player).onAssist(player);
         }
     }
 
@@ -1181,5 +1179,13 @@ public class PlayerCharacter {
 
     public void setTotalMonumentsBroken(int totalMonumentsBroken) {
         this.totalMonumentsBroken = totalMonumentsBroken;
+    }
+
+    public int getFlatDealDamageIncrease() {
+        return flatDealDamageIncrease;
+    }
+
+    public double getDealDamageMultiplier() {
+        return dealDamageMultiplier;
     }
 }
