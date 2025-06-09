@@ -1038,9 +1038,11 @@ public class PlayerCharacter {
                     }
                     case DAMAGE_OVER_TIME_FLAT -> {
                         this.dealDamage((int) effect.strength);
+                        getPlayer().damage(0.0);
                     }
                     case DAMAGE_OVER_TIME_PERCENTAGE -> {
                         this.dealDamage((int) effect.strength * this.maxHealth);
+                        getPlayer().damage(0.0);
                     }
                     default -> {
                     }

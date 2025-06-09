@@ -265,7 +265,6 @@ public class ArenaInstance {
                 world.setGameRule(GameRule.DO_ENTITY_DROPS, false);
                 world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
                 sendExplanation();
-                // startCountdown();
             }
             case RUNNING -> {
                 this.arenaState = ArenaState.ENDING;

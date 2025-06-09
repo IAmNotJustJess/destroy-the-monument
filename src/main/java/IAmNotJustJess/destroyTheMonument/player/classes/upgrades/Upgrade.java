@@ -3,6 +3,7 @@ package IAmNotJustJess.destroyTheMonument.player.classes.upgrades;
 import java.util.ArrayList;
 import java.util.List;
 
+import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
 import org.bukkit.Material;
@@ -17,6 +18,7 @@ public class Upgrade {
     private int maxStacks;
     private int stackCount;
     private Material guiMaterial;
+    private List<String> guiDescription;
     public ArrayList<ArrayList<String>> descriptionTextReplacementList;
     public ArrayList<ArrayList<Double>> strengthPerLevelList;
     public ArrayList<Integer> shardPricesPerLevelList;
@@ -81,7 +83,54 @@ public class Upgrade {
     public List<String> getDescription() {
         String string = description;
         for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
-            string = string.replaceAll("<"+i+">", descriptionTextReplacementList.get(currentLevel).get(i));
+            string = string.replaceAll("<"+i+">",
+                MainConfiguration.guiConfiguration.getString("upgrade-available")
+                + "<b>"
+                + descriptionTextReplacementList.get(currentLevel).get(i))
+                + "<reset>";
+        }
+        return MiniMessageParser.deserializeMultilineToString(string);
+    }
+
+    public List<String> getDescriptionForUpgrades() {
+        if(currentLevel == maxLevels) return getDescription();
+        String string = description;
+        for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
+            String replacement = descriptionTextReplacementList.get(currentLevel).get(i);
+            if(currentLevel == 0) replacement = "-";
+            string = string.replaceAll("<"+i+">",
+                MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards")
+                + replacement
+                + " <b>-> <reset>"
+                + MainConfiguration.guiConfiguration.getString("upgrade-available")
+                + descriptionTextReplacementList.get(currentLevel + 1).get(i)
+                + "<reset>"
+            );
+        }
+        return MiniMessageParser.deserializeMultilineToString(string);
+    }
+
+    public List<String> getGuiDescriptionForClassInfo() {
+        String string = description;
+        for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
+            int j;
+            for(j = 0; j < descriptionTextReplacementList.get(currentLevel).size() - 1; j++) {
+                String replacement = descriptionTextReplacementList.get(j).get(i);
+                string = string.replaceAll("<"+i+">",
+                    MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards")
+                        + replacement
+                        + " <b>/ <"
+                        + i
+                        + "><reset>"
+                );
+            }
+            j = descriptionTextReplacementList.get(currentLevel).size() - 1;
+            String replacement = descriptionTextReplacementList.get(j).get(i);
+            string = string.replaceAll("<"+i+">",
+                MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards")
+                    + replacement
+                    + "<reset>"
+            );
         }
         return MiniMessageParser.deserializeMultilineToString(string);
     }

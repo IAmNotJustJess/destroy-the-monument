@@ -143,9 +143,11 @@ public class Effect {
             }
             case DEAL_DAMAGE_FLAT -> {
                 affectedPlayer.dealDamage((int) strength);
+                affectedPlayer.getPlayer().damage(0.0, caster.getPlayer());
             }
             case DEAL_DAMAGE_PERCENTAGE -> {
                 affectedPlayer.dealDamage((int) (affectedPlayer.getMaxHealth() * strength));
+                affectedPlayer.getPlayer().damage(0.0, caster.getPlayer());
             }
             default -> {
                 affectedPlayer.getEffectList().add(this);
