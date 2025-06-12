@@ -7,6 +7,7 @@ import java.util.List;
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import com.sun.tools.javac.Main;
 import org.bukkit.Material;
 
 public class Upgrade {
@@ -91,7 +92,7 @@ public class Upgrade {
 
     private List<String> getDescription() {
         String string = description;
-        for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
+        for(int i = 0; i <= descriptionTextReplacementList.get(currentLevel).size(); i++) {
             string = string.replaceAll("<"+i+">",
                 MainConfiguration.guiConfiguration.getString("upgrade-maxed")
                 + "<b>"
@@ -103,7 +104,12 @@ public class Upgrade {
 
     private List<String> getDescriptionForUpgrades() {
         if(currentLevel == maxLevels) return getDescription();
-        String string = description;
+        String string = MainConfiguration.guiConfiguration.getString("shards")
+            + shardPricesPerLevelList.get(currentLevel)
+            + " "
+            + MainConfiguration.guiConfiguration.getString("shards-text")
+            + "<newline><newline>";
+        string += description;
         for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
             String replacement = descriptionTextReplacementList.get(currentLevel).get(i);
             if(currentLevel == 0) replacement = "-";
@@ -120,28 +126,40 @@ public class Upgrade {
     }
 
     private List<String> getGuiDescriptionForClassInfo() {
-        String string = description;
+        StringBuilder string = new StringBuilder();
+        for(int i = 0; i < shardPricesPerLevelList.size() - 2; i++) {
+            string
+                .append(MainConfiguration.guiConfiguration.getString("shards"))
+                .append(shardPricesPerLevelList.get(i))
+                .append(" / ");
+        }
+        string
+            .append(MainConfiguration.guiConfiguration.getString("shards"))
+            .append(shardPricesPerLevelList.get(maxLevels - 1))
+            .append(MainConfiguration.guiConfiguration.getString("shards-text"))
+            .append("<newline><newline>")
+            .append(description);
         for(int i = 0; i < descriptionTextReplacementList.get(currentLevel).size(); i++) {
             int j;
-            for(j = 0; j < descriptionTextReplacementList.get(currentLevel).size() - 1; j++) {
+            for(j = 0; j < maxLevels - 2; j++) {
                 String replacement = descriptionTextReplacementList.get(j).get(i);
-                string = string.replaceAll("<"+i+">",
+                string = new StringBuilder(string.toString().replaceAll("<" + i + ">",
                     MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards")
                         + replacement
                         + " <b>/ <"
                         + i
                         + "><reset>"
-                );
+                ));
             }
-            j = descriptionTextReplacementList.get(currentLevel).size() - 1;
+            j = maxLevels - 1;
             String replacement = descriptionTextReplacementList.get(j).get(i);
-            string = string.replaceAll("<"+i+">",
+            string = new StringBuilder(string.toString().replaceAll("<" + i + ">",
                 MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards")
                     + replacement
                     + "<reset>"
-            );
+            ));
         }
-        return MiniMessageParser.deserializeMultilineToString(string);
+        return MiniMessageParser.deserializeMultilineToString(string.toString());
     }
 
     public void setDescription(String description) {
