@@ -1,6 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.guis;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
+import IAmNotJustJess.destroyTheMonument.guis.items.UpgradeGuiItem;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
@@ -20,91 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class UpgradeTreeGui {
+
     public static void openGUI(PlayerCharacter player) {
-
-        UpgradeTree upgradeTree = player.getChosenClass().upgradeTree;
-
-        List<SimpleItem> items = new ArrayList<>();
-
-        for(int i = 0; i < 8; i++) {
-            Upgrade upgrade = upgradeTree.getUpgrade(UpgradeTreeLocationConverter.convertIntegerToLocation(i)).getFirst();
-            String name = upgrade.getName();
-            List<String> lore = new ArrayList<>();
-            Material material = upgrade.getGuiMaterial();
-            int amount = upgrade.getCurrentLevel();
-            boolean set = false;
-            switch(i) {
-                case 1 -> {
-                    if(upgradeTree.getUpgrade(UpgradeTreeLocation.BASIC_ONE).getFirst().getCurrentLevel() == 0) {
-                        name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
-                        lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
-                        material = Material.BARRIER;
-                        set = true;
-                    }
-                }
-                case 2, 4, 6 -> {
-                    if(upgradeTree.getUpgrade(UpgradeTreeLocation.BASIC_TWO).getFirst().getCurrentLevel() == 0) {
-                        name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
-                        lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
-                        material = Material.BARRIER;
-                        set = true;
-                    }
-                }
-                case 3 -> {
-                    if(upgradeTree.getUpgrade(UpgradeTreeLocation.SPECIAL_ONE).getFirst().getCurrentLevel() == 0) {
-                        name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
-                        lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
-                        material = Material.BARRIER;
-                        set = true;
-                    }
-                }
-                case 5 -> {
-                    if(upgradeTree.getUpgrade(UpgradeTreeLocation.SKILL_ONE).getFirst().getCurrentLevel() == 0) {
-                        name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
-                        lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
-                        material = Material.BARRIER;
-                        set = true;
-                    }
-                }
-                case 7 -> {
-                    if(upgradeTree.getUpgrade(UpgradeTreeLocation.ULTIMATE_ONE).getFirst().getCurrentLevel() == 0) {
-                        name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
-                        lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
-                        material = Material.BARRIER;
-                        set = true;
-                    }
-                }
-            }
-            if(!set) {
-                if(upgrade.getCurrentLevel() == upgrade.getMaxLevels()) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-maxed") + name;
-                    lore.add(MainConfiguration.guiConfiguration.getString("upgrade-maxed-text"));
-                }
-                else if (player.getShards() >= upgrade.shardPricesPerLevelList.get(upgrade.getCurrentLevel())) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-available") + name;
-                    lore.add(MainConfiguration.guiConfiguration.getString("upgrade-available-text"));
-                }
-                else {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards") + name;
-                    lore.add(MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards-text"));
-                }
-            }
-            lore.add(" ");
-            lore.addAll(upgrade.cachedGuiDescriptionsForUpgrades.get(upgrade.getCurrentLevel()));
-            if(amount < 0) amount = 1;
-            name = MiniMessageParser.deserializeToString(name);
-            SimpleItem simpleItem = new SimpleItem(
-                new ItemBuilder(material, amount)
-                    .setDisplayName(name)
-                    .setLegacyLore(lore)
-                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-            );
-            items.add(simpleItem);
-        }
 
         SimpleItem border = new SimpleItem(new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(""));
 
-        Gui gui = Gui.normal() // Creates the GuiBuilder for a normal GUI
+        Gui gui = Gui.normal()
             .setStructure(
                 "# . . . . . . . #",
                 "# . 4 . 6 . 8 . #",
@@ -113,14 +35,14 @@ public class UpgradeTreeGui {
                 "# . . . 1 . . . #",
                 "# . . . . . . . #")
             .addIngredient('#', border)
-            .addIngredient('1', items.get(0))
-            .addIngredient('2', items.get(1))
-            .addIngredient('3', items.get(2))
-            .addIngredient('4', items.get(3))
-            .addIngredient('5', items.get(4))
-            .addIngredient('6', items.get(5))
-            .addIngredient('7', items.get(6))
-            .addIngredient('8', items.get(7))
+            .addIngredient('1', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.BASIC_ONE, player))
+            .addIngredient('2', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.BASIC_TWO, player))
+            .addIngredient('3', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.SPECIAL_ONE, player))
+            .addIngredient('4', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.SPECIAL_TWO, player))
+            .addIngredient('5', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.SKILL_ONE, player))
+            .addIngredient('6', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.SKILL_TWO, player))
+            .addIngredient('7', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.ULTIMATE_ONE, player))
+            .addIngredient('8', new UpgradeGuiItem().getItemProvider(UpgradeTreeLocation.ULTIMATE_TWO, player))
             .build();
 
         Window window = Window.single()
