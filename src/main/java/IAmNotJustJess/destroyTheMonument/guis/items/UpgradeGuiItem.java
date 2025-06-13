@@ -42,7 +42,7 @@ public class UpgradeGuiItem extends AbstractItem {
         switch(upgradeTreeLocation) {
             case BASIC_TWO -> {
                 if(upgradeTree.getUpgrade(UpgradeTreeLocation.BASIC_ONE).getFirst().getCurrentLevel() == 0) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
+                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable-colour") + name;
                     lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
                     material = Material.BARRIER;
                     set = true;
@@ -50,7 +50,7 @@ public class UpgradeGuiItem extends AbstractItem {
             }
             case SPECIAL_ONE, SKILL_ONE, ULTIMATE_ONE -> {
                 if(upgradeTree.getUpgrade(UpgradeTreeLocation.BASIC_TWO).getFirst().getCurrentLevel() == 0) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
+                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable-colour") + name;
                     lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
                     material = Material.BARRIER;
                     set = true;
@@ -58,7 +58,7 @@ public class UpgradeGuiItem extends AbstractItem {
             }
             case SPECIAL_TWO -> {
                 if(upgradeTree.getUpgrade(UpgradeTreeLocation.SPECIAL_ONE).getFirst().getCurrentLevel() == 0) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
+                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable-colour") + name;
                     lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
                     material = Material.BARRIER;
                     set = true;
@@ -66,7 +66,7 @@ public class UpgradeGuiItem extends AbstractItem {
             }
             case SKILL_TWO -> {
                 if(upgradeTree.getUpgrade(UpgradeTreeLocation.SKILL_ONE).getFirst().getCurrentLevel() == 0) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
+                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable-colour") + name;
                     lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
                     material = Material.BARRIER;
                     set = true;
@@ -74,7 +74,7 @@ public class UpgradeGuiItem extends AbstractItem {
             }
             case ULTIMATE_TWO -> {
                 if(upgradeTree.getUpgrade(UpgradeTreeLocation.ULTIMATE_ONE).getFirst().getCurrentLevel() == 0) {
-                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable") + name;
+                    name = MainConfiguration.guiConfiguration.getString("upgrade-unavailable-colour") + name;
                     lore.add(MainConfiguration.guiConfiguration.getString("upgrade-unavailable-text"));
                     material = Material.BARRIER;
                     set = true;
@@ -83,15 +83,15 @@ public class UpgradeGuiItem extends AbstractItem {
         }
         if(!set) {
             if(upgrade.getCurrentLevel() == upgrade.getMaxLevels()) {
-                name = MainConfiguration.guiConfiguration.getString("upgrade-maxed") + name;
+                name = MainConfiguration.guiConfiguration.getString("upgrade-maxed-colour") + name;
                 lore.add(MainConfiguration.guiConfiguration.getString("upgrade-maxed-text"));
             }
             else if (playerCharacter.getShards() >= upgrade.shardPricesPerLevelList.get(upgrade.getCurrentLevel())) {
-                name = MainConfiguration.guiConfiguration.getString("upgrade-available") + name;
+                name = MainConfiguration.guiConfiguration.getString("upgrade-available-colour") + name;
                 lore.add(MainConfiguration.guiConfiguration.getString("upgrade-available-text"));
             }
             else {
-                name = MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards") + name;
+                name = MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards-colour") + name;
                 lore.add(MainConfiguration.guiConfiguration.getString("upgrade-not-enough-shards-text"));
             }
             lore.add(" ");
