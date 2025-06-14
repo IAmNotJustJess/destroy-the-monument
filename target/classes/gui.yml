@@ -1,6 +1,23 @@
 file-version: 1
 
 upgrade-unavailable-colour: "<#cc2b2b>"
-upgrade-not-enough-shards: "<#dbd814>"
-upgrade-available: "<#14db4c>"
-upgrade-maxed: "<#5c5b14>"
+upgrade-not-enough-shards-colour: "<#dbd814>"
+upgrade-available-colour: "<#14db4c>"
+upgrade-maxed-colour: "<#5c5b14>"
+shards-colour: "<#19a0e3>"
+
+upgrade-unavailable-text: "<#cc2b2b><b>LOCKED</b>"
+upgrade-not-enough-shards-text: "<#dbd814><b>NOT ENOUGH SHARDS</b>"
+upgrade-available-text: "<#14db4c><b>CLICK TO BUY</b>"
+upgrade-maxed-text: "<#5c5b14><b>MAXED OUT</b>"
+shards-text: "<#19a0e3> shards"
+previous-upgrade-required-text: "<#cc2b2b>Previous upgrade required!"
+
+page-count-colour: "<#dbd814>"
+
+next-page-item-text: "<#777777>Next page"
+next-page-text: "<#777777>Page "
+no-next-pages-text: "<#cc2b2b>You can't go further!"
+previous-page-item-text: "<#777777>Previous page"
+previous-page-text: "<#777777>Page "
+no-previous-page-text: "<#cc2b2b>You can't go back that far!"

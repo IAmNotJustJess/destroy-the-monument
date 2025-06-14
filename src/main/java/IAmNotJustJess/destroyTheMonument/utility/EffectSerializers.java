@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class EffectSerializers {
 
-    public static void ParticleDeserialize(String serializedString, Location location) {
+    public static void particleDeserialize(String serializedString, Location location) {
 
         // 1-2-3-4-5-6-7;1-2-3-4-5-6-7
         // 1: Particle%OptionalData
@@ -72,7 +72,7 @@ public class EffectSerializers {
 
     }
 
-    public static void playSplitSound(String serializedString, Location location) {
+    public static void soundDeserialize(String serializedString, Location location) {
 
         // 1-2-3-4-5;1-2-3-4-5
         // 1: Spigot Sound - https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html

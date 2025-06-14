@@ -3,6 +3,7 @@ package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
+import IAmNotJustJess.destroyTheMonument.utility.EffectSerializers;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,8 +18,6 @@ public class Effect {
 
     public EffectType effectType;
     public EffectApplicationType effectApplicationType;
-    public String soundSerliaziedString;
-    public String particleSerializedString;
     public double strength;
     public double range;
     public int longevity;
@@ -32,9 +31,13 @@ public class Effect {
     public int longevityAfterUpgrades;
     public int baseLongevity;
     public boolean removeOnDeath;
+    public String soundSerliaziedString;
+    public String particleSerializedString;
+    public EffectParticleSpawnLocation particleSpawnLocation;
 
-
-    Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath) {
+    Effect(EffectType effectType, EffectApplicationType effectApplicationType,
+           double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
+           String soundSerliaziedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
         this.longevity = longevity;
@@ -49,10 +52,16 @@ public class Effect {
         this.tickEveryServerTicks = tickEveryServerTicks;
         this.removeOnDeath = removeOnDeath;
         this.delay = delay;
+        this.soundSerliaziedString = soundSerliaziedString;
+        this.particleSerializedString = particleSerializedString;
+        this.particleSpawnLocation = particleSpawnLocation;
         this.potionEffect = null;
     }
 
-    Effect(EffectType effectType, EffectApplicationType effectApplicationType, double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath, PotionEffect potionEffect) {
+    Effect(EffectType effectType, EffectApplicationType effectApplicationType,
+           double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
+           String soundSerliaziedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation,
+           PotionEffect potionEffect) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
         this.longevity = longevity;
@@ -67,6 +76,9 @@ public class Effect {
         this.tickEveryServerTicks = tickEveryServerTicks;
         this.removeOnDeath = removeOnDeath;
         this.delay = delay;
+        this.soundSerliaziedString = soundSerliaziedString;
+        this.particleSerializedString = particleSerializedString;
+        this.particleSpawnLocation = particleSpawnLocation;
         this.potionEffect = potionEffect;
     }
 
@@ -75,6 +87,15 @@ public class Effect {
         new BukkitRunnable() {
             @Override
             public void run() {
+                EffectSerializers.soundDeserialize(soundSerliaziedString, caster.getPlayer().getLocation());
+                switch(particleSpawnLocation) {
+                    case USER -> {
+                        EffectSerializers.particleDeserialize(particleSerializedString, caster.getPlayer().getLocation());
+                    }
+                    case LOCATION -> {
+                        EffectSerializers.particleDeserialize(particleSerializedString, location);
+                    }
+                }
                 switch (effectApplicationType) {
                     case APPLY_SELF -> {
                         activateAbilityOnSelf(caster);
@@ -104,10 +125,15 @@ public class Effect {
         for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, range, range, range)) {
 
             if (!(entity instanceof Player)) continue;
+
             PlayerCharacter loopedPlayer = PlayerCharacterManager.getList().get(entity);
-            loopedPlayer.setLastAttacked(caster);
 
             if(caster.getTeam() == loopedPlayer.getTeam()) continue;
+
+            loopedPlayer.setLastAttacked(caster);
+            if(particleSpawnLocation == EffectParticleSpawnLocation.AFFECTED) {
+                EffectSerializers.particleDeserialize(particleSerializedString, loopedPlayer.getPlayer().getLocation());
+            }
 
             activateAbilityOnPlayer(caster, loopedPlayer);
         }
@@ -117,9 +143,14 @@ public class Effect {
         for (Entity entity : Objects.requireNonNull(location.getWorld()).getNearbyEntities(location, range, range, range)) {
 
             if (!(entity instanceof Player)) continue;
+
             PlayerCharacter loopedPlayer = PlayerCharacterManager.getList().get(entity);
 
             if(caster.getTeam() != loopedPlayer.getTeam()) continue;
+
+            if(particleSpawnLocation == EffectParticleSpawnLocation.AFFECTED) {
+                EffectSerializers.particleDeserialize(particleSerializedString, loopedPlayer.getPlayer().getLocation());
+            }
 
             activateAbilityOnPlayer(caster, loopedPlayer);
         }
