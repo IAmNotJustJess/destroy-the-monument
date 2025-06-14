@@ -21,3 +21,6 @@ no-next-pages-text: "<#cc2b2b>You can't go further!"
 previous-page-item-text: "<#777777>Previous page"
 previous-page-text: "<#777777>Page "
 no-previous-page-text: "<#cc2b2b>You can't go back that far!"
+
+click-to-select: "<#14db4c>Left Click to Select"
+click-to-get-info: "<#dbd814>Right Click to View Info"

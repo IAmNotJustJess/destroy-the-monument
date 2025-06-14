@@ -1,5 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.guis.items;
 
+import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
@@ -13,6 +14,9 @@ import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.AbstractItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerClassGuiItem extends AbstractItem {
 
     private PlayerClass playerClass;
@@ -24,12 +28,22 @@ public class PlayerClassGuiItem extends AbstractItem {
 
     public ItemProvider getItemProvider(PlayerClass playerClass) {
         this.playerClass = playerClass;
+        List<String> lore = new ArrayList<>();
+        lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("click-to-select")));
+        lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("click-to-get-info")));
         return new ItemBuilder(playerClass.guiMaterial, 1).setDisplayName(MiniMessageSerializers.deserializeToString(playerClass.name)).setLegacyLore(MiniMessageSerializers.deserializeMultilineToString(playerClass.description)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
-        PlayerCharacterManager.getList().get(player).setChosenClass((PlayerClass) playerClass.clone());
+        switch(clickType) {
+            case LEFT -> {
+                PlayerCharacterManager.getList().get(player).setChosenClass((PlayerClass) playerClass.clone());
+            }
+            case RIGHT -> {
+
+            }
+        }
         notifyWindows(); // this will update the ItemStack that is displayed to the player
     }
 
