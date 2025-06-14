@@ -1,7 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.guis.items;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.item.ItemProvider;
@@ -19,10 +19,10 @@ public class PreviousPageGuiItem extends PageItem {
         ItemBuilder builder = new ItemBuilder(gui.hasPreviousPage()
             ? Material.PAPER
             : Material.BARRIER);
-        builder.setDisplayName(MiniMessageParser.deserializeToString(MainConfiguration.guiConfiguration.getString("previous-page-item-text")))
+        builder.setDisplayName(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("previous-page-item-text")))
             .addLoreLines(gui.hasPreviousPage()
-                ? MiniMessageParser.deserializeToString(MainConfiguration.guiConfiguration.getString("previous-page-text") + MainConfiguration.guiConfiguration.getString("page-count-colour") + (gui.getCurrentPage() + 2) + "/" + gui.getPageAmount())
-                : MiniMessageParser.deserializeToString(MainConfiguration.guiConfiguration.getString("no-previous-pages-text")));
+                ? MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("previous-page-text") + MainConfiguration.guiConfiguration.getString("page-count-colour") + (gui.getCurrentPage() + 2) + "/" + gui.getPageAmount())
+                : MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("no-previous-pages-text")));
 
         return builder;
     }

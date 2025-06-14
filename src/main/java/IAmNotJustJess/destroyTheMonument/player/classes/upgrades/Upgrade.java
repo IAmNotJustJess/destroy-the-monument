@@ -6,8 +6,7 @@ import java.util.List;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
-import com.sun.tools.javac.Main;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 
 public class Upgrade {
@@ -53,7 +52,7 @@ public class Upgrade {
     }
 
     public String getName() {
-        return MiniMessageParser.deserializeToString(this.name);
+        return MiniMessageSerializers.deserializeToString(this.name);
     }
 
     public void setName(String name) {
@@ -99,7 +98,7 @@ public class Upgrade {
                 + descriptionTextReplacementList.get(currentLevel).get(i))
                 + "<reset>";
         }
-        return MiniMessageParser.deserializeMultilineToString(string);
+        return MiniMessageSerializers.deserializeMultilineToString(string);
     }
 
     private List<String> getDescriptionForUpgrades() {
@@ -122,7 +121,7 @@ public class Upgrade {
                 + "<reset>"
             );
         }
-        return MiniMessageParser.deserializeMultilineToString(string);
+        return MiniMessageSerializers.deserializeMultilineToString(string);
     }
 
     private List<String> getGuiDescriptionForClassInfo() {
@@ -159,7 +158,7 @@ public class Upgrade {
                     + "<reset>"
             ));
         }
-        return MiniMessageParser.deserializeMultilineToString(string.toString());
+        return MiniMessageSerializers.deserializeMultilineToString(string.toString());
     }
 
     public void setDescription(String description) {

@@ -1,24 +1,13 @@
 package IAmNotJustJess.destroyTheMonument.guis;
 
-import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.guis.items.UpgradeGuiItem;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
-import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 import xyz.xenondevs.invui.window.Window;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class UpgradeTreeGui {
 

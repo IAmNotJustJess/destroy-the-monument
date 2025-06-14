@@ -6,8 +6,7 @@ import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
-import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -98,7 +97,7 @@ public class UpgradeGuiItem extends AbstractItem {
             lore.addAll(upgrade.cachedGuiDescriptionsForUpgrades.get(upgrade.getCurrentLevel()));
         }
         if(amount < 0) amount = 1;
-        name = MiniMessageParser.deserializeToString(name);
+        name = MiniMessageSerializers.deserializeToString(name);
         return new ItemBuilder(material, amount).setDisplayName(name).setLegacyLore(lore).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 

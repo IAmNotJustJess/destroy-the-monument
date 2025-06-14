@@ -5,7 +5,7 @@ import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +35,7 @@ public class ArenaListener implements Listener {
             if(teamColour == PlayerCharacterManager.getList().get(event.getPlayer()).getTeam()
             && arenaInstance.getMonumentList().get(teamColour).contains(location)) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(MiniMessageParser.deserializeToString(
+                event.getPlayer().sendMessage(MiniMessageSerializers.deserializeToString(
                         MessagesConfiguration.arenaMessagesConfiguration.getString("breaking-own-monument")
                     )
                 );

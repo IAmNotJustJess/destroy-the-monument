@@ -1,13 +1,8 @@
 package IAmNotJustJess.destroyTheMonument.guis.items;
 
-import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
-import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -17,9 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.AbstractItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerClassGuiItem extends AbstractItem {
 
@@ -32,7 +24,7 @@ public class PlayerClassGuiItem extends AbstractItem {
 
     public ItemProvider getItemProvider(PlayerClass playerClass) {
         this.playerClass = playerClass;
-        return new ItemBuilder(playerClass.guiMaterial, 1).setDisplayName(MiniMessageParser.deserializeToString(playerClass.name)).setLegacyLore(MiniMessageParser.deserializeMultilineToString(playerClass.description)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        return new ItemBuilder(playerClass.guiMaterial, 1).setDisplayName(MiniMessageSerializers.deserializeToString(playerClass.name)).setLegacyLore(MiniMessageSerializers.deserializeMultilineToString(playerClass.description)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 
     @Override

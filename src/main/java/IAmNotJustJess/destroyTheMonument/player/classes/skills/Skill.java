@@ -5,7 +5,7 @@ import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -121,7 +121,7 @@ public class Skill {
         for(int i = 0; i < descriptionTextReplacementList.size(); i++) {
             string = string.replaceAll("<"+i+">", descriptionTextReplacementList.get(i));
         }
-        return MiniMessageParser.deserializeMultilineToString(string);
+        return MiniMessageSerializers.deserializeMultilineToString(string);
     }
 
     public void setDescription(String description) {
@@ -129,7 +129,7 @@ public class Skill {
     }
 
     public String getName() {
-        return MiniMessageParser.deserializeToString(name);
+        return MiniMessageSerializers.deserializeToString(name);
     }
 
     public void setName(String name) {

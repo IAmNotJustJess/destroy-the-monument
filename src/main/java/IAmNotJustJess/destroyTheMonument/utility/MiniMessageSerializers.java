@@ -7,7 +7,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MiniMessageParser {
+public class MiniMessageSerializers {
 
     public static String deserializeToString(String string) {
         return LegacyComponentSerializer.legacyAmpersand().serialize(MiniMessage.miniMessage().deserialize(string));

@@ -4,7 +4,7 @@ import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeSpecialEffectProperty;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -114,10 +114,10 @@ public class Weapon {
         assert itemMeta != null;
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setItemName(MiniMessageParser.deserializeToString(name));
+        itemMeta.setItemName(MiniMessageSerializers.deserializeToString(name));
         itemMeta.getPersistentDataContainer().set(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "damage"), PersistentDataType.STRING, weaponType.name());
         itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "dtm.attackSpeed"), cooldown, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
-        itemMeta.setLore(MiniMessageParser.deserializeMultilineToString(descriptionBeforeChanges));
+        itemMeta.setLore(MiniMessageSerializers.deserializeMultilineToString(descriptionBeforeChanges));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

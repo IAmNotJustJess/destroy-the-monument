@@ -1,6 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.player.classes.items;
 
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -16,8 +16,8 @@ public class ItemGenerator {
         assert itemMeta != null;
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.setItemName(MiniMessageParser.deserializeToString(name));
-        itemMeta.setLore(MiniMessageParser.deserializeMultilineToString(description));
+        itemMeta.setItemName(MiniMessageSerializers.deserializeToString(name));
+        itemMeta.setLore(MiniMessageSerializers.deserializeMultilineToString(description));
 
         itemStack.setItemMeta(itemMeta);
         return itemStack;

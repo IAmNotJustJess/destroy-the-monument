@@ -10,7 +10,7 @@ import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLoca
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.GameMode;
@@ -126,7 +126,7 @@ public class PlayerCharacter {
         ArrayList<Upgrade> upgradeList = chosenPlayerClass.upgradeTree.getUpgrade(location);
 
         if(firstUpgrade.getCurrentLevel() == firstUpgrade.getMaxLevels()) {
-            player.sendMessage(MiniMessageParser.deserializeToString(
+            player.sendMessage(MiniMessageSerializers.deserializeToString(
                             MessagesConfiguration.upgradesMessagesConfiguration.getString("maxed-out")
                                     .replace("<upgrade>", firstUpgrade.getName())
                                     .replace("<maxLevel>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getMaxLevels()))
@@ -136,7 +136,7 @@ public class PlayerCharacter {
             return 1;
         }
         if(shards < firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel())) {
-            player.sendMessage(MiniMessageParser.deserializeToString(
+            player.sendMessage(MiniMessageSerializers.deserializeToString(
                     MessagesConfiguration.upgradesMessagesConfiguration.getString("insufficient-shards")
                             .replace("<cost>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel()))
                             )
@@ -148,7 +148,7 @@ public class PlayerCharacter {
 
         shards -= firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel());
 
-        player.sendMessage(MiniMessageParser.deserializeToString(
+        player.sendMessage(MiniMessageSerializers.deserializeToString(
                 MessagesConfiguration.upgradesMessagesConfiguration.getString("bought")
                         .replace("<cost>", String.valueOf(firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel()))
                         )
@@ -572,7 +572,7 @@ public class PlayerCharacter {
     public void addShards(int shards, String message) {
         Audience audience = (Audience) player;
         this.shards += shards;
-        audience.sendMessage(MiniMessageParser.deserializeToComponent(message
+        audience.sendMessage(MiniMessageSerializers.deserializeToComponent(message
                 .replace("<award>", String.valueOf(shards))
                 .replace("<totalShards>", String.valueOf(this.shards))
         ));
@@ -581,7 +581,7 @@ public class PlayerCharacter {
     public void onEnemyKill(Player enemy) {
 
         this.shards += ArenaSettings.shardsPerKill;
-        player.sendMessage(MiniMessageParser.deserializeToString(
+        player.sendMessage(MiniMessageSerializers.deserializeToString(
                 MessagesConfiguration.playerMessagesConfiguration.getString("assist-shards")
                         .replace("<player>", enemy.getName())
                         .replace("<award>", String.valueOf(ArenaSettings.shardsPerKill))
@@ -962,7 +962,7 @@ public class PlayerCharacter {
     public void onAssist(Player enemy) {
 
         this.shards += ArenaSettings.shardsPerAssist;
-        player.sendMessage(MiniMessageParser.deserializeToString(
+        player.sendMessage(MiniMessageSerializers.deserializeToString(
                 MessagesConfiguration.playerMessagesConfiguration.getString("assist-shards")
                         .replace("<player>", enemy.getName())
                         .replace("<award>", String.valueOf(ArenaSettings.shardsPerAssist))

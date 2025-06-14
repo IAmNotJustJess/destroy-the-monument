@@ -17,6 +17,8 @@ public class Effect {
 
     public EffectType effectType;
     public EffectApplicationType effectApplicationType;
+    public String soundSerliaziedString;
+    public String particleSerializedString;
     public double strength;
     public double range;
     public int longevity;

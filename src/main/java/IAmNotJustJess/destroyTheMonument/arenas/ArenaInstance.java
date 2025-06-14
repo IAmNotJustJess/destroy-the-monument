@@ -6,7 +6,7 @@ import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.teams.Team;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageParser;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
 import IAmNotJustJess.destroyTheMonument.utility.RandomElementPicker;
 import net.kyori.adventure.audience.Audience;
@@ -44,7 +44,7 @@ public class ArenaInstance {
         }
     }
     public void sendMessageGlobally(String string) {
-        List<String> stringListToSend = MiniMessageParser.deserializeMultilineToString(string);
+        List<String> stringListToSend = MiniMessageSerializers.deserializeMultilineToString(string);
         for(Player player : playerList) {
             for(String stringInList : stringListToSend) {
                 player.sendMessage(stringInList);
@@ -60,7 +60,7 @@ public class ArenaInstance {
     }
 
     public void sendMessageToATeam(TeamColour teamColour, String string) {
-        List<String> stringListToSend = MiniMessageParser.deserializeMultilineToString(string);
+        List<String> stringListToSend = MiniMessageSerializers.deserializeMultilineToString(string);
         for(Player player : playersInTeamsList.get(teamColour)) {
             for(String stringInList : stringListToSend) {
                 player.sendMessage(stringInList);
@@ -78,7 +78,7 @@ public class ArenaInstance {
     }
 
     public void sendTitleGlobally(String title, String subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
-        Title titleMessage = Title.title(MiniMessageParser.deserializeToComponent(title), MiniMessageParser.deserializeToComponent(subtitle), Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
+        Title titleMessage = Title.title(MiniMessageSerializers.deserializeToComponent(title), MiniMessageSerializers.deserializeToComponent(subtitle), Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
         for(Player player : playerList) {
 
             Audience audience = (Audience) player;
@@ -96,7 +96,7 @@ public class ArenaInstance {
     }
 
     public void sendTitleToATeam(TeamColour teamColour, String title, String subtitle, Long fadeInMills, Long holdMills, Long fadeOutMills) {
-        Title titleMessage = Title.title(MiniMessageParser.deserializeToComponent(title), MiniMessageParser.deserializeToComponent(subtitle), Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
+        Title titleMessage = Title.title(MiniMessageSerializers.deserializeToComponent(title), MiniMessageSerializers.deserializeToComponent(subtitle), Title.Times.times(Duration.ofMillis(fadeInMills), Duration.ofMillis(holdMills), Duration.ofMillis(fadeOutMills)));
         for(Player player : playersInTeamsList.get(teamColour)) {
 
             Audience audience = (Audience) player;
