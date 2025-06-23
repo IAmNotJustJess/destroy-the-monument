@@ -28,19 +28,19 @@ public class ChooseClassGui {
 
         Item border = new SimpleItem(new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(""));
 
-        List<ItemProvider> items = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
 
         switch(playerClassType) {
             case ATTACK, DEFENCE, SUPPORT -> {
                 for(PlayerClass playerClass : PlayerClassManager.getList()) {
                     if(playerClass.playerClassType == playerClassType) {
-                        items.add(new ChooseClassItem().getItemProvider(playerClass, player.getPlayer()));
+                        items.add((Item) new ChooseClassItem().getItemProvider(playerClass, player.getPlayer()));
                     }
                 }
             }
             case null, default -> {
                 for(PlayerClass playerClass : PlayerClassManager.getList()) {
-                    items.add(new ChooseClassItem().getItemProvider(playerClass, player.getPlayer()));
+                    items.add((Item) new ChooseClassItem().getItemProvider(playerClass, player.getPlayer()));
                 }
             }
         }
