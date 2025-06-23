@@ -47,6 +47,8 @@ public class PlayerCharacter {
     private long totalDamageTaken;
     private int totalKills;
     private int totalMonumentsBroken;
+    private PlayerClass changeClassTo;
+    private boolean changeClassOnRespawn;
 
     public PlayerCharacter(Player player, PlayerClass chosenPlayerClass, TeamColour team, float movementSpeed) {
         this.player = player;
@@ -1018,6 +1020,18 @@ public class PlayerCharacter {
             }
         }
 
+        if(changeClassOnRespawn) {
+            for(int i = 0; i < 8; i++) {
+                UpgradeTreeLocation upgradeTreeLocation = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
+                for(int j = 0; j < chosenPlayerClass.upgradeTree.getUpgrade(upgradeTreeLocation).getFirst().getCurrentLevel(); j++) {
+                    shards += chosenPlayerClass.upgradeTree.getUpgrade(upgradeTreeLocation).getFirst().shardPricesPerLevelList.get(j);
+                }
+            }
+
+            chosenPlayerClass = (PlayerClass) changeClassTo.clone();
+            changeClassOnRespawn = false;
+        }
+
     }
 
     public void readThroughEffectList() {
@@ -1145,6 +1159,17 @@ public class PlayerCharacter {
         for(Player player : getAssistList()) {
             PlayerCharacterManager.getList().get(player).onAssist(player);
         }
+    }
+
+    public void changeClass(PlayerClass playerClass) {
+
+        if(Objects.equals(chosenPlayerClass.name, playerClass.name)) {
+            //send message cancelling
+            return;
+        }
+        changeClassTo = playerClass;
+        changeClassOnRespawn = true;
+
     }
 
     public int getShards() {

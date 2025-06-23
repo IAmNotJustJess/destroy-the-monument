@@ -31,7 +31,8 @@ public class PlayerClassGuiItem extends AbstractItem {
         List<String> lore = new ArrayList<>();
         lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("click-to-select")));
         lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("click-to-get-info")));
-        return new ItemBuilder(playerClass.guiMaterial, 1).setDisplayName(MiniMessageSerializers.deserializeToString(playerClass.name)).setLegacyLore(MiniMessageSerializers.deserializeMultilineToString(playerClass.description)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        lore.addAll(MiniMessageSerializers.deserializeMultilineToString(playerClass.description));
+        return new ItemBuilder(playerClass.guiMaterial, 1).setDisplayName(MiniMessageSerializers.deserializeToString(playerClass.name)).setLegacyLore(lore).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
     }
 
     @Override
