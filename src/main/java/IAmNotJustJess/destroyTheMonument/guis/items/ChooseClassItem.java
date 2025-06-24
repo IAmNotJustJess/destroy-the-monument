@@ -1,13 +1,8 @@
 package IAmNotJustJess.destroyTheMonument.guis.items;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
-import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
-import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.Upgrade;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
-import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

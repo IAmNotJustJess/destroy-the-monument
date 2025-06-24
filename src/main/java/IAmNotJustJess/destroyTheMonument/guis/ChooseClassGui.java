@@ -4,7 +4,6 @@ import IAmNotJustJess.destroyTheMonument.guis.items.ChooseClassItem;
 import IAmNotJustJess.destroyTheMonument.guis.items.NextPageGuiItem;
 import IAmNotJustJess.destroyTheMonument.guis.items.PreviousPageGuiItem;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
-import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassType;
@@ -13,14 +12,11 @@ import xyz.xenondevs.invui.gui.Gui;
 import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
-import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChooseClassGui {
 

@@ -2,6 +2,7 @@ package IAmNotJustJess.destroyTheMonument.player.classes.items;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
+import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeSpecialEffectProperty;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
@@ -12,8 +13,6 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-
-import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;

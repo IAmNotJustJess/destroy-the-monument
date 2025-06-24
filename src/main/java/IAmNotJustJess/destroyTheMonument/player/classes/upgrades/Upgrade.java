@@ -1,13 +1,13 @@
 package IAmNotJustJess.destroyTheMonument.player.classes.upgrades;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Upgrade {
     private String name;

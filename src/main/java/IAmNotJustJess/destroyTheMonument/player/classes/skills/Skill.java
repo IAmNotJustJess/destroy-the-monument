@@ -3,7 +3,6 @@ package IAmNotJustJess.destroyTheMonument.player.classes.skills;
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
-
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
