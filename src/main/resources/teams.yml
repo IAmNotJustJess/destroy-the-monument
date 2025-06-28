@@ -1,6 +1,15 @@
 file-version: 1
 
 teams:
+  none:
+    name: ""
+    text-colour: ""
+    team-colour: NONE
+    block-type: AIR
+    armour colour:
+      r: 0
+      g: 0
+      b: 0
   white:
     name: "<#e9ecec>White"
     text-colour: "<#e9ecec>"

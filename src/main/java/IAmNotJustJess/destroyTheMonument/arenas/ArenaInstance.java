@@ -15,6 +15,8 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -117,10 +119,6 @@ public class ArenaInstance {
 
         int remainingMonuments = monumentRemainingCount.get(brokenTeamColour) - 1;
         monumentRemainingCount.put(brokenTeamColour, remainingMonuments);
-        if(remainingMonuments == 0) {
-            endArena(getOppositeTeam(brokenTeamColour));
-            return;
-        }
 
         location.getWorld().spawnParticle(Particle.BLOCK, location, 25, 1, 1, 1, 0.25, location.getBlock().getBlockData());
         location.getWorld().spawnParticle(Particle.LAVA, location, 3, 0.1, 0.1, 0.1, 0.25, location.getBlock().getBlockData());
@@ -159,6 +157,11 @@ public class ArenaInstance {
             PlayerCharacterManager.getList().get(player).addShards(shards, message);
         }
 
+        if(remainingMonuments == 0) {
+            endArena(getOppositeTeam(brokenTeamColour));
+            return;
+        }
+
         for(Player player : playersInTeamsList.get(brokenTeamColour)) {
             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_DEATH, SoundCategory.MASTER, 3, 1);
         }
@@ -169,6 +172,11 @@ public class ArenaInstance {
         List<String> messages = List.of(MessagesConfiguration.arenaMessagesConfiguration.getString("starting-tips-messages").split("<newline>"));
         List<String> titles = List.of(MessagesConfiguration.arenaMessagesConfiguration.getString("starting-tips-titles").split("<newline>"));
         List<String> subtitles = List.of(MessagesConfiguration.arenaMessagesConfiguration.getString("starting-tips-subtitles").split("<newline>"));
+
+        for(Player player : playerList) {
+            player.setWalkSpeed(0.0f);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, PotionEffect.INFINITE_DURATION, 1));
+        }
 
         for(int i = 0; i < messages.size(); i++) {
             int finalI = i;
@@ -181,6 +189,8 @@ public class ArenaInstance {
                         startCountdown();
                         for(Player player : playerList) {
                             player.setGameMode(GameMode.SURVIVAL);
+                            PlayerCharacterManager.getList().get(player).updatePlayerSpeed();
+                            player.removePotionEffect(PotionEffectType.BLINDNESS);
                         }
                     }
                 }
@@ -188,12 +198,37 @@ public class ArenaInstance {
         }
     }
 
-    public void endArena(TeamColour teamColour) {
+    public void endArena(TeamColour winner) {
         for(Player player : playerList) {
             player.setGameMode(GameMode.SPECTATOR);
         }
 
-        TeamColour winner = TeamColour.NONE;
+        Team team1 = TeamManager.list.get(teamColours.getFirst());
+        Team team2 = TeamManager.list.get(teamColours.get(1));
+
+        String subtitle = MessagesConfiguration.arenaMessagesConfiguration.getString("end-screen-subtitle")
+            .replace("<teamColour1>", team1.textColour)
+            .replace("<remainingMonuments1>", Integer.toString(monumentRemainingCount.get(team1.teamColour)))
+            .replace("<teamColour2>", team2.textColour)
+            .replace("<remainingMonuments2>", Integer.toString(monumentRemainingCount.get(team1.teamColour)));
+
+        subtitle = MiniMessageSerializers.deserializeToString(subtitle);
+
+        if(winner == TeamColour.NONE) {
+            String title = MessagesConfiguration.arenaMessagesConfiguration.getString("tie-title");
+            title = MiniMessageSerializers.deserializeToString(title);
+            sendTitleGlobally(title, subtitle, 500L, 5000L, 500L);
+        }
+        else {
+            String titleVictory = MessagesConfiguration.arenaMessagesConfiguration.getString("victory-title");
+            titleVictory = MiniMessageSerializers.deserializeToString(titleVictory);
+            String titleDefeat = MessagesConfiguration.arenaMessagesConfiguration.getString("defeat-title");
+            titleDefeat = MiniMessageSerializers.deserializeToString(titleDefeat);
+            sendTitleToATeam(winner, titleVictory, subtitle, 500L, 5000L, 500L);
+            sendTitleToATeam(getOppositeTeam(winner), titleDefeat, subtitle, 500L, 5000L, 500L);
+        }
+
+        tickTask.cancel();
     }
 
     public void startCountdown() {
@@ -204,6 +239,11 @@ public class ArenaInstance {
                 timer -= 1;
                 timerString = MinutesTimerConverter.convert(timer);
                 if(timer <= 0) advanceState();
+                if(arenaState == ArenaState.RUNNING){
+                    for(Player player : playerList) {
+                        PlayerCharacterManager.getList().get(player).readThroughEffectList();
+                    }
+                }
             }
         }.runTaskTimerAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 0L, 20L);
     };
@@ -243,6 +283,10 @@ public class ArenaInstance {
         }
     }
 
+    public void teleportPlayerToArena(Player player) {
+        player.teleport(RandomElementPicker.getRandomElement(spawnLocations.get(PlayerCharacterManager.getList().get(player).getTeam())));
+    }
+
     public void advanceState() {
         switch (arenaState) {
             case LOBBY -> {
@@ -268,6 +312,7 @@ public class ArenaInstance {
             }
             case RUNNING -> {
                 this.arenaState = ArenaState.ENDING;
+                this.endArena(TeamColour.NONE);
                 tickTask.cancel();
             }
             case ENDING -> {

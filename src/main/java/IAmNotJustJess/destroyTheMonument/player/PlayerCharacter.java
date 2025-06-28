@@ -1,7 +1,10 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
+import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaSettings;
+import IAmNotJustJess.destroyTheMonument.arenas.ArenaState;
+import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.effects.Effect;
@@ -15,6 +18,8 @@ import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -118,7 +123,7 @@ public class PlayerCharacter {
         this.effectList = effectList;
     }
 
-    private void updatePlayerSpeed() {
+    public void updatePlayerSpeed() {
         player.setWalkSpeed(movementSpeed / 5);
     }
 
@@ -972,7 +977,7 @@ public class PlayerCharacter {
         ));
     }
 
-    public void onDeathLogic() {
+    public void onRespawnLogin() {
 
         chosenPlayerClass.loadout.mainWeapon.effectList.removeIf(effect -> effect.removeOnDeath);
         chosenPlayerClass.loadout.secondaryWeapon.effectList.removeIf(effect -> effect.removeOnDeath);
@@ -1031,6 +1036,10 @@ public class PlayerCharacter {
             chosenPlayerClass = (PlayerClass) changeClassTo.clone();
             changeClassOnRespawn = false;
         }
+
+        player.setGameMode(GameMode.SURVIVAL);
+
+        ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).teleportPlayerToArena(player);
 
     }
 
@@ -1158,6 +1167,29 @@ public class PlayerCharacter {
 
         for(Player player : getAssistList()) {
             PlayerCharacterManager.getList().get(player).onAssist(player);
+        }
+
+        setAssistList(new HashSet<>());
+
+        if(!effectList.isEmpty()) effectList.clear();
+
+        int seconds = MainConfiguration.globalGameRulesConfiguration.getInt("player-respawn-interval");
+        String title = MiniMessageSerializers.deserializeToString(MessagesConfiguration.arenaMessagesConfiguration.getString("player-killed-title"));
+        String subtitle = MessagesConfiguration.arenaMessagesConfiguration.getString("player-killed-subtitle");
+        for(int i = seconds; i >= 0; i--) {
+            String timerSubtitle = subtitle.replace("<phase>", Double.toString((double) i / (seconds))
+                .replace("<seconds>", Integer.toString(i)));
+            int finalI = i;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if(ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).getArenaState().equals(ArenaState.RUNNING)) {
+                        player.sendTitle(title, MiniMessageSerializers.deserializeToString(timerSubtitle), 0, 25, 0);
+                    } else if (finalI == 0) {
+                        onRespawnLogin();
+                    }
+                }
+            }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), (seconds - i) * 20L);
         }
     }
 

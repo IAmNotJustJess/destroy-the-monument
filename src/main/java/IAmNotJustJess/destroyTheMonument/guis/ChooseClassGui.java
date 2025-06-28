@@ -14,6 +14,7 @@ import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.window.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,5 +59,13 @@ public class ChooseClassGui {
             .addIngredient('n', new NextPageGuiItem())
             .setContent(items)
             .build();
+
+        Window window = Window.single()
+            .setViewer(player.getPlayer())
+            .setTitle("Select your class!")
+            .setGui(gui)
+            .build();
+
+        window.open();
     }
 }
