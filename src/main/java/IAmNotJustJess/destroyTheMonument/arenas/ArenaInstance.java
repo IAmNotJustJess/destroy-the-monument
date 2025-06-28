@@ -10,6 +10,7 @@ import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
 import IAmNotJustJess.destroyTheMonument.utility.RandomElementPicker;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
@@ -24,6 +25,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ArenaInstance {
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
@@ -33,11 +35,14 @@ public class ArenaInstance {
     private ArrayList<Player> playerList;
     private HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
     private ArrayList<Location> playerPlacedBlocksLocations;
+    private TeamColour victor;
     private Location lobbyLocation;
     private int timer;
     private String timerString;
     private ArenaState arenaState;
     private BukkitTask tickTask;
+    private String bossbarFormat;
+    private BossBar bossbar;
 
     public void sendMessageGlobally(TextComponent textComponent) {
         for(Player player : playerList) {
@@ -203,6 +208,7 @@ public class ArenaInstance {
             player.setGameMode(GameMode.SPECTATOR);
         }
 
+        victor = winner;
         Team team1 = TeamManager.list.get(teamColours.getFirst());
         Team team2 = TeamManager.list.get(teamColours.get(1));
 
@@ -240,6 +246,7 @@ public class ArenaInstance {
                 timerString = MinutesTimerConverter.convert(timer);
                 if(timer <= 0) advanceState();
                 if(arenaState == ArenaState.RUNNING){
+                    if(timer <= 0) endArena(TeamColour.NONE);
                     for(Player player : playerList) {
                         PlayerCharacterManager.getList().get(player).readThroughEffectList();
                     }
@@ -251,6 +258,8 @@ public class ArenaInstance {
     public void addPlayerToArena(Player player) {
         playerList.add(player);
         checkPlayerCount();
+        updateBossBar();
+        ((Audience) player).showBossBar(bossbar);
     }
 
     public void removePlayerFromArena(Player player) {
@@ -259,6 +268,60 @@ public class ArenaInstance {
             playersInTeamsList.remove(PlayerCharacterManager.getList().get(player).getTeam());
         }
         checkPlayerCount();
+        updateBossBar();
+        ((Audience) player).hideBossBar(bossbar);
+    }
+
+    private void updateBossBar() {
+        if(Objects.isNull(bossbar)) {
+            if (Objects.requireNonNull(getArenaState()) == ArenaState.LOBBY) {
+                bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-lobby-format");
+                TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat.replace("<players>", Integer.toString(playerList.size()))
+                    .replace("<maxPlayers>", Integer.toString(ArenaSettings.maxPlayersPerTeam * 2)));
+                bossbar = BossBar.bossBar(text, 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+            }
+        }
+        else {
+            switch(getArenaState()) {
+                case LOBBY -> {
+                    TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
+                        .replace("<players>", Integer.toString(playerList.size()))
+                        .replace("<maxPlayers>", Integer.toString(ArenaSettings.maxPlayersPerTeam * 2)));
+                    bossbar.name(text);
+                    bossbar.progress(1.0f);
+                }
+                case COUNTDOWN -> {
+                    TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
+                        .replace("<players>", Integer.toString(playerList.size()))
+                        .replace("<maxPlayers>", Integer.toString(ArenaSettings.maxPlayersPerTeam * 2))
+                        .replace("<seconds>", Integer.toString(timer)));
+                    bossbar.name(text);
+                    bossbar.progress((float) timer / ArenaSettings.arenaBeginCountdownInSeconds);
+                }
+                case RUNNING -> {
+                    TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
+                        .replace("<teamColour1>", TeamManager.list.get(teamColours.getFirst()).textColour)
+                        .replace("<teamColour2>", TeamManager.list.get(teamColours.get(1)).textColour)
+                        .replace("<remainingMonuments1>", Integer.toString(monumentRemainingCount.get(teamColours.getFirst())))
+                        .replace("<remainingMonuments2>", Integer.toString(monumentRemainingCount.get(teamColours.get(1))))
+                        .replace("<timeRemaining>", timerString));
+                    bossbar.name(text);
+                    bossbar.progress((float) (timer / (ArenaSettings.arenaLengthInMinutes * 60)));
+                }
+                case ENDING -> {
+                    if(victor == TeamColour.NONE) {
+                        bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-ending-tie-format");
+                    }
+                    else {
+                        bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-ending-format");
+                    }
+                    TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
+                        .replace("<teamName>", TeamManager.list.get(teamColours.getFirst()).name));
+                    bossbar.name(text);
+                    bossbar.progress(0.0f);
+                }
+            }
+        }
     }
 
     private void checkPlayerCount() {
@@ -291,16 +354,12 @@ public class ArenaInstance {
         switch (arenaState) {
             case LOBBY -> {
                 this.arenaState = ArenaState.COUNTDOWN;
+                bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-countdown-format");
                 timer = ArenaSettings.arenaBeginCountdownInSeconds;
                 startCountdown();
             }
             case COUNTDOWN ->  {
                 this.arenaState = ArenaState.STARTING;
-                tickTask.cancel();
-            }
-            case STARTING -> {
-                this.arenaState = ArenaState.RUNNING;
-                timer = (int) (ArenaSettings.arenaLengthInMinutes * 60);
                 teleportPlayersToArena();
                 World world = playerList.getFirst().getWorld();
                 world.setGameRule(GameRule.DO_INSOMNIA, false);
@@ -309,10 +368,15 @@ public class ArenaInstance {
                 world.setGameRule(GameRule.DO_ENTITY_DROPS, false);
                 world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
                 sendExplanation();
+                tickTask.cancel();
+            }
+            case STARTING -> {
+                this.arenaState = ArenaState.RUNNING;
+                bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-running-format");
+                timer = (int) (ArenaSettings.arenaLengthInMinutes * 60);
             }
             case RUNNING -> {
                 this.arenaState = ArenaState.ENDING;
-                this.endArena(TeamColour.NONE);
                 tickTask.cancel();
             }
             case ENDING -> {

@@ -3,9 +3,9 @@ file-version: 1
 
 assist-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Assisted in killing <player>) <#1a5775>(<totalShards> Total)"
 
-victory-title: "<teamColour>Victory!"
-defeat-title: "<teamColour>Defeat!"
-tie-title: "<teamColour>Tie!"
+victory-title: "<#14db4c>Victory!"
+defeat-title: "<#cc2b2b>Defeat!"
+tie-title: "<#dbd814>Tie!"
 end-screen-subtitle: "<teamColour1><remainingMonuments1><#ffffff>:<teamColour2><remainingMonuments2>"
 
 breaking-own-monument: "<#6e1818>Action disallowed! <#cc2b2b>You cannot destroy your own monument!"
@@ -37,3 +37,9 @@ starting-tips-subtitles: "<#19a0e3>Destroy the Monument<newline>
 <#cc2b2b>Break them all!<newline>
 <#14db4c>Have more of them standing!<newline>
 <#19a0e3>You'll need it!"
+
+bossbar-lobby-format: "<#777777>[<#ffffff><players>><#777777>/<#ffffff><maxPlayers><#777777>] <#dbd814>Waiting for more players..."
+bossbar-countdown-format: "<#777777>[<#ffffff><players>><#777777>/<#ffffff><maxPlayers><#777777>] <#14db4c>Arena starts in <#6de38e><seconds><#14db4c>..."
+bossbar-running-format: "<teamColour1><remainingMonuments1> <#ffffff>| <timeRemaining> | <teamColour2><remainingMonuments2>"
+bossbar-ending-format: "<#ffffff>Team <teamName> <#ffffff>has <#6de38e>won<#ffffff>!"
+bossbar-ending-tie-format: "<#ffffff>It's a <#dbd814>tie<#ffffff>!"
