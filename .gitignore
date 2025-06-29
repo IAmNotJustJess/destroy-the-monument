@@ -1,1 +1,3 @@
-target/*
+target
+target/DestroyTheMonument-1.0-shaded.jar
+target/DestroyTheMonument-1.0.jar
