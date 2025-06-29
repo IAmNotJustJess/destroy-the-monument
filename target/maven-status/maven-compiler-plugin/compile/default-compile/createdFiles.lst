@@ -10,6 +10,7 @@ IAmNotJustJess\destroyTheMonument\player\PlayerCharacter$1.class
 IAmNotJustJess\destroyTheMonument\arenas\ArenaInstance$1.class
 IAmNotJustJess\destroyTheMonument\utility\EffectSerializers$2.class
 IAmNotJustJess\destroyTheMonument\utility\RandomElementPicker.class
+IAmNotJustJess\destroyTheMonument\arenas\ArenaInstance$5.class
 IAmNotJustJess\destroyTheMonument\player\PlayerCharacterManager.class
 IAmNotJustJess\destroyTheMonument\guis\items\UpgradeGuiItem.class
 IAmNotJustJess\destroyTheMonument\player\classes\upgrades\Upgrade.class
@@ -18,6 +19,7 @@ IAmNotJustJess\destroyTheMonument\player\classes\effects\EffectParticleSpawnLoca
 IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill$2.class
 IAmNotJustJess\destroyTheMonument\player\classes\items\Weapon$1.class
 IAmNotJustJess\destroyTheMonument\player\classes\items\ItemGenerator.class
+IAmNotJustJess\destroyTheMonument\player\PlayerCharacter$2.class
 IAmNotJustJess\destroyTheMonument\player\classes\effects\Effect.class
 IAmNotJustJess\destroyTheMonument\player\classes\upgrades\UpgradeTreeLocation.class
 IAmNotJustJess\destroyTheMonument\arenas\ArenaListener.class
@@ -29,7 +31,10 @@ IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill$3.class
 IAmNotJustJess\destroyTheMonument\arenas\ArenaManager.class
 IAmNotJustJess\destroyTheMonument\player\classes\items\Weapon$2.class
 IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill$2$1.class
+IAmNotJustJess\destroyTheMonument\guis\items\PlayerClassGuiItem$1.class
 IAmNotJustJess\destroyTheMonument\utility\EffectSerializers.class
+IAmNotJustJess\destroyTheMonument\arenas\ArenaInstance$4.class
+IAmNotJustJess\destroyTheMonument\arenas\ArenaInstance$7.class
 IAmNotJustJess\destroyTheMonument\guis\items\PlayerClassGuiItem.class
 IAmNotJustJess\destroyTheMonument\utility\NumberConverters.class
 IAmNotJustJess\destroyTheMonument\player\classes\upgrades\UpgradeAffection.class
@@ -39,10 +44,13 @@ IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill.class
 IAmNotJustJess\destroyTheMonument\player\classes\skills\Skill$1.class
 IAmNotJustJess\destroyTheMonument\player\classes\effects\EffectApplicationType.class
 IAmNotJustJess\destroyTheMonument\player\classes\skills\SkillType.class
+IAmNotJustJess\destroyTheMonument\arenas\ArenaInstance$6.class
 IAmNotJustJess\destroyTheMonument\utility\EffectSerializers$1.class
 IAmNotJustJess\destroyTheMonument\utility\UpgradeTreeLocationConverter.class
 IAmNotJustJess\destroyTheMonument\utility\MinutesTimerConverter.class
+IAmNotJustJess\destroyTheMonument\guis\items\ChooseClassItem.class
 IAmNotJustJess\destroyTheMonument\teams\TeamColour.class
+IAmNotJustJess\destroyTheMonument\guis\items\ChooseClassItem$1.class
 IAmNotJustJess\destroyTheMonument\arenas\ArenaInstance$3.class
 IAmNotJustJess\destroyTheMonument\guis\items\NextPageGuiItem.class
 IAmNotJustJess\destroyTheMonument\DestroyTheMonument.class

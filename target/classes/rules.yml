@@ -6,7 +6,7 @@ rules:
   max-players-per-team: 16
 
   # How many seconds must pass before the arena starts.
-  rena-begin-countdown: 60
+  arena-begin-countdown: 60
 
   # The percentage of players required to start the countdown. (0-1)
   arena-start-countdown-percentage-requirement: 0.125

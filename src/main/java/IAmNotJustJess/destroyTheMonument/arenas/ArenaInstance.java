@@ -2,7 +2,10 @@ package IAmNotJustJess.destroyTheMonument.arenas;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
+import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
+import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
+import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
 import IAmNotJustJess.destroyTheMonument.teams.Team;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
@@ -23,24 +26,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ArenaInstance {
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
     private HashMap<TeamColour, Integer> monumentRemainingCount;
     private HashMap<TeamColour, ArrayList<Location>> spawnLocations;
     private ArrayList<TeamColour> teamColours;
-    private ArrayList<Player> playerList;
-    private HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
+    private HashSet<Player> playerList;
+    private HashMap<TeamColour, HashSet<Player>> playersInTeamsList;
     private ArrayList<Location> playerPlacedBlocksLocations;
     private HashMap<Location, Material> playerDestroyedBlocksLocations;
     private HashMap<Location, BlockData> playerDestroyedBlocksData;
     private TeamColour victor;
     private Location lobbyLocation;
     private int timer;
+    private int shardsPerMinute;
     private String timerString;
     private ArenaState arenaState;
     private BukkitTask tickTask;
@@ -247,19 +248,32 @@ public class ArenaInstance {
             public void run() {
                 timer -= 1;
                 timerString = MinutesTimerConverter.convert(timer);
-                if(timer <= 0) advanceState();
                 if(arenaState == ArenaState.RUNNING){
-                    if(timer <= 0) endArena(TeamColour.NONE);
-                    for(Player player : playerList) {
-                        PlayerCharacterManager.getList().get(player).readThroughEffectList();
+                    if(timer <= 0) {
+                        endArena(TeamColour.NONE);
+                        for(Player player : playerList) {
+                            PlayerCharacterManager.getList().get(player).readThroughEffectList();
+                        }
+                        advanceState();
+                        return;
+                    }
+                    if(timer % 60 * ArenaSettings.boostShardsEveryTimeInMinutes == 0) {
+                        shardsPerMinute += ArenaSettings.boostShardsBy;
+                    }
+                    if(timer % 60 == 0) {
+                        for(Player player : playerList) {
+                            PlayerCharacterManager.getList().get(player).addShards(shardsPerMinute, MessagesConfiguration.playerMessagesConfiguration.getString("passive-shards"));
+                        }
                     }
                 }
+                if(timer <= 0) advanceState();
             }
         }.runTaskTimerAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 0L, 20L);
     };
 
     public void addPlayerToArena(Player player) {
         playerList.add(player);
+        PlayerCharacterManager.getList().put(player, new PlayerCharacter(player, (PlayerClass) RandomElementPicker.getRandomElement(PlayerClassManager.getList()).clone(), TeamColour.NONE, 1.0f));
         checkPlayerCount();
         updateBossBar();
         ((Audience) player).showBossBar(bossbar);
@@ -267,9 +281,7 @@ public class ArenaInstance {
 
     public void removePlayerFromArena(Player player) {
         playerList.remove(player);
-        if(PlayerCharacterManager.getList().containsKey(player)) {
-            playersInTeamsList.remove(PlayerCharacterManager.getList().get(player).getTeam());
-        }
+        playersInTeamsList.get(PlayerCharacterManager.getList().get(player).getTeam()).remove(player);
         checkPlayerCount();
         updateBossBar();
         ((Audience) player).hideBossBar(bossbar);
@@ -444,7 +456,7 @@ public class ArenaInstance {
             case COUNTDOWN ->  {
                 this.arenaState = ArenaState.STARTING;
                 teleportPlayersToArena();
-                World world = playerList.getFirst().getWorld();
+                World world = playerList.toArray(new Player[0])[0].getWorld();
                 world.setGameRule(GameRule.DO_INSOMNIA, false);
                 world.setGameRule(GameRule.MAX_ENTITY_CRAMMING, 0);
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
@@ -455,6 +467,7 @@ public class ArenaInstance {
             }
             case STARTING -> {
                 this.arenaState = ArenaState.RUNNING;
+                this.shardsPerMinute = ArenaSettings.shardsPerMinute;
                 bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-running-format");
                 timer = (int) (ArenaSettings.arenaLengthInMinutes * 60);
             }
@@ -472,7 +485,7 @@ public class ArenaInstance {
     }
 
     public ArenaInstance() {
-        this.playerList = new ArrayList<>();
+        this.playerList = new HashSet<>();
         this.teamColours = new ArrayList<>();
         this.monumentRemainingCount = new HashMap<>();
         this.monumentList = new HashMap<>();
