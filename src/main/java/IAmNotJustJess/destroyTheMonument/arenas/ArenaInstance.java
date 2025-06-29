@@ -14,6 +14,7 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -35,6 +36,8 @@ public class ArenaInstance {
     private ArrayList<Player> playerList;
     private HashMap<TeamColour, ArrayList<Player>> playersInTeamsList;
     private ArrayList<Location> playerPlacedBlocksLocations;
+    private HashMap<Location, Material> playerDestroyedBlocksLocations;
+    private HashMap<Location, BlockData> playerDestroyedBlocksData;
     private TeamColour victor;
     private Location lobbyLocation;
     private int timer;
@@ -350,6 +353,86 @@ public class ArenaInstance {
         player.teleport(RandomElementPicker.getRandomElement(spawnLocations.get(PlayerCharacterManager.getList().get(player).getTeam())));
     }
 
+    public void resetArena() {
+        for (Player player : playerList) {
+            removePlayerFromArena(player);
+        }
+
+        for(TeamColour teamColour : monumentList.keySet()) {
+            for(Location location : monumentList.get(teamColour)) {
+                location.getBlock().setType(Material.CRYING_OBSIDIAN);
+            }
+        }
+
+        int amountOfBlocksPlaced = playerPlacedBlocksLocations.size();
+        int amountOfBlocksBroken = playerDestroyedBlocksLocations.size();
+
+        int maxBlockRemovalPerTick = 50;
+        int loopTimes = amountOfBlocksPlaced / maxBlockRemovalPerTick;
+
+        int i;
+        for(i = 0; i < loopTimes; i++) {
+            int finalAmountOfBlocksPlaced = amountOfBlocksPlaced;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    int value = finalAmountOfBlocksPlaced - maxBlockRemovalPerTick;
+                    for(int j = finalAmountOfBlocksPlaced - 1; j > value; j--) {
+                        playerPlacedBlocksLocations.get(j).getBlock().setType(Material.AIR);
+                        playerPlacedBlocksLocations.removeLast();
+                    }
+                }
+            }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i);
+            amountOfBlocksPlaced -= maxBlockRemovalPerTick;
+        }
+        int finalAmountOfBlocksPlaced = amountOfBlocksPlaced;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for(int j = finalAmountOfBlocksPlaced - 1; j >= 0; j--) {
+                    playerPlacedBlocksLocations.get(j).getBlock().setType(Material.AIR);
+                    playerPlacedBlocksLocations.removeLast();
+                }
+            }
+        }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i);
+
+        loopTimes = amountOfBlocksBroken / maxBlockRemovalPerTick;
+        for(i = 0; i < loopTimes; i++) {
+            int finalAmountOfBlocksBroken = amountOfBlocksBroken;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    int value = finalAmountOfBlocksBroken - maxBlockRemovalPerTick;
+                    int j = finalAmountOfBlocksBroken - 1;
+                    for(Location location : playerDestroyedBlocksLocations.keySet()) {
+                        if (j <= value) return;
+                        location.getBlock().setType(playerDestroyedBlocksLocations.get(location));
+                        location.getBlock().setBlockData(playerDestroyedBlocksData.get(location));
+                        playerDestroyedBlocksLocations.remove(location);
+                        playerDestroyedBlocksData.remove(location);
+                        j--;
+                    }
+                }
+            }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i + 10L);
+            amountOfBlocksBroken -= maxBlockRemovalPerTick;
+        }
+        int finalAmountOfBlocksBroken = amountOfBlocksBroken;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                int j = finalAmountOfBlocksBroken - 1;
+                for(Location location : playerDestroyedBlocksLocations.keySet()) {
+                    if (j <= -1) return;
+                    location.getBlock().setType(playerDestroyedBlocksLocations.get(location));
+                    location.getBlock().setBlockData(playerDestroyedBlocksData.get(location));
+                    playerDestroyedBlocksLocations.remove(location);
+                    playerDestroyedBlocksData.remove(location);
+                    j--;
+                }
+            }
+        }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i + 10L);
+    }
+
     public void advanceState() {
         switch (arenaState) {
             case LOBBY -> {
@@ -420,5 +503,13 @@ public class ArenaInstance {
 
     public void setLobbyLocation(Location lobbyLocation) {
         this.lobbyLocation = lobbyLocation;
+    }
+
+    public HashMap<Location, Material> getPlayerDestroyedBlocksLocations() {
+        return playerDestroyedBlocksLocations;
+    }
+
+    public HashMap<Location, BlockData> getPlayerDestroyedBlocksData() {
+        return playerDestroyedBlocksData;
     }
 }

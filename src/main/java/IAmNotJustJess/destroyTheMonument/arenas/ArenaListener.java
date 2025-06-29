@@ -5,6 +5,7 @@ import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
+import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -15,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,7 +30,10 @@ public class ArenaListener implements Listener {
         ArenaInstance arenaInstance = ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(event.getPlayer()));
         Location location = event.getBlock().getLocation();
         if(!arenaInstance.getPlayerPlacedBlocksLocations().contains(location))  {
-            event.setCancelled(true);
+            arenaInstance.getPlayerDestroyedBlocksLocations().put(location, event.getBlock().getType());
+            arenaInstance.getPlayerDestroyedBlocksData().put(location, event.getBlock().getBlockData());
+            event.setDropItems(false);
+            location.getWorld().dropItem(location, new ItemStack(TeamManager.list.get(PlayerCharacterManager.getList().get(event.getPlayer()).getTeam()).blockType, 1));
             return;
         }
         for(TeamColour teamColour : arenaInstance.getMonumentRemainingCount().keySet()) {
@@ -47,6 +52,7 @@ public class ArenaListener implements Listener {
                 return;
             }
         }
+
         arenaInstance.getPlayerPlacedBlocksLocations().remove(location);
     }
 
