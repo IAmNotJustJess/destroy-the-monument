@@ -29,7 +29,7 @@ public class Skill {
     public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingWhichEffectList;
     public BukkitTask cooldownTask;
 
-    public Skill(String name, String description, ArrayList<String> descriptionTextReplacementList, SkillType type, double cooldown, Effect effect) {
+    public Skill(String name, String description, ArrayList<String> descriptionTextReplacementList, SkillType type, double cooldown) {
 
         this.name = name;
         this.description = description;
@@ -42,7 +42,6 @@ public class Skill {
         this.effectList = new ArrayList<>();
         this.upgradeAffectingWhichEffectList = new HashMap<>();
         this.active = false;
-        this.effectList.add(effect);
 
     }
 
