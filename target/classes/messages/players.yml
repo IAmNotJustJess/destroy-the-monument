@@ -1,7 +1,0 @@
-# Do not change if you do not know what you are doing!
-file-version: 1
-
-assist-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Assisted in killing <player>) <#1a5775>(<totalShards> Total)"
-kill-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Killed <player>) <#1a5775>(<totalShards> Total)"
-monument-broken-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Destroyed opponent's monument) <#1a5775>(<totalShards> Total)"
-passive-shards: "<#19a0e3>+<award> Shards <#80bbd9>(Passive income) <#1a5775>(<totalShards> Total)"
