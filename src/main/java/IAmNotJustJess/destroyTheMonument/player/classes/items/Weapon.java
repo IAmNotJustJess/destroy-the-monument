@@ -40,7 +40,7 @@ public class Weapon {
     public ArrayList<UpgradeSpecialEffectProperty> specialEffectPropertyList;
     public BukkitTask cooldownTask;
 
-    Weapon(String name, String description, WeaponType weaponType, ItemStack item, Integer damage, double cooldown) {
+    public Weapon(String name, String description, WeaponType weaponType, ItemStack item, Integer damage, double cooldown) {
         this.name = name;
         this.description = description;
         this.weaponType = weaponType;

@@ -207,6 +207,16 @@ public class ArenaInstance {
         }
     }
 
+    public void checkForArenaEnd() {
+        for(TeamColour teamColour : playersInTeamsList.keySet()) {
+            if(playersInTeamsList.get(teamColour).isEmpty()) {
+                endArena(getOppositeTeam(teamColour));
+                return;
+            }
+        }
+
+    }
+
     public void endArena(TeamColour winner) {
         for(Player player : playerList) {
             player.setGameMode(GameMode.SPECTATOR);
@@ -272,6 +282,7 @@ public class ArenaInstance {
     };
 
     public void addPlayerToArena(Player player) {
+        if(arenaState != ArenaState.LOBBY) return;
         playerList.add(player);
         PlayerCharacterManager.getList().put(player, new PlayerCharacter(player, (PlayerClass) RandomElementPicker.getRandomElement(PlayerClassManager.getList()).clone(), TeamColour.NONE, 1.0f));
         checkPlayerCount();
@@ -280,11 +291,17 @@ public class ArenaInstance {
     }
 
     public void removePlayerFromArena(Player player) {
+        if(!playerList.contains(player)) return;
         playerList.remove(player);
         playersInTeamsList.get(PlayerCharacterManager.getList().get(player).getTeam()).remove(player);
         checkPlayerCount();
         updateBossBar();
         ((Audience) player).hideBossBar(bossbar);
+        switch(arenaState) {
+            case STARTING, RUNNING -> {
+                checkForArenaEnd();
+            }
+        }
     }
 
     private void updateBossBar() {
@@ -441,6 +458,7 @@ public class ArenaInstance {
                     playerDestroyedBlocksData.remove(location);
                     j--;
                 }
+                advanceState();
             }
         }.runTaskLaterAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 20L * i + 10L);
     }
@@ -477,6 +495,7 @@ public class ArenaInstance {
             }
             case ENDING -> {
                 this.arenaState = ArenaState.CLEARING;
+                resetArena();
             }
             case CLEARING -> {
                 this.arenaState = ArenaState.LOBBY;
@@ -492,6 +511,9 @@ public class ArenaInstance {
         this.playerPlacedBlocksLocations = new ArrayList<>();
         this.playersInTeamsList = new HashMap<>();
         this.spawnLocations = new HashMap<>();
+        this.playerPlacedBlocksLocations = new ArrayList<>();
+        this.playerDestroyedBlocksData = new HashMap<>();
+        this.playerDestroyedBlocksLocations = new HashMap<>();
         this.arenaState = ArenaState.LOBBY;
     }
     public HashMap<TeamColour, Integer> getMonumentRemainingCount() {

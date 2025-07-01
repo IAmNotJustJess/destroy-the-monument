@@ -35,9 +35,9 @@ public class Effect {
     public String particleSerializedString;
     public EffectParticleSpawnLocation particleSpawnLocation;
 
-    Effect(EffectType effectType, EffectApplicationType effectApplicationType,
-           double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
-           String soundSerliaziedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation) {
+    public Effect(EffectType effectType, EffectApplicationType effectApplicationType,
+                  double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
+                  String soundSerliaziedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
         this.longevity = longevity;
