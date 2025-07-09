@@ -31,13 +31,13 @@ public class Effect {
     public int longevityAfterUpgrades;
     public int baseLongevity;
     public boolean removeOnDeath;
-    public String soundSerliaziedString;
+    public String soundSerializedString;
     public String particleSerializedString;
     public EffectParticleSpawnLocation particleSpawnLocation;
 
     public Effect(EffectType effectType, EffectApplicationType effectApplicationType,
                   double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
-                  String soundSerliaziedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation) {
+                  String soundSerializedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
         this.longevity = longevity;
@@ -52,7 +52,7 @@ public class Effect {
         this.tickEveryServerTicks = tickEveryServerTicks;
         this.removeOnDeath = removeOnDeath;
         this.delay = delay;
-        this.soundSerliaziedString = soundSerliaziedString;
+        this.soundSerializedString = soundSerializedString;
         this.particleSerializedString = particleSerializedString;
         this.particleSpawnLocation = particleSpawnLocation;
         this.potionEffect = null;
@@ -60,7 +60,7 @@ public class Effect {
 
     Effect(EffectType effectType, EffectApplicationType effectApplicationType,
            double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
-           String soundSerliaziedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation,
+           String soundSerializedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation,
            PotionEffect potionEffect) {
         this.effectType = effectType;
         this.effectApplicationType = effectApplicationType;
@@ -76,7 +76,7 @@ public class Effect {
         this.tickEveryServerTicks = tickEveryServerTicks;
         this.removeOnDeath = removeOnDeath;
         this.delay = delay;
-        this.soundSerliaziedString = soundSerliaziedString;
+        this.soundSerializedString = soundSerializedString;
         this.particleSerializedString = particleSerializedString;
         this.particleSpawnLocation = particleSpawnLocation;
         this.potionEffect = potionEffect;
@@ -87,7 +87,7 @@ public class Effect {
         new BukkitRunnable() {
             @Override
             public void run() {
-                EffectSerializers.soundDeserialize(soundSerliaziedString, caster.getPlayer().getLocation());
+                EffectSerializers.soundDeserialize(soundSerializedString, caster.getPlayer().getLocation());
                 switch(particleSpawnLocation) {
                     case USER -> {
                         EffectSerializers.particleDeserialize(particleSerializedString, caster.getPlayer().getLocation());

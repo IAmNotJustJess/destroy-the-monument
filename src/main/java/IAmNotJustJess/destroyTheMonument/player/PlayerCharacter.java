@@ -59,7 +59,7 @@ public class PlayerCharacter {
         this.player = player;
         this.chosenPlayerClass = chosenPlayerClass;
         this.team = team;
-        this.maxHealth = chosenPlayerClass.HP;
+        this.maxHealth = chosenPlayerClass.healthPoints;
         this.health = maxHealth;
         this.baseMaxHealth = maxHealth;
         this.maxHealthAfterUpgrades = maxHealth;

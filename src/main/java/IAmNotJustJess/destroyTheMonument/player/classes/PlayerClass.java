@@ -10,7 +10,7 @@ public class PlayerClass implements Cloneable {
     public String name;
     public String description;
     public PlayerClassType playerClassType;
-    public int HP;
+    public int healthPoints;
     public float movementSpeed;
     public Skill passiveSkill;
     public Skill activeSkill;
@@ -19,11 +19,11 @@ public class PlayerClass implements Cloneable {
     public UpgradeTree upgradeTree;
     public Material guiMaterial;
 
-    PlayerClass(String name, String description, PlayerClassType playerClassType, int HP, float movementSpeed, Skill passiveSkill, Skill activeSkill, Skill ultimateSkill, Loadout loadout, UpgradeTree upgradeTree, Material guiMaterial) {
+    PlayerClass(String name, String description, PlayerClassType playerClassType, int healthPoints, float movementSpeed, Skill passiveSkill, Skill activeSkill, Skill ultimateSkill, Loadout loadout, UpgradeTree upgradeTree, Material guiMaterial) {
         this.name = name;
         this.description = description;
         this.playerClassType = playerClassType;
-        this.HP = HP;
+        this.healthPoints = healthPoints;
         this.movementSpeed = movementSpeed;
         this.passiveSkill = passiveSkill;
         this.activeSkill = activeSkill;

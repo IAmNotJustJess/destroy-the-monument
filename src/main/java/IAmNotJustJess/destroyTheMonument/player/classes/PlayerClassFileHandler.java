@@ -10,6 +10,7 @@ import IAmNotJustJess.destroyTheMonument.player.classes.items.WeaponType;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.SkillType;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.*;
+import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,12 +18,172 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerClassFileHandler {
 
     public void save() {
+
+        Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+
+        for(PlayerClass playerClass : PlayerClassManager.getList()) {
+
+            File configFile = new File(plugin.getDataFolder() + File.separator + "classes" + File.separator + plugin.getName());
+            FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
+
+            fileConfiguration.set("name", playerClass.name);
+            fileConfiguration.set("description", playerClass.description);
+            fileConfiguration.set("playerClassType", playerClass.playerClassType);
+            fileConfiguration.set("hp", playerClass.healthPoints);
+            fileConfiguration.set("movementSpeed", playerClass.movementSpeed);
+
+            fileConfiguration.set("passive.name", playerClass.passiveSkill.name);
+            fileConfiguration.set("passive.description", playerClass.passiveSkill.description);
+            fileConfiguration.set("passive.descriptionTextReplacements", playerClass.passiveSkill.getDescriptionTextReplacementList());
+            fileConfiguration.set("passive.skillType", playerClass.passiveSkill.type);
+            fileConfiguration.set("passive.cooldown", playerClass.passiveSkill.cooldown);
+
+            fileConfiguration.set("active.name", playerClass.activeSkill.name);
+            fileConfiguration.set("active.description", playerClass.activeSkill.description);
+            fileConfiguration.set("active.descriptionTextReplacements", playerClass.activeSkill.getDescriptionTextReplacementList());
+            fileConfiguration.set("active.skillType", playerClass.activeSkill.type);
+            fileConfiguration.set("active.cooldown", playerClass.activeSkill.cooldown);
+
+            fileConfiguration.set("ultimate.name", playerClass.ultimateSkill.name);
+            fileConfiguration.set("ultimate.description", playerClass.ultimateSkill.description);
+            fileConfiguration.set("ultimate.descriptionTextReplacements", playerClass.ultimateSkill.getDescriptionTextReplacementList());
+            fileConfiguration.set("ultimate.skillType", playerClass.ultimateSkill.type);
+            fileConfiguration.set("ultimate.cooldown", playerClass.ultimateSkill.cooldown);
+
+            fileConfiguration.set("loadout.helmet", playerClass.loadout.helmet);
+            fileConfiguration.set("loadout.chestplate", playerClass.loadout.chestplate);
+            fileConfiguration.set("loadout.leggings", playerClass.loadout.leggings);
+            fileConfiguration.set("loadout.boots", playerClass.loadout.boots);
+
+            fileConfiguration.set("loadout.mainWeapon.name", playerClass.loadout.mainWeapon.name);
+            fileConfiguration.set("loadout.mainWeapon.description", playerClass.loadout.mainWeapon.description);
+            fileConfiguration.set("loadout.mainWeapon.weaponType", playerClass.loadout.mainWeapon.weaponType);
+            fileConfiguration.set("loadout.mainWeapon.itemStack", playerClass.loadout.mainWeapon.item);
+            fileConfiguration.set("loadout.mainWeapon.cooldown", playerClass.loadout.mainWeapon.cooldown);
+
+            fileConfiguration.set("loadout.secondaryWeapon.name", playerClass.loadout.secondaryWeapon.name);
+            fileConfiguration.set("loadout.secondaryWeapon.description", playerClass.loadout.secondaryWeapon.description);
+            fileConfiguration.set("loadout.secondaryWeapon.weaponType", playerClass.loadout.secondaryWeapon.weaponType);
+            fileConfiguration.set("loadout.secondaryWeapon.itemStack", playerClass.loadout.secondaryWeapon.item);
+            fileConfiguration.set("loadout.secondaryWeapon.cooldown", playerClass.loadout.secondaryWeapon.cooldown);
+
+            fileConfiguration.set("loadout.blockAmount", playerClass.loadout.blockAmount);
+
+            int i = 0;
+            for(Effect effect : playerClass.passiveSkill.effectList) {
+                fileConfiguration.set("passive.effects." + i + ".effectType", effect.effectType);
+                fileConfiguration.set("passive.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("passive.effects." + i + ".strength", effect.strength);
+                fileConfiguration.set("passive.effects." + i + ".range", effect.range);
+                fileConfiguration.set("passive.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
+                fileConfiguration.set("passive.effects." + i + ".longevity", effect.longevity);
+                fileConfiguration.set("passive.effects." + i + ".delay", effect.delay);
+                fileConfiguration.set("passive.effects." + i + ".removeOnDeath", effect.removeOnDeath);
+                fileConfiguration.set("passive.effects." + i + ".soundSerializedString", effect.soundSerializedString);
+                fileConfiguration.set("passive.effects." + i + ".particleSerializedString", effect.particleSerializedString);
+                fileConfiguration.set("passive.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                i++;
+            }
+
+            i = 0;
+            for(Effect effect : playerClass.activeSkill.effectList) {
+                fileConfiguration.set("active.effects." + i + ".effectType", effect.effectType);
+                fileConfiguration.set("active.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("active.effects." + i + ".strength", effect.strength);
+                fileConfiguration.set("active.effects." + i + ".range", effect.range);
+                fileConfiguration.set("active.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
+                fileConfiguration.set("active.effects." + i + ".longevity", effect.longevity);
+                fileConfiguration.set("active.effects." + i + ".delay", effect.delay);
+                fileConfiguration.set("active.effects." + i + ".removeOnDeath", effect.removeOnDeath);
+                fileConfiguration.set("active.effects." + i + ".soundSerializedString", effect.soundSerializedString);
+                fileConfiguration.set("active.effects." + i + ".particleSerializedString", effect.particleSerializedString);
+                fileConfiguration.set("active.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                i++;
+            }
+
+            i = 0;
+            for(Effect effect : playerClass.ultimateSkill.effectList) {
+                fileConfiguration.set("ultimate.effects." + i + ".effectType", effect.effectType);
+                fileConfiguration.set("ultimate.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("ultimate.effects." + i + ".strength", effect.strength);
+                fileConfiguration.set("ultimate.effects." + i + ".range", effect.range);
+                fileConfiguration.set("ultimate.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
+                fileConfiguration.set("ultimate.effects." + i + ".longevity", effect.longevity);
+                fileConfiguration.set("ultimate.effects." + i + ".delay", effect.delay);
+                fileConfiguration.set("ultimate.effects." + i + ".removeOnDeath", effect.removeOnDeath);
+                fileConfiguration.set("ultimate.effects." + i + ".soundSerializedString", effect.soundSerializedString);
+                fileConfiguration.set("ultimate.effects." + i + ".particleSerializedString", effect.particleSerializedString);
+                fileConfiguration.set("ultimate.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                i++;
+            }
+
+            i = 0;
+            for(Effect effect : playerClass.loadout.mainWeapon.effectList) {
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".effectType", effect.effectType);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".strength", effect.strength);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".range", effect.range);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".longevity", effect.longevity);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".delay", effect.delay);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".removeOnDeath", effect.removeOnDeath);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".soundSerializedString", effect.soundSerializedString);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".particleSerializedString", effect.particleSerializedString);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                i++;
+            }
+
+            i = 0;
+            for(Effect effect : playerClass.loadout.secondaryWeapon.effectList) {
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".effectType", effect.effectType);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".strength", effect.strength);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".range", effect.range);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".longevity", effect.longevity);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".delay", effect.delay);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".removeOnDeath", effect.removeOnDeath);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".soundSerializedString", effect.soundSerializedString);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".particleSerializedString", effect.particleSerializedString);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                i++;
+            }
+
+            for(int j = 0; j < 8; j++) {
+                i = 0;
+                UpgradeTreeLocation upgradeTreeLocation = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
+                for(Upgrade upgrade : playerClass.upgradeTree.getUpgrade(upgradeTreeLocation)) {
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".name", upgrade.name);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".description", upgrade.description);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".maxLevels", upgrade.maxLevels);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".upgradeAffection", upgrade.upgradeAffection);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".upgradeType", upgrade.upgradeType);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".maxStacks", upgrade.maxStacks);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".guiMaterial", upgrade.guiMaterial);
+
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".passiveAffection", playerClass.passiveSkill.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".activeAffection", playerClass.activeSkill.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".ultimateAffection", playerClass.ultimateSkill.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".mainWeaponAffection", playerClass.loadout.mainWeapon.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".secondaryWeaponAffection", playerClass.loadout.secondaryWeapon.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    i++;
+                }
+            }
+
+            try {
+                fileConfiguration.save(configFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
 
     }
 
@@ -184,8 +345,8 @@ public class PlayerClassFileHandler {
                         fileConfiguration.getString("loadout.secondaryWeapon.effects." + path + ".particleSerializedString"),
                         EffectParticleSpawnLocation.valueOf("loadout.secondaryWeapon.effects." + path + ".particleSpawnLocation")
                     );
-                    playerClass.loadout.mainWeapon.effectList.add(effect);
-                    playerClass.loadout.mainWeapon.specialEffectPropertyList.add(UpgradeSpecialEffectProperty.valueOf(fileConfiguration.getString("loadout.secondaryWeapon.effects." + path + ".specialEffectProperty")));
+                    playerClass.loadout.secondaryWeapon.effectList.add(effect);
+                    playerClass.loadout.secondaryWeapon.specialEffectPropertyList.add(UpgradeSpecialEffectProperty.valueOf(fileConfiguration.getString("loadout.secondaryWeapon.effects." + path + ".specialEffectProperty")));
                 }
             }
 
@@ -204,7 +365,7 @@ public class PlayerClassFileHandler {
                                 UpgradeAffection.valueOf(fileConfiguration.getString("upgradeTree." + path + "." + path2 + ".upgradeAffection")),
                                 UpgradeType.valueOf(fileConfiguration.getString("upgradeTree." + path + "." + path2 + ".upgradeType")),
                                 fileConfiguration.getInt("upgradeTree." + path + "." + path2 + ".maxStacks"),
-                                Material.valueOf(fileConfiguration.getString("upgradeTree." + path + "." + path2 + ".upgradeType"))
+                                Material.valueOf(fileConfiguration.getString("upgradeTree." + path + "." + path2 + ".guiMaterial"))
                             );
                             upgrades.add(upgrade);
                             playerClass.passiveSkill.upgradeAffectingWhichEffectList.put(upgradeTreeLocation, (ArrayList<Integer>) fileConfiguration.getIntegerList("upgradeTree." + path + "." + path2 + "." + "passiveAffection"));
@@ -218,6 +379,8 @@ public class PlayerClassFileHandler {
                 }
             }
 
+            playerClass.upgradeTree = upgradeTree;
+            PlayerClassManager.getList().add(playerClass);
         }
 
     }

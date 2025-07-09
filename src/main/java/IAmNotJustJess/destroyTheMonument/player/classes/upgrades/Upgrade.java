@@ -10,15 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Upgrade {
-    private String name;
-    private String description;
-    private int currentLevel;
-    private int maxLevels;
-    private UpgradeAffection upgradeAffection;
-    private UpgradeType upgradeType;
-    private int maxStacks;
-    private int stackCount;
-    private Material guiMaterial;
+    public String name;
+    public String description;
+    public int currentLevel;
+    public int maxLevels;
+    public UpgradeAffection upgradeAffection;
+    public UpgradeType upgradeType;
+    public int maxStacks;
+    public int stackCount;
+    public Material guiMaterial;
     public HashMap<Integer, List<String>> cachedGuiDescriptionsForUpgrades;
     public List<String> cachedGuiDescriptionsForClassInfo;
     public ArrayList<ArrayList<String>> descriptionTextReplacementList;
