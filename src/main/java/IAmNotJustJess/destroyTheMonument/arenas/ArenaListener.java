@@ -8,6 +8,7 @@ import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -37,7 +38,8 @@ public class ArenaListener implements Listener {
             return;
         }
         for(TeamColour teamColour : arenaInstance.getMonumentRemainingCount().keySet()) {
-            if(teamColour == PlayerCharacterManager.getList().get(event.getPlayer()).getTeam()
+            if(event.getBlock().getType() == Material.OBSIDIAN
+            && teamColour == PlayerCharacterManager.getList().get(event.getPlayer()).getTeam()
             && arenaInstance.getMonumentList().get(teamColour).contains(location)) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(MiniMessageSerializers.deserializeToString(
@@ -46,7 +48,7 @@ public class ArenaListener implements Listener {
                 );
                 return;
             }
-            if(arenaInstance.getMonumentList().get(teamColour).contains(location)) {
+            if(event.getBlock().getType() == Material.OBSIDIAN && arenaInstance.getMonumentList().get(teamColour).contains(location)) {
                 event.setCancelled(true);
                 arenaInstance.breakMonument(event.getPlayer(), teamColour, event.getBlock().getLocation());
                 return;

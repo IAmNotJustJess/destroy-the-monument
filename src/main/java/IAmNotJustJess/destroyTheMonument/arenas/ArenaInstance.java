@@ -133,8 +133,8 @@ public class ArenaInstance {
         monumentRemainingCount.put(brokenTeamColour, remainingMonuments);
 
         location.getWorld().spawnParticle(Particle.BLOCK, location, 25, 1, 1, 1, 0.25, location.getBlock().getBlockData());
-        location.getWorld().spawnParticle(Particle.LAVA, location, 3, 0.1, 0.1, 0.1, 0.25, location.getBlock().getBlockData());
-        location.getWorld().spawnParticle(Particle.POOF, location, 15, 0.1, 0.1, 0.1, 0.25, location.getBlock().getBlockData());
+        location.getWorld().spawnParticle(Particle.LAVA, location, 3, 0.1, 0.1, 0.1, 0.25);
+        location.getWorld().spawnParticle(Particle.POOF, location, 15, 0.1, 0.1, 0.1, 0.25);
         location.getWorld().strikeLightningEffect(location);
 
         location.getBlock().setType(Material.AIR);

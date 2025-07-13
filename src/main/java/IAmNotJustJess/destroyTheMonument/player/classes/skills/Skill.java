@@ -18,7 +18,6 @@ public class Skill {
 
     public String name;
     public String description;
-    private ArrayList<String> descriptionTextReplacementList;
     public SkillType type;
     private double currentCooldown;
     public boolean active;
@@ -29,11 +28,10 @@ public class Skill {
     public HashMap<UpgradeTreeLocation, ArrayList<Integer>> upgradeAffectingWhichEffectList;
     public BukkitTask cooldownTask;
 
-    public Skill(String name, String description, ArrayList<String> descriptionTextReplacementList, SkillType type, double cooldown) {
+    public Skill(String name, String description, SkillType type, double cooldown) {
 
         this.name = name;
         this.description = description;
-        this.descriptionTextReplacementList = descriptionTextReplacementList;
         this.type = type;
         this.cooldown = cooldown;
         this.cooldownAfterUpgrades = cooldown;
@@ -116,9 +114,6 @@ public class Skill {
 
     public List<String> getDescription() {
         String string = description;
-        for(int i = 0; i < descriptionTextReplacementList.size(); i++) {
-            string = string.replaceAll("<"+i+">", descriptionTextReplacementList.get(i));
-        }
         return MiniMessageSerializers.deserializeMultilineToString(string);
     }
 
@@ -132,13 +127,5 @@ public class Skill {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ArrayList<String> getDescriptionTextReplacementList() {
-        return descriptionTextReplacementList;
-    }
-
-    public void setDescriptionTextReplacementList(ArrayList<String> descriptionTextReplacementList) {
-        this.descriptionTextReplacementList = descriptionTextReplacementList;
     }
 }

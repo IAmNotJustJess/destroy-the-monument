@@ -47,19 +47,16 @@ public class PlayerClassFileHandler {
 
             fileConfiguration.set("passive.name", playerClass.passiveSkill.name);
             fileConfiguration.set("passive.description", playerClass.passiveSkill.description);
-            fileConfiguration.set("passive.descriptionTextReplacements", playerClass.passiveSkill.getDescriptionTextReplacementList());
             fileConfiguration.set("passive.skillType", playerClass.passiveSkill.type);
             fileConfiguration.set("passive.cooldown", playerClass.passiveSkill.cooldown);
 
             fileConfiguration.set("active.name", playerClass.activeSkill.name);
             fileConfiguration.set("active.description", playerClass.activeSkill.description);
-            fileConfiguration.set("active.descriptionTextReplacements", playerClass.activeSkill.getDescriptionTextReplacementList());
             fileConfiguration.set("active.skillType", playerClass.activeSkill.type);
             fileConfiguration.set("active.cooldown", playerClass.activeSkill.cooldown);
 
             fileConfiguration.set("ultimate.name", playerClass.ultimateSkill.name);
             fileConfiguration.set("ultimate.description", playerClass.ultimateSkill.description);
-            fileConfiguration.set("ultimate.descriptionTextReplacements", playerClass.ultimateSkill.getDescriptionTextReplacementList());
             fileConfiguration.set("ultimate.skillType", playerClass.ultimateSkill.type);
             fileConfiguration.set("ultimate.cooldown", playerClass.ultimateSkill.cooldown);
 
@@ -227,21 +224,18 @@ public class PlayerClassFileHandler {
                 new Skill(
                     fileConfiguration.getString("passive.name"),
                     fileConfiguration.getString("passive.description"),
-                    (ArrayList<String>) fileConfiguration.getStringList("passive.descriptionTextReplacements"),
                     SkillType.valueOf(fileConfiguration.getString("passive.skillType")),
                     fileConfiguration.getDouble("passive.cooldown")
                 ),
                 new Skill(
                     fileConfiguration.getString("active.name"),
                     fileConfiguration.getString("active.description"),
-                    (ArrayList<String>) fileConfiguration.getStringList("active.descriptionTextReplacements"),
                     SkillType.valueOf(fileConfiguration.getString("active.skillType")),
                     fileConfiguration.getDouble("active.cooldown")
                 ),
                 new Skill(
                     fileConfiguration.getString("ultimate.name"),
                     fileConfiguration.getString("ultimate.description"),
-                    (ArrayList<String>) fileConfiguration.getStringList("ultimate.descriptionTextReplacements"),
                     SkillType.valueOf(fileConfiguration.getString("ultimate.skillType")),
                     fileConfiguration.getDouble("ultimate.cooldown")
                 ),
