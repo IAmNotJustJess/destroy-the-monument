@@ -10,6 +10,8 @@ import IAmNotJustJess.destroyTheMonument.player.classes.items.WeaponType;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.SkillType;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.*;
+import IAmNotJustJess.destroyTheMonument.utility.ConsoleDebugSending;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,13 +26,17 @@ import java.util.Objects;
 
 public class PlayerClassFileHandler {
 
-    public void save() {
+    public static void save() {
 
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+        ConsoleDebugSending.send(
+            "send-save-messages",
+            MiniMessageSerializers.deserializeToString("<#dbd814>Saving Player Classes...")
+        );
 
         for(PlayerClass playerClass : PlayerClassManager.getList()) {
 
-            File configFile = new File(plugin.getDataFolder() + File.separator + "classes" + File.separator + plugin.getName());
+            File configFile = new File(plugin.getDataFolder() + File.separator + "classes" + File.separator + playerClass.name + ".yml");
             FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
 
             fileConfiguration.set("name", playerClass.name);
@@ -179,7 +185,15 @@ public class PlayerClassFileHandler {
 
             try {
                 fileConfiguration.save(configFile);
+                ConsoleDebugSending.send(
+                    "send-save-messages",
+                    MiniMessageSerializers.deserializeToString("<#14db4c>Successfully saved the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
+                );
             } catch (IOException e) {
+                ConsoleDebugSending.send(
+                    "send-save-messages",
+                    MiniMessageSerializers.deserializeToString("<#cc2b2b>Failed to save the<#ffffff>" + playerClass.name + "<#cc2b2b>player class!")
+                );
                 throw new RuntimeException(e);
             }
 
@@ -187,9 +201,14 @@ public class PlayerClassFileHandler {
 
     }
 
-    public void read() {
+    public static void load() {
 
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+
+        ConsoleDebugSending.send(
+            "send-load-messages",
+            MiniMessageSerializers.deserializeToString("<#dbd814>Loading Player Classes...")
+        );
 
         File[] configFolder = new File(plugin.getDataFolder() + File.separator + "classes").listFiles();
 
@@ -381,6 +400,10 @@ public class PlayerClassFileHandler {
 
             playerClass.upgradeTree = upgradeTree;
             PlayerClassManager.getList().add(playerClass);
+            ConsoleDebugSending.send(
+                "send-load-messages",
+                MiniMessageSerializers.deserializeToString("<#14db4c>Successfully loaded the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
+            );
         }
 
     }

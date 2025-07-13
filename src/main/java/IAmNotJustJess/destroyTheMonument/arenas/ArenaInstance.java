@@ -29,10 +29,11 @@ import java.time.Duration;
 import java.util.*;
 
 public class ArenaInstance {
+    private String arenaName;
+    private ArrayList<TeamColour> teamColours;
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
     private HashMap<TeamColour, Integer> monumentRemainingCount;
     private HashMap<TeamColour, ArrayList<Location>> spawnLocations;
-    private ArrayList<TeamColour> teamColours;
     private HashSet<Player> playerList;
     private HashMap<TeamColour, HashSet<Player>> playersInTeamsList;
     private ArrayList<Location> playerPlacedBlocksLocations;
@@ -47,6 +48,8 @@ public class ArenaInstance {
     private BukkitTask tickTask;
     private String bossbarFormat;
     private BossBar bossbar;
+
+
 
     public void sendMessageGlobally(TextComponent textComponent) {
         for(Player player : playerList) {
@@ -503,7 +506,8 @@ public class ArenaInstance {
         }
     }
 
-    public ArenaInstance() {
+    public ArenaInstance(String arenaName) {
+        this.arenaName = arenaName;
         this.playerList = new HashSet<>();
         this.teamColours = new ArrayList<>();
         this.monumentRemainingCount = new HashMap<>();
@@ -522,6 +526,14 @@ public class ArenaInstance {
 
     public HashMap<TeamColour, ArrayList<Location>> getMonumentList() {
         return monumentList;
+    }
+
+    public ArrayList<TeamColour> getTeamColours() {
+        return teamColours;
+    }
+
+    public HashMap<TeamColour, ArrayList<Location>> getSpawnLocations() {
+        return spawnLocations;
     }
 
     public ArrayList<Location> getPlayerPlacedBlocksLocations() {
@@ -546,5 +558,9 @@ public class ArenaInstance {
 
     public HashMap<Location, BlockData> getPlayerDestroyedBlocksData() {
         return playerDestroyedBlocksData;
+    }
+
+    public String getArenaName() {
+        return arenaName;
     }
 }

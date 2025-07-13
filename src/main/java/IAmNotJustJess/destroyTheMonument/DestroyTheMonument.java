@@ -1,10 +1,12 @@
 package IAmNotJustJess.destroyTheMonument;
 
+import IAmNotJustJess.destroyTheMonument.arenas.ArenaFileHandler;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaListener;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaSettings;
 import IAmNotJustJess.destroyTheMonument.commands.GuiDebugCommand;
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
+import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassFileHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,12 +22,17 @@ public final class DestroyTheMonument extends JavaPlugin {
 
         ArenaSettings.loadSettings();
 
+        ArenaFileHandler.load();
+        PlayerClassFileHandler.load();
+
         Bukkit.getServer().getPluginManager().registerEvents(new ArenaListener(), this);
 
     }
 
     @Override
     public void onDisable() {
+        ArenaFileHandler.save();
+        PlayerClassFileHandler.save();
         // Plugin shutdown logic
     }
 }
