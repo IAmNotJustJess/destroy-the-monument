@@ -58,7 +58,7 @@ public class Effect {
         this.potionEffect = null;
     }
 
-    Effect(EffectType effectType, EffectApplicationType effectApplicationType,
+    public Effect(EffectType effectType, EffectApplicationType effectApplicationType,
            double strength, double range, int tickEveryServerTicks, int longevity, long delay, boolean removeOnDeath,
            String soundSerializedString, String particleSerializedString, EffectParticleSpawnLocation particleSpawnLocation,
            PotionEffect potionEffect) {
