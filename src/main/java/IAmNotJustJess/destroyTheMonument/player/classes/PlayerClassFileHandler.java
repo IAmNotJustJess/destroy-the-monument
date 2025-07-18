@@ -200,6 +200,8 @@ public class PlayerClassFileHandler {
 
     public static void load() {
 
+        if(!PlayerClassDefaultClasses.load()) return;
+
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
 
         ConsoleDebugSending.send(
@@ -260,6 +262,11 @@ public class PlayerClassFileHandler {
                         fileConfiguration.getInt("loadout.secondaryWeapon.damage"),
                         fileConfiguration.getDouble("loadout.secondaryWeapon.cooldown")
                     ),
+                    new ArrayList<>() {{
+                        for(String path : Objects.requireNonNull(fileConfiguration.getConfigurationSection("loadout.additionalItems")).getKeys(false)) {
+                            add(fileConfiguration.getItemStack("loadout.additionalItems." + path));
+                        }
+                    }},
                     fileConfiguration.getInt("loadout.blockAmount")
                 ),
                 new UpgradeTree(),

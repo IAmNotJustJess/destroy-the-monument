@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerClassDefaultClasses {
-    public static void load() {
+    public static boolean load() {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
 
         File folder = new File(plugin.getDataFolder() + File.separator + "classes");
 
         if(!(Objects.isNull(folder.listFiles()) && Objects.requireNonNull(folder.listFiles()).length == 0)) {
             ConsoleDebugSending.send("send-load-messages", "<#14db4c>Located player classes files!");
-            return;
+            return false;
         }
 
         ConsoleDebugSending.send("send-load-messages", "<#dbd814>Couldn't locate any player classes files! Creating default configuration.");
@@ -149,6 +149,10 @@ public class PlayerClassDefaultClasses {
                     0,
                     0.0
                 ),
+                new ArrayList<>() {{
+                    add(new ItemStack(Material.IRON_PICKAXE, 1));
+                    add(new ItemStack(Material.STONE_AXE, 1));
+                }},
                 45
             ),
             new UpgradeTree() {{
@@ -501,5 +505,6 @@ public class PlayerClassDefaultClasses {
 
         PlayerClassFileHandler.save();
 
+        return true;
     }
 }
