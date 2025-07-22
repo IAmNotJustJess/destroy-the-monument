@@ -18,6 +18,7 @@ import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -125,6 +126,29 @@ public class PlayerCharacter {
 
     public void updatePlayerSpeed() {
         player.setWalkSpeed(movementSpeed / 5);
+    }
+
+    public void obtainLoadout() {
+        player.getInventory().clear();
+
+        player.getInventory().setHelmet(chosenPlayerClass.loadout.helmet);
+        player.getInventory().setChestplate(chosenPlayerClass.loadout.chestplate);
+        player.getInventory().setLeggings(chosenPlayerClass.loadout.leggings);
+        player.getInventory().setBoots(chosenPlayerClass.loadout.boots);
+
+        player.getInventory().setItem(0, chosenPlayerClass.loadout.mainWeapon.generateItem());
+        player.getInventory().setItem(1, chosenPlayerClass.loadout.secondaryWeapon.generateItem());
+
+        player.getInventory().setItem(2, new ItemStack(TeamManager.list.get(team).blockType, chosenPlayerClass.loadout.blockAmount));
+        player.getInventory().setItem(3, chosenPlayerClass.activeSkill.generateItem());
+        player.getInventory().setItem(4, chosenPlayerClass.passiveSkill.generateItem());
+
+
+        int i = 5;
+        for(ItemStack itemStack : chosenPlayerClass.loadout.additionalItems) {
+            player.getInventory().setItem(i, itemStack);
+            i++;
+        }
     }
 
     public int buyUpgrade(UpgradeTreeLocation location) {
@@ -1102,6 +1126,7 @@ public class PlayerCharacter {
         }
 
         player.setGameMode(GameMode.SURVIVAL);
+        obtainLoadout();
 
         ArenaManager.arenaList.get(ArenaManager.playerArenaIdList.get(player)).teleportPlayerToArena(player);
 

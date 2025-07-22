@@ -1,7 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.player;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
-import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
+import IAmNotJustJess.destroyTheMonument.player.classes.items.WeaponType;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
@@ -36,22 +37,53 @@ public class PlayerCharacterListener implements Listener {
 
         switch(event.getCause()) {
             case PROJECTILE -> {
-                if(!(ArenaManager.playerArenaIdList.containsKey((Player) projectile.getShooter()) || !(ArenaManager.playerArenaIdList.containsKey((victim))))) return;
-                damage = Objects.requireNonNull(projectile.getPersistentDataContainer().get(new NamespacedKey(plugin, "projectileDamage"), PersistentDataType.INTEGER));
+                if(!(PlayerCharacterManager.getList().containsKey((Player) projectile.getShooter()) || !(PlayerCharacterManager.getList().containsKey((victim))))) return;
+                if(projectile.getPersistentDataContainer().has(new NamespacedKey(plugin, "projetileDamage"))) {
+                    damage = Objects.requireNonNull(projectile.getPersistentDataContainer().get(new NamespacedKey(plugin, "projectileDamage"), PersistentDataType.INTEGER));
+                }
+                else {
+                    damage = 0;
+                }
                 event.setDamage(0.0);
                 victimCharacter.setLastAttacked(PlayerCharacterManager.getList().get((Player) projectile.getShooter()));
                 victimCharacter.dealDamage(damage);
             }
             case ENTITY_ATTACK -> {
-                if (!(ArenaManager.playerArenaIdList.containsKey(damager) || !(ArenaManager.playerArenaIdList.containsKey((victim))))) return;
-                damage = Objects.requireNonNull(Objects.requireNonNull(damager.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "damage"), PersistentDataType.INTEGER));
+                if (!(PlayerCharacterManager.getList().containsKey(damager) || !(PlayerCharacterManager.getList().containsKey((victim))))) return;
+                PlayerCharacter damagerCharacter = PlayerCharacterManager.getList().get(damager);
+                String weaponTypeString = Objects.requireNonNull(Objects.requireNonNull(damager.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "weaponType"), PersistentDataType.STRING));
+                WeaponType weaponType = WeaponType.valueOf(weaponTypeString);
+                switch (weaponType) {
+                    case MAIN_MELEE -> {
+                        damage = damagerCharacter.getChosenClass().loadout.mainWeapon.damage;
+                    }
+                    case SECONDARY_MELEE -> {
+                        damage = damagerCharacter.getChosenClass().loadout.secondaryWeapon.damage;
+                    }
+                    default -> {
+                        damage = 1;
+                    }
+                }
                 event.setDamage(0.0);
                 victimCharacter.setLastAttacked(PlayerCharacterManager.getList().get(damager));
                 victimCharacter.dealDamage(damage);
             }
             case ENTITY_SWEEP_ATTACK -> {
-                if (!(ArenaManager.playerArenaIdList.containsKey(damager) || !(ArenaManager.playerArenaIdList.containsKey((victim))))) return;
-                damage = Objects.requireNonNull(Objects.requireNonNull(damager.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "damage"), PersistentDataType.INTEGER));
+                if (!(PlayerCharacterManager.getList().containsKey(damager) || !(PlayerCharacterManager.getList().containsKey((victim))))) return;
+                PlayerCharacter damagerCharacter = PlayerCharacterManager.getList().get(damager);
+                String weaponTypeString = Objects.requireNonNull(Objects.requireNonNull(damager.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "weaponType"), PersistentDataType.STRING));
+                WeaponType weaponType = WeaponType.valueOf(weaponTypeString);
+                switch (weaponType) {
+                    case MAIN_MELEE -> {
+                        damage = damagerCharacter.getChosenClass().loadout.mainWeapon.damage;
+                    }
+                    case SECONDARY_MELEE -> {
+                        damage = damagerCharacter.getChosenClass().loadout.secondaryWeapon.damage;
+                    }
+                    default -> {
+                        damage = 1;
+                    }
+                }
                 event.setDamage(0.0);
                 victimCharacter.setLastAttacked(PlayerCharacterManager.getList().get(damager));
                 victimCharacter.dealDamage(damage / 5);
@@ -107,6 +139,14 @@ public class PlayerCharacterListener implements Listener {
                 playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, location);
             }
         }
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+
+        if(!PlayerCharacterManager.getList().containsKey(event.getPlayer())) return;
+
+        event.setCancelled(true);
 
     }
 }

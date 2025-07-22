@@ -47,17 +47,17 @@ public class PlayerClassFileHandler {
 
             fileConfiguration.set("passive.name", playerClass.passiveSkill.name);
             fileConfiguration.set("passive.description", playerClass.passiveSkill.description);
-            fileConfiguration.set("passive.skillType", playerClass.passiveSkill.type);
+            fileConfiguration.set("passive.skillType", playerClass.passiveSkill.skillType);
             fileConfiguration.set("passive.cooldown", playerClass.passiveSkill.cooldown);
 
             fileConfiguration.set("active.name", playerClass.activeSkill.name);
             fileConfiguration.set("active.description", playerClass.activeSkill.description);
-            fileConfiguration.set("active.skillType", playerClass.activeSkill.type);
+            fileConfiguration.set("active.skillType", playerClass.activeSkill.skillType);
             fileConfiguration.set("active.cooldown", playerClass.activeSkill.cooldown);
 
             fileConfiguration.set("ultimate.name", playerClass.ultimateSkill.name);
             fileConfiguration.set("ultimate.description", playerClass.ultimateSkill.description);
-            fileConfiguration.set("ultimate.skillType", playerClass.ultimateSkill.type);
+            fileConfiguration.set("ultimate.skillType", playerClass.ultimateSkill.skillType);
             fileConfiguration.set("ultimate.cooldown", playerClass.ultimateSkill.cooldown);
 
             fileConfiguration.set("loadout.helmet", playerClass.loadout.helmet);

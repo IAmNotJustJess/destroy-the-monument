@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -103,20 +104,21 @@ public class Weapon {
     public ItemStack generateItem() {
 
         ItemStack itemStack = item.clone();
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemMeta itemMeta = itemStack.getItemMeta().clone();
 
         String descriptionBeforeChanges = description;
 
         descriptionBeforeChanges = descriptionBeforeChanges.replaceAll("<dmg>", String.valueOf(damage));
         descriptionBeforeChanges = descriptionBeforeChanges.replaceAll("<cooldown>", String.valueOf(cooldown));
 
-        assert itemMeta != null;
+        Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemMeta.setItemName(MiniMessageSerializers.deserializeToString(name));
-        itemMeta.getPersistentDataContainer().set(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "damage"), PersistentDataType.STRING, weaponType.name());
-        itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "dtm.attackSpeed"), cooldown, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
+        itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(new NamespacedKey(JavaPlugin.getPlugin(DestroyTheMonument.class), "attackSpeed"), cooldown, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
         itemMeta.setLore(MiniMessageSerializers.deserializeMultilineToString(descriptionBeforeChanges));
+        itemMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "weaponType"), PersistentDataType.STRING, weaponType.name());
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
