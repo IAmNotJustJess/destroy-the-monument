@@ -22,14 +22,10 @@ import java.util.Objects;
 public class ChooseClassItem extends AbstractItem {
 
     private PlayerClass playerClass;
+    private Player player;
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.BARRIER).setDisplayName("Not this method...");
-    }
-
-    public ItemProvider getItemProvider(PlayerClass playerClass, Player player) {
-        this.playerClass = playerClass;
         String name = playerClass.name;
         List<String> lore = new ArrayList<>();
         Material material = playerClass.guiMaterial;
@@ -55,6 +51,12 @@ public class ChooseClassItem extends AbstractItem {
         ItemBuilder itemBuilder = new ItemBuilder(material, 1).setDisplayName(name).setLegacyLore(lore).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         if(set) itemBuilder.addEnchantment(Enchantment.UNBREAKING, 10, true);
         return itemBuilder;
+    }
+
+    public ItemProvider getItemProvider(PlayerClass playerClass, Player player) {
+        this.playerClass = playerClass;
+        this.player = player;
+        return getItemProvider();
     }
 
     @Override

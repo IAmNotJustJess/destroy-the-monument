@@ -129,6 +129,7 @@ public class PlayerCharacter {
     }
 
     public void obtainLoadout() {
+
         player.getInventory().clear();
 
         player.getInventory().setHelmet(chosenPlayerClass.loadout.helmet);
@@ -143,15 +144,15 @@ public class PlayerCharacter {
         player.getInventory().setItem(3, chosenPlayerClass.activeSkill.generateItem());
         player.getInventory().setItem(4, chosenPlayerClass.passiveSkill.generateItem());
 
-
         int i = 5;
         for(ItemStack itemStack : chosenPlayerClass.loadout.additionalItems) {
             player.getInventory().setItem(i, itemStack);
             i++;
         }
+
     }
 
-    public int buyUpgrade(UpgradeTreeLocation location) {
+    public void buyUpgrade(UpgradeTreeLocation location) {
 
         Upgrade firstUpgrade = chosenPlayerClass.upgradeTree.getUpgrade(location).getFirst();
         ArrayList<Upgrade> upgradeList = chosenPlayerClass.upgradeTree.getUpgrade(location);
@@ -164,7 +165,7 @@ public class PlayerCharacter {
                                     )
                     )
             );
-            return 1;
+            return;
         }
         if(shards < firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel())) {
             player.sendMessage(MiniMessageSerializers.deserializeToString(
@@ -174,7 +175,7 @@ public class PlayerCharacter {
                             .replace("<upgrade>", firstUpgrade.getName())
                     )
             );
-            return 2;
+            return;
         }
 
         shards -= firstUpgrade.shardPricesPerLevelList.get(firstUpgrade.getCurrentLevel());
@@ -629,7 +630,6 @@ public class PlayerCharacter {
             i++;
         }
 
-        return 0;
     }
 
     public void addShards(int shards, String message) {

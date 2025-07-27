@@ -143,7 +143,7 @@ public class Skill {
         itemMeta.setUnbreakable(true);
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemMeta.setLore(MiniMessageSerializers.deserializeMultilineToString(description));
-        itemMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "weaponType"), PersistentDataType.STRING, skillType.name());
+        itemMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "skillType"), PersistentDataType.STRING, skillType.name());
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

@@ -23,14 +23,10 @@ import java.util.List;
 public class UpgradeGuiItem extends AbstractItem {
 
     private UpgradeTreeLocation upgradeTreeLocation;
+    private PlayerCharacter playerCharacter;
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.BARRIER).setDisplayName("Not this method...");
-    }
-
-    public ItemProvider getItemProvider(UpgradeTreeLocation upgradeTreeLocation, PlayerCharacter playerCharacter) {
-        this.upgradeTreeLocation = upgradeTreeLocation;
         UpgradeTree upgradeTree = playerCharacter.getChosenClass().upgradeTree;
         Upgrade upgrade = upgradeTree.getUpgrade(upgradeTreeLocation).getFirst();
         String name = upgrade.getName();
@@ -99,6 +95,12 @@ public class UpgradeGuiItem extends AbstractItem {
         if(amount < 0) amount = 1;
         name = MiniMessageSerializers.deserializeToString(name);
         return new ItemBuilder(material, amount).setDisplayName(name).setLegacyLore(lore).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+    }
+
+    public ItemProvider getItemProvider(UpgradeTreeLocation upgradeTreeLocation, PlayerCharacter playerCharacter) {
+        this.upgradeTreeLocation = upgradeTreeLocation;
+        this.playerCharacter = playerCharacter;
+        return getItemProvider();
     }
 
     @Override

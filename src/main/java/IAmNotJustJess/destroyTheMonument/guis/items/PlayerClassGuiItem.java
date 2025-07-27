@@ -4,7 +4,6 @@ import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -23,16 +22,16 @@ public class PlayerClassGuiItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.BARRIER).setDisplayName("Not this method...");
-    }
-
-    public ItemProvider getItemProvider(PlayerClass playerClass) {
-        this.playerClass = playerClass;
         List<String> lore = new ArrayList<>();
         lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("click-to-select")));
         lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("click-to-get-info")));
         lore.addAll(MiniMessageSerializers.deserializeMultilineToString(playerClass.description));
         return new ItemBuilder(playerClass.guiMaterial, 1).setDisplayName(MiniMessageSerializers.deserializeToString(playerClass.name)).setLegacyLore(lore).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+    }
+
+    public ItemProvider getItemProvider(PlayerClass playerClass) {
+        this.playerClass = playerClass;
+        return getItemProvider();
     }
 
     @Override

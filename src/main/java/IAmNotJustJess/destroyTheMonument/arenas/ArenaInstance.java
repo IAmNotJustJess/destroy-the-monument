@@ -34,6 +34,7 @@ public class ArenaInstance {
     private HashMap<TeamColour, ArrayList<Location>> monumentList;
     private HashMap<TeamColour, Integer> monumentRemainingCount;
     private HashMap<TeamColour, ArrayList<Location>> spawnLocations;
+    private ArrayList<Location> shopLocations;
     private HashSet<Player> playerList;
     private HashMap<TeamColour, HashSet<Player>> playersInTeamsList;
     private ArrayList<Location> playerPlacedBlocksLocations;
@@ -509,7 +510,11 @@ public class ArenaInstance {
     public ArenaInstance(String arenaName) {
         this.arenaName = arenaName;
         this.playerList = new HashSet<>();
-        this.teamColours = new ArrayList<>();
+        this.teamColours = new ArrayList<>() {{
+            add(TeamColour.NONE);
+            add(TeamColour.NONE);
+        }};
+        this.shopLocations = new ArrayList<>();
         this.monumentRemainingCount = new HashMap<>();
         this.monumentList = new HashMap<>();
         this.playerPlacedBlocksLocations = new ArrayList<>();
