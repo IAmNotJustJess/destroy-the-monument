@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class ArenaManager {
-    public static HashMap<Integer, ArenaInstance> arenaList = new HashMap<>();
-    public static HashMap<Player, Integer> playerArenaIdList = new HashMap<>();
+    public static HashMap<String, ArenaInstance> arenaList = new HashMap<>();
+    public static HashMap<Player, String> playerArenaIdList = new HashMap<>();
 
-    public static void playerJoin(Player player, Integer id) {
+    public static void playerJoin(Player player, String id) {
         if(!arenaList.containsKey(id)) return;
 
         playerArenaIdList.put(player, id);

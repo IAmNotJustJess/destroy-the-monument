@@ -41,7 +41,7 @@ public class PlayerCharacter {
     private double takeDamageMultiplier = 1;
     private int flatDealDamageIncrease = 0;
     private int flatTakeDamageIncrease = 0;
-    private int shards = 0;
+    private int shards;
     private HashSet<Player> assistList;
     private Player lastAttacked;
     private Instant lastAttackedDate;

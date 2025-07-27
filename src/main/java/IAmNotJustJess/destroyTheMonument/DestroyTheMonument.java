@@ -3,6 +3,7 @@ package IAmNotJustJess.destroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaFileHandler;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaListener;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaSettings;
+import IAmNotJustJess.destroyTheMonument.commands.ArenaSetupCommand;
 import IAmNotJustJess.destroyTheMonument.commands.GuiDebugCommand;
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
@@ -17,6 +18,7 @@ public final class DestroyTheMonument extends JavaPlugin {
     public void onEnable() {
 
         this.getCommand("testgui").setExecutor(new GuiDebugCommand());
+        this.getCommand("dtm").setExecutor(new ArenaSetupCommand());
 
         MainConfiguration.setConfig();
         MessagesConfiguration.setConfig();

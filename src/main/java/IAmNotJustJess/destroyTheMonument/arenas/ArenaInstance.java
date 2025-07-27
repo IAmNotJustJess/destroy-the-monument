@@ -50,7 +50,56 @@ public class ArenaInstance {
     private String bossbarFormat;
     private BossBar bossbar;
 
+    public boolean checkArenaAvailabilityState() {
+        boolean arenaAvailability = true;
 
+        if(teamColours.get(0) == TeamColour.NONE) {
+            arenaAvailability = false;
+        }
+        if(teamColours.get(1) == TeamColour.NONE) {
+            arenaAvailability = false;
+        }
+        if(monumentList.get(teamColours.get(0)).isEmpty()) {
+            arenaAvailability = false;
+        }
+        if(monumentList.get(teamColours.get(1)).isEmpty()) {
+            arenaAvailability = false;
+        }
+        if(spawnLocations.get(teamColours.get(0)).isEmpty()) {
+            arenaAvailability = false;
+        }
+        if(spawnLocations.get(teamColours.get(1)).isEmpty()) {
+            arenaAvailability = false;
+        }
+        if(shopLocations.isEmpty()) {
+            arenaAvailability = false;
+        }
+
+        return arenaAvailability;
+    }
+
+    public void setFirstTeam(TeamColour teamColour) {
+        if(teamColours.getFirst() != TeamColour.NONE) {
+            monumentList.remove(teamColour);
+            spawnLocations.remove(teamColour);
+        }
+        teamColours.set(0, teamColour);
+    }
+
+    public void setSecondTeam(TeamColour teamColour) {
+        if(teamColours.get(1) != TeamColour.NONE) {
+            monumentList.remove(teamColour);
+            spawnLocations.remove(teamColour);
+        }
+        teamColours.set(1, teamColour);
+    }
+
+    public TeamColour getFirstTeam() {
+        return teamColours.getFirst();
+    }
+    public TeamColour getSecondTeam() {
+        return teamColours.get(1);
+    }
 
     public void sendMessageGlobally(TextComponent textComponent) {
         for(Player player : playerList) {
@@ -535,6 +584,10 @@ public class ArenaInstance {
 
     public ArrayList<TeamColour> getTeamColours() {
         return teamColours;
+    }
+
+    public ArrayList<Location> getShopLocations() {
+        return shopLocations;
     }
 
     public HashMap<TeamColour, ArrayList<Location>> getSpawnLocations() {

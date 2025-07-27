@@ -11,3 +11,7 @@ commands:
     description: Test the gui
     usage: /<command>
     permission: dtm.admin
+  dtm:
+    description: Main DTM command
+    usage: /<command> <options>
+    permission: dtm.admin
