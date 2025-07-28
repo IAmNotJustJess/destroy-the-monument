@@ -43,6 +43,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                     }
                     ArenaManager.arenaList.put(args[1], new ArenaInstance(args[1]));
                     player.sendMessage("Created the arena instance " + args[1] + "!");
+                    return true;
                 }
                 case "set" -> {
                     if(Objects.isNull(args[1])) {

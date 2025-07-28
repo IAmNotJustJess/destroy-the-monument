@@ -11,6 +11,7 @@ import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.SkillType;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.*;
 import IAmNotJustJess.destroyTheMonument.utility.ConsoleDebugSending;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -26,14 +27,16 @@ public class PlayerClassDefaultClasses {
     public static boolean load() {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
 
+
+
         File folder = new File(plugin.getDataFolder() + File.separator + "classes");
 
         if(!(Objects.isNull(folder.listFiles()) && Objects.requireNonNull(folder.listFiles()).length == 0)) {
-            ConsoleDebugSending.send("send-load-messages", "<#14db4c>Located player classes files!");
+            ConsoleDebugSending.send("send-load-messages", MiniMessageSerializers.deserializeToComponent("<#14db4c>Located player classes files!"));
             return false;
         }
 
-        ConsoleDebugSending.send("send-load-messages", "<#dbd814>Couldn't locate any player classes files! Creating default configuration.");
+        ConsoleDebugSending.send("send-load-messages", MiniMessageSerializers.deserializeToComponent("<#dbd814>Couldn't locate any player classes files! Creating default configuration."));
 
         PlayerClass playerClass = new PlayerClass(
             "Knight",

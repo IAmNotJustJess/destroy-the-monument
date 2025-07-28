@@ -21,6 +21,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -31,7 +33,7 @@ public class PlayerClassFileHandler {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
         ConsoleDebugSending.send(
             "send-save-messages",
-            MiniMessageSerializers.deserializeToString("<#dbd814>Saving Player Classes...")
+            MiniMessageSerializers.deserializeToComponent("<#dbd814>Saving Player Classes...")
         );
 
         for(PlayerClass playerClass : PlayerClassManager.getList()) {
@@ -184,12 +186,12 @@ public class PlayerClassFileHandler {
                 fileConfiguration.save(configFile);
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToString("<#14db4c>Successfully saved the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
+                    MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully saved the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
                 );
             } catch (IOException e) {
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToString("<#cc2b2b>Failed to save the<#ffffff>" + playerClass.name + "<#cc2b2b>player class!")
+                    MiniMessageSerializers.deserializeToComponent("<#cc2b2b>Failed to save the<#ffffff>" + playerClass.name + "<#cc2b2b>player class!")
                 );
                 throw new RuntimeException(e);
             }
@@ -200,20 +202,26 @@ public class PlayerClassFileHandler {
 
     public static void load() {
 
-        if(!PlayerClassDefaultClasses.load()) return;
-
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+
+        try {
+            Files.createDirectories(Paths.get(plugin.getDataFolder() + File.separator + "classes"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(!PlayerClassDefaultClasses.load()) return;
 
         ConsoleDebugSending.send(
             "send-load-messages",
-            MiniMessageSerializers.deserializeToString("<#dbd814>Loading Player Classes...")
+            MiniMessageSerializers.deserializeToComponent("<#dbd814>Loading Player Classes...")
         );
 
         File[] configFolder = new File(plugin.getDataFolder() + File.separator + "classes").listFiles();
 
         PlayerClassManager.getList().clear();
 
-        for(File configFile : Objects.requireNonNull(configFolder)) {
+        for(File configFile : configFolder) {
 
             FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
 
@@ -403,7 +411,7 @@ public class PlayerClassFileHandler {
             PlayerClassManager.getList().add(playerClass);
             ConsoleDebugSending.send(
                 "send-load-messages",
-                MiniMessageSerializers.deserializeToString("<#14db4c>Successfully loaded the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
+                MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully loaded the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
             );
         }
 

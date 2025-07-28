@@ -12,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -22,7 +24,7 @@ public class ArenaFileHandler {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
         ConsoleDebugSending.send(
             "send-save-messages",
-            MiniMessageSerializers.deserializeToString("<#dbd814>Saving Arena Instances...")
+            MiniMessageSerializers.deserializeToComponent("<#dbd814>Saving Arena Instances...")
         );
 
         for(ArenaInstance arenaInstance : ArenaManager.arenaList.values()) {
@@ -62,12 +64,12 @@ public class ArenaFileHandler {
                 fileConfiguration.save(configFile);
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToString("<#14db4c>Successfully saved the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!")
+                    MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully saved the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!")
                 );
             } catch (IOException e) {
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToString("<#cc2b2b>Failed to save the<#ffffff>" + arenaInstance.getArenaName() + "<#cc2b2b>arena instance!")
+                    MiniMessageSerializers.deserializeToComponent("<#cc2b2b>Failed to save the<#ffffff>" + arenaInstance.getArenaName() + "<#cc2b2b>arena instance!")
                 );
                 throw new RuntimeException(e);
             }
@@ -81,14 +83,20 @@ public class ArenaFileHandler {
 
         ConsoleDebugSending.send(
             "send-load-messages",
-            MiniMessageSerializers.deserializeToString("<#dbd814>Loading Arena Instances...")
+            MiniMessageSerializers.deserializeToComponent("<#dbd814>Loading Arena Instances...")
         );
+
+        try {
+            Files.createDirectories(Paths.get(plugin.getDataFolder() + File.separator + "arenas"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         File[] configFolder = new File(plugin.getDataFolder() + File.separator + "arenas").listFiles();
 
         ArenaManager.arenaList.clear();
 
-        for(File configFile : Objects.requireNonNull(configFolder)) {
+        for(File configFile : configFolder) {
 
             FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
             ArenaInstance arenaInstance = new ArenaInstance(fileConfiguration.getString("name"));
@@ -129,11 +137,11 @@ public class ArenaFileHandler {
                 }
             }
 
-            ArenaManager.arenaList.put(ArenaManager.arenaList.size(), arenaInstance);
+            ArenaManager.arenaList.put(arenaInstance.getArenaName(), arenaInstance);
 
             ConsoleDebugSending.send(
                 "send-load-messages",
-                MiniMessageSerializers.deserializeToString("<#14db4c>Successfully loaded the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!")
+                MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully loaded the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!")
             );
         }
     }
