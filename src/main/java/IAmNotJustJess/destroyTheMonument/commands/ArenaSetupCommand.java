@@ -3,6 +3,8 @@ package IAmNotJustJess.destroyTheMonument.commands;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaInstance;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -55,21 +57,37 @@ public class ArenaSetupCommand implements CommandExecutor {
                         return true;
                     }
                     switch (args[2]) {
+                        case "lobby" -> {
+                            ArenaManager.arenaList.get(args[1]).setLobbyLocation(player.getLocation().getBlock().getLocation());
+                            player.sendMessage("Set the lobby location!");
+                        }
                         case "team1" -> {
                             if(Objects.isNull(args[3])) {
                                 player.sendMessage("Correct usage: /dtm set <arena> team1 <teamColour>");
                                 return true;
                             }
-                            ArenaManager.arenaList.get(args[1]).setFirstTeam(TeamColour.valueOf(args[3]));
-                            player.sendMessage("Set the first team's colour to " + TeamColour.valueOf(args[3]) + "!");
+                            if(ArenaManager.arenaList.get(args[1]).setFirstTeam(TeamColour.valueOf(args[3].toUpperCase()))) {
+                                player.sendMessage("Set the first team's colour to " + args[3] + "!");
+                            }
+                            else {
+                                player.sendMessage("The second team's colour is " + args[3] + "!");
+                                player.sendMessage("You can't set two teams to the same one!");
+                            }
+
                         }
                         case "team2" -> {
                             if(Objects.isNull(args[3])) {
                                 player.sendMessage("Correct usage: /dtm set <arena> team1 <teamColour>");
                                 return true;
                             }
-                            ArenaManager.arenaList.get(args[1]).setSecondTeam(TeamColour.valueOf(args[3]));
-                            player.sendMessage("Set the second team's colour to " + TeamColour.valueOf(args[3]) + "!");
+                            if(ArenaManager.arenaList.get(args[1]).setSecondTeam(TeamColour.valueOf(args[3].toUpperCase()))){
+                                player.sendMessage("Set the second team's colour to " + args[3] + "!");
+                            }
+                            else {
+                                player.sendMessage("The first team's colour is " + args[3] + "!");
+                                player.sendMessage("You can't set two teams to the same one!");
+                            }
+
                         }
                         case "spawn" -> {
                             if(Objects.isNull(args[3]) || Objects.isNull(args[4])) {
@@ -78,14 +96,14 @@ public class ArenaSetupCommand implements CommandExecutor {
                             }
                             switch(args[4]) {
                                 case "add" -> {
-                                    ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3]))
+                                    ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .add(player.getLocation().getBlock().getLocation());
-                                    player.sendMessage("Added a new location!");
+                                    player.sendMessage("Added a new spawn location of team " + args[3] + "!");
                                 }
                                 case "clear" -> {
-                                    ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3]))
+                                    ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .clear();
-                                    player.sendMessage("Cleared locations!");
+                                    player.sendMessage("Cleared spawn locations of team " + args[3] + "!");
                                 }
                                 default -> {
                                     player.sendMessage("Correct usage: /dtm set <arena> spawn <teamColour> <add/clear>");
@@ -100,14 +118,18 @@ public class ArenaSetupCommand implements CommandExecutor {
                             }
                             switch(args[4]) {
                                 case "add" -> {
-                                    ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3]))
+                                    ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .add(player.getLocation().getBlock().getLocation());
-                                    player.sendMessage("Added a new location!");
+                                    player.getLocation().getBlock().setType(Material.OBSIDIAN);
+                                    player.sendMessage("Added a new monument location of team " + args[3] + "!");
                                 }
                                 case "clear" -> {
-                                    ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3]))
+                                    for(Location location : ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))) {
+                                        location.getBlock().setType(Material.AIR);
+                                    }
+                                    ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .clear();
-                                    player.sendMessage("Cleared locations!");
+                                    player.sendMessage("Cleared monument locations of team " + args[3] + "!");
                                 }
                                 default -> {
                                     player.sendMessage("Correct usage: /dtm set <arena> monument <teamColour> <add/clear>");
@@ -117,19 +139,19 @@ public class ArenaSetupCommand implements CommandExecutor {
                         }
                         case "shop" -> {
                             if(Objects.isNull(args[3])) {
-                                player.sendMessage("Correct usage: /dtm set <arena> shop <teamColour> <add/clear>");
+                                player.sendMessage("Correct usage: /dtm set <arena> shop <add/clear>");
                                 return true;
                             }
                             switch(args[3]) {
                                 case "add" -> {
                                     ArenaManager.arenaList.get(args[1]).getShopLocations()
                                         .add(player.getLocation().getBlock().getLocation());
-                                    player.sendMessage("Added a new location!");
+                                    player.sendMessage("Added a new shop location!");
                                 }
                                 case "clear" -> {
                                     ArenaManager.arenaList.get(args[1]).getShopLocations()
                                         .clear();
-                                    player.sendMessage("Cleared locations!");
+                                    player.sendMessage("Cleared shop locations!");
                                 }
                                 default -> {
                                     player.sendMessage("Correct usage: /dtm set <arena> shop <add/clear>");

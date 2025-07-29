@@ -3,7 +3,6 @@ package IAmNotJustJess.destroyTheMonument.arenas;
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.utility.ConsoleDebugSending;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,7 +23,7 @@ public class ArenaFileHandler {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
         ConsoleDebugSending.send(
             "send-save-messages",
-            MiniMessageSerializers.deserializeToComponent("<#dbd814>Saving Arena Instances...")
+            "<#dbd814>Saving Arena Instances..."
         );
 
         for(ArenaInstance arenaInstance : ArenaManager.arenaList.values()) {
@@ -64,12 +63,12 @@ public class ArenaFileHandler {
                 fileConfiguration.save(configFile);
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully saved the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!")
+                    "<#14db4c>Successfully saved the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!"
                 );
             } catch (IOException e) {
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToComponent("<#cc2b2b>Failed to save the<#ffffff>" + arenaInstance.getArenaName() + "<#cc2b2b>arena instance!")
+                    "<#cc2b2b>Failed to save the<#ffffff>" + arenaInstance.getArenaName() + "<#cc2b2b>arena instance!"
                 );
                 throw new RuntimeException(e);
             }
@@ -83,7 +82,7 @@ public class ArenaFileHandler {
 
         ConsoleDebugSending.send(
             "send-load-messages",
-            MiniMessageSerializers.deserializeToComponent("<#dbd814>Loading Arena Instances...")
+            "<#dbd814>Loading Arena Instances..."
         );
 
         try {
@@ -141,7 +140,7 @@ public class ArenaFileHandler {
 
             ConsoleDebugSending.send(
                 "send-load-messages",
-                MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully loaded the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!")
+                "<#14db4c>Successfully loaded the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!"
             );
         }
     }

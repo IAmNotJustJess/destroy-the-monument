@@ -11,7 +11,6 @@ import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.SkillType;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.*;
 import IAmNotJustJess.destroyTheMonument.utility.ConsoleDebugSending;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,7 +32,7 @@ public class PlayerClassFileHandler {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
         ConsoleDebugSending.send(
             "send-save-messages",
-            MiniMessageSerializers.deserializeToComponent("<#dbd814>Saving Player Classes...")
+            "<#dbd814>Saving Player Classes..."
         );
 
         for(PlayerClass playerClass : PlayerClassManager.getList()) {
@@ -43,23 +42,23 @@ public class PlayerClassFileHandler {
 
             fileConfiguration.set("name", playerClass.name);
             fileConfiguration.set("description", playerClass.description);
-            fileConfiguration.set("playerClassType", playerClass.playerClassType);
+            fileConfiguration.set("playerClassType", playerClass.playerClassType.toString());
             fileConfiguration.set("hp", playerClass.healthPoints);
             fileConfiguration.set("movementSpeed", playerClass.movementSpeed);
 
             fileConfiguration.set("passive.name", playerClass.passiveSkill.name);
             fileConfiguration.set("passive.description", playerClass.passiveSkill.description);
-            fileConfiguration.set("passive.skillType", playerClass.passiveSkill.skillType);
+            fileConfiguration.set("passive.skillType", playerClass.passiveSkill.skillType.toString());
             fileConfiguration.set("passive.cooldown", playerClass.passiveSkill.cooldown);
 
             fileConfiguration.set("active.name", playerClass.activeSkill.name);
             fileConfiguration.set("active.description", playerClass.activeSkill.description);
-            fileConfiguration.set("active.skillType", playerClass.activeSkill.skillType);
+            fileConfiguration.set("active.skillType", playerClass.activeSkill.skillType.toString());
             fileConfiguration.set("active.cooldown", playerClass.activeSkill.cooldown);
 
             fileConfiguration.set("ultimate.name", playerClass.ultimateSkill.name);
             fileConfiguration.set("ultimate.description", playerClass.ultimateSkill.description);
-            fileConfiguration.set("ultimate.skillType", playerClass.ultimateSkill.skillType);
+            fileConfiguration.set("ultimate.skillType", playerClass.ultimateSkill.skillType.toString());
             fileConfiguration.set("ultimate.cooldown", playerClass.ultimateSkill.cooldown);
 
             fileConfiguration.set("loadout.helmet", playerClass.loadout.helmet);
@@ -69,13 +68,13 @@ public class PlayerClassFileHandler {
 
             fileConfiguration.set("loadout.mainWeapon.name", playerClass.loadout.mainWeapon.name);
             fileConfiguration.set("loadout.mainWeapon.description", playerClass.loadout.mainWeapon.description);
-            fileConfiguration.set("loadout.mainWeapon.weaponType", playerClass.loadout.mainWeapon.weaponType);
+            fileConfiguration.set("loadout.mainWeapon.weaponType", playerClass.loadout.mainWeapon.weaponType.toString());
             fileConfiguration.set("loadout.mainWeapon.itemStack", playerClass.loadout.mainWeapon.item);
             fileConfiguration.set("loadout.mainWeapon.cooldown", playerClass.loadout.mainWeapon.cooldown);
 
             fileConfiguration.set("loadout.secondaryWeapon.name", playerClass.loadout.secondaryWeapon.name);
             fileConfiguration.set("loadout.secondaryWeapon.description", playerClass.loadout.secondaryWeapon.description);
-            fileConfiguration.set("loadout.secondaryWeapon.weaponType", playerClass.loadout.secondaryWeapon.weaponType);
+            fileConfiguration.set("loadout.secondaryWeapon.weaponType", playerClass.loadout.secondaryWeapon.weaponType.toString());
             fileConfiguration.set("loadout.secondaryWeapon.itemStack", playerClass.loadout.secondaryWeapon.item);
             fileConfiguration.set("loadout.secondaryWeapon.cooldown", playerClass.loadout.secondaryWeapon.cooldown);
 
@@ -83,8 +82,8 @@ public class PlayerClassFileHandler {
 
             int i = 0;
             for(Effect effect : playerClass.passiveSkill.effectList) {
-                fileConfiguration.set("passive.effects." + i + ".effectType", effect.effectType);
-                fileConfiguration.set("passive.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("passive.effects." + i + ".effectType", effect.effectType.toString());
+                fileConfiguration.set("passive.effects." + i + ".effectApplicationType", effect.effectApplicationType.toString());
                 fileConfiguration.set("passive.effects." + i + ".strength", effect.strength);
                 fileConfiguration.set("passive.effects." + i + ".range", effect.range);
                 fileConfiguration.set("passive.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
@@ -93,14 +92,14 @@ public class PlayerClassFileHandler {
                 fileConfiguration.set("passive.effects." + i + ".removeOnDeath", effect.removeOnDeath);
                 fileConfiguration.set("passive.effects." + i + ".soundSerializedString", effect.soundSerializedString);
                 fileConfiguration.set("passive.effects." + i + ".particleSerializedString", effect.particleSerializedString);
-                fileConfiguration.set("passive.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                fileConfiguration.set("passive.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation.toString());
                 i++;
             }
 
             i = 0;
             for(Effect effect : playerClass.activeSkill.effectList) {
-                fileConfiguration.set("active.effects." + i + ".effectType", effect.effectType);
-                fileConfiguration.set("active.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("active.effects." + i + ".effectType", effect.effectType.toString());
+                fileConfiguration.set("active.effects." + i + ".effectApplicationType", effect.effectApplicationType.toString());
                 fileConfiguration.set("active.effects." + i + ".strength", effect.strength);
                 fileConfiguration.set("active.effects." + i + ".range", effect.range);
                 fileConfiguration.set("active.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
@@ -109,14 +108,14 @@ public class PlayerClassFileHandler {
                 fileConfiguration.set("active.effects." + i + ".removeOnDeath", effect.removeOnDeath);
                 fileConfiguration.set("active.effects." + i + ".soundSerializedString", effect.soundSerializedString);
                 fileConfiguration.set("active.effects." + i + ".particleSerializedString", effect.particleSerializedString);
-                fileConfiguration.set("active.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                fileConfiguration.set("active.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation.toString());
                 i++;
             }
 
             i = 0;
             for(Effect effect : playerClass.ultimateSkill.effectList) {
-                fileConfiguration.set("ultimate.effects." + i + ".effectType", effect.effectType);
-                fileConfiguration.set("ultimate.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("ultimate.effects." + i + ".effectType", effect.effectType.toString());
+                fileConfiguration.set("ultimate.effects." + i + ".effectApplicationType", effect.effectApplicationType.toString());
                 fileConfiguration.set("ultimate.effects." + i + ".strength", effect.strength);
                 fileConfiguration.set("ultimate.effects." + i + ".range", effect.range);
                 fileConfiguration.set("ultimate.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
@@ -125,14 +124,14 @@ public class PlayerClassFileHandler {
                 fileConfiguration.set("ultimate.effects." + i + ".removeOnDeath", effect.removeOnDeath);
                 fileConfiguration.set("ultimate.effects." + i + ".soundSerializedString", effect.soundSerializedString);
                 fileConfiguration.set("ultimate.effects." + i + ".particleSerializedString", effect.particleSerializedString);
-                fileConfiguration.set("ultimate.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                fileConfiguration.set("ultimate.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation.toString());
                 i++;
             }
 
             i = 0;
             for(Effect effect : playerClass.loadout.mainWeapon.effectList) {
-                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".effectType", effect.effectType);
-                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".effectType", effect.effectType.toString());
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".effectApplicationType", effect.effectApplicationType.toString());
                 fileConfiguration.set("loadout.mainWeapon.effects." + i + ".strength", effect.strength);
                 fileConfiguration.set("loadout.mainWeapon.effects." + i + ".range", effect.range);
                 fileConfiguration.set("loadout.mainWeapon.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
@@ -141,14 +140,14 @@ public class PlayerClassFileHandler {
                 fileConfiguration.set("loadout.mainWeapon.effects." + i + ".removeOnDeath", effect.removeOnDeath);
                 fileConfiguration.set("loadout.mainWeapon.effects." + i + ".soundSerializedString", effect.soundSerializedString);
                 fileConfiguration.set("loadout.mainWeapon.effects." + i + ".particleSerializedString", effect.particleSerializedString);
-                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                fileConfiguration.set("loadout.mainWeapon.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation.toString());
                 i++;
             }
 
             i = 0;
             for(Effect effect : playerClass.loadout.secondaryWeapon.effectList) {
-                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".effectType", effect.effectType);
-                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".effectApplicationType", effect.effectApplicationType);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".effectType", effect.effectType.toString());
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".effectApplicationType", effect.effectApplicationType.toString());
                 fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".strength", effect.strength);
                 fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".range", effect.range);
                 fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".tickEveryServerTicks", effect.tickEveryServerTicks);
@@ -157,21 +156,21 @@ public class PlayerClassFileHandler {
                 fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".removeOnDeath", effect.removeOnDeath);
                 fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".soundSerializedString", effect.soundSerializedString);
                 fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".particleSerializedString", effect.particleSerializedString);
-                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation);
+                fileConfiguration.set("loadout.secondaryWeapon.effects." + i + ".particleSpawnLocation", effect.particleSpawnLocation.toString());
                 i++;
             }
 
             for(int j = 0; j < 8; j++) {
                 i = 0;
-                UpgradeTreeLocation upgradeTreeLocation = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
+                UpgradeTreeLocation upgradeTreeLocation = UpgradeTreeLocationConverter.convertIntegerToLocation(j);
                 for(Upgrade upgrade : playerClass.upgradeTree.getUpgrade(upgradeTreeLocation)) {
                     fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".name", upgrade.name);
                     fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".description", upgrade.description);
                     fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".maxLevels", upgrade.maxLevels);
-                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".upgradeAffection", upgrade.upgradeAffection);
-                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".upgradeType", upgrade.upgradeType);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".upgradeAffection", upgrade.upgradeAffection.toString());
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".upgradeType", upgrade.upgradeType.toString());
                     fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".maxStacks", upgrade.maxStacks);
-                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".guiMaterial", upgrade.guiMaterial);
+                    fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".guiMaterial", upgrade.guiMaterial.toString());
 
                     fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".passiveAffection", playerClass.passiveSkill.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
                     fileConfiguration.set("upgradeTree." + upgradeTreeLocation + "." + i + ".activeAffection", playerClass.activeSkill.upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
@@ -186,12 +185,12 @@ public class PlayerClassFileHandler {
                 fileConfiguration.save(configFile);
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully saved the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
+                    "<#14db4c>Successfully saved the <#ffffff>" + playerClass.name + " <#14db4c>player class!"
                 );
             } catch (IOException e) {
                 ConsoleDebugSending.send(
                     "send-save-messages",
-                    MiniMessageSerializers.deserializeToComponent("<#cc2b2b>Failed to save the<#ffffff>" + playerClass.name + "<#cc2b2b>player class!")
+                    "<#cc2b2b>Failed to save the <#ffffff>" + playerClass.name + " <#cc2b2b>player class!"
                 );
                 throw new RuntimeException(e);
             }
@@ -214,7 +213,7 @@ public class PlayerClassFileHandler {
 
         ConsoleDebugSending.send(
             "send-load-messages",
-            MiniMessageSerializers.deserializeToComponent("<#dbd814>Loading Player Classes...")
+            "<#dbd814>Loading Player Classes..."
         );
 
         File[] configFolder = new File(plugin.getDataFolder() + File.separator + "classes").listFiles();
@@ -411,7 +410,7 @@ public class PlayerClassFileHandler {
             PlayerClassManager.getList().add(playerClass);
             ConsoleDebugSending.send(
                 "send-load-messages",
-                MiniMessageSerializers.deserializeToComponent("<#14db4c>Successfully loaded the<#ffffff>" + playerClass.name + "<#14db4c>player class!")
+                "<#14db4c>Successfully loaded the<#ffffff>" + playerClass.name + "<#14db4c>player class!"
             );
         }
 

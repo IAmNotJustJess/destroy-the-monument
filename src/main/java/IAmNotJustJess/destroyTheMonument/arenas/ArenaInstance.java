@@ -74,24 +74,39 @@ public class ArenaInstance {
         if(shopLocations.isEmpty()) {
             arenaAvailability = false;
         }
+        if(lobbyLocation == null) {
+            arenaAvailability = false;
+        }
 
         return arenaAvailability;
     }
 
-    public void setFirstTeam(TeamColour teamColour) {
+    public boolean setFirstTeam(TeamColour teamColour) {
+        if(teamColour == teamColours.get(1)) {
+            return false;
+        }
         if(teamColours.getFirst() != TeamColour.NONE) {
-            monumentList.remove(teamColour);
-            spawnLocations.remove(teamColour);
+            monumentList.remove(teamColours.getFirst());
+            spawnLocations.remove(teamColours.getFirst());
         }
         teamColours.set(0, teamColour);
+        monumentList.put(teamColour, new ArrayList<>());
+        spawnLocations.put(teamColour, new ArrayList<>());
+        return true;
     }
 
-    public void setSecondTeam(TeamColour teamColour) {
+    public boolean setSecondTeam(TeamColour teamColour) {
+        if(teamColour == teamColours.getFirst()) {
+            return false;
+        }
         if(teamColours.get(1) != TeamColour.NONE) {
-            monumentList.remove(teamColour);
-            spawnLocations.remove(teamColour);
+            monumentList.remove(teamColours.getFirst());
+            spawnLocations.remove(teamColours.getFirst());
         }
         teamColours.set(1, teamColour);
+        monumentList.put(teamColour, new ArrayList<>());
+        spawnLocations.put(teamColour, new ArrayList<>());
+        return true;
     }
 
     public TeamColour getFirstTeam() {
