@@ -15,6 +15,7 @@ import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -81,6 +82,12 @@ public class PlayerClassFileHandler {
             fileConfiguration.set("loadout.blockAmount", playerClass.loadout.blockAmount);
 
             int i = 0;
+            for(ItemStack itemStack : playerClass.loadout.additionalItems) {
+                fileConfiguration.set("loadout.additionalItems."+i, itemStack);
+                i++;
+            }
+
+            i = 0;
             for(Effect effect : playerClass.passiveSkill.effectList) {
                 fileConfiguration.set("passive.effects." + i + ".effectType", effect.effectType.toString());
                 fileConfiguration.set("passive.effects." + i + ".effectApplicationType", effect.effectApplicationType.toString());

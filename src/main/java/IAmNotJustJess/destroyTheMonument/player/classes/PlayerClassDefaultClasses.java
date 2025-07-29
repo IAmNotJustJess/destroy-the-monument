@@ -140,8 +140,8 @@ public class PlayerClassDefaultClasses {
                 new ItemStack(Material.LEATHER_LEGGINGS),
                 new ItemStack(Material.CHAINMAIL_BOOTS),
                 new Weapon(
-                    "",
-                    "",
+                    "Excalibur",
+                    "A powerful sword, for a powerful person.",
                     WeaponType.MAIN_MELEE,
                     new ItemStack(Material.IRON_SWORD),
                     25,
