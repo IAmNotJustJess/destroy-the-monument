@@ -56,8 +56,6 @@ public class MainConfiguration {
         catch (IOException exception) {
             exception.printStackTrace();
         }
-
-        TeamManager.createListFromConfig();
     }
 
 

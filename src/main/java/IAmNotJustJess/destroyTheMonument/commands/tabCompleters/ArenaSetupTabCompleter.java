@@ -72,6 +72,7 @@ public class ArenaSetupTabCompleter implements TabCompleter {
                         case "team1", "team2" -> {
                             return new ArrayList<>() {{
                                 for(TeamColour teamColour : TeamColour.values()) {
+                                    if(teamColour == TeamColour.NONE) continue;
                                     add(teamColour.toString().toLowerCase());
                                 }
                             }};

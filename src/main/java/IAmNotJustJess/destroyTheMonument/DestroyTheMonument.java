@@ -10,6 +10,7 @@ import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassFileHandler;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
+import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,6 +25,8 @@ public final class DestroyTheMonument extends JavaPlugin {
 
         MainConfiguration.setConfig();
         MessagesConfiguration.setConfig();
+
+        TeamManager.createListFromConfig();
 
         ArenaSettings.loadSettings();
 

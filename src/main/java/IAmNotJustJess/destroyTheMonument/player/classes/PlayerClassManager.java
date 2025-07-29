@@ -1,7 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.player.classes;
 
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTreeLocation;
-import IAmNotJustJess.destroyTheMonument.utility.ConsoleDebugSending;
+import IAmNotJustJess.destroyTheMonument.utility.QuickSendingMethods;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class PlayerClassManager {
     private static final ArrayList<PlayerClass> list = new ArrayList<>();
 
     public static void cacheDescriptions() {
-        ConsoleDebugSending.send(
+        QuickSendingMethods.sendToConsole(
             "send-load-messages",
             "<#dbd814>Caching upgrade descriptions!"
         );
@@ -19,9 +19,9 @@ public class PlayerClassManager {
                 UpgradeTreeLocation upgradeTreeLocation = UpgradeTreeLocationConverter.convertIntegerToLocation(i);
                 playerClass.upgradeTree.getUpgrade(upgradeTreeLocation).getFirst().cacheDescriptions();
             }
-            ConsoleDebugSending.send(
+            QuickSendingMethods.sendToConsole(
                 "send-load-messages",
-                "<#14db4c>Successfully cached "+ playerClass.name +" upgrades!"
+                "<#14db4c>Successfully cached <#ffffff>"+ playerClass.name +" <#14db4c>upgrades!"
             );
         }
     }

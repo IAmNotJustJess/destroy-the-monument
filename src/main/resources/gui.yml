@@ -15,11 +15,11 @@ previous-upgrade-required-text: "<#cc2b2b>Previous upgrade required!"
 
 page-count-colour: "<#dbd814>"
 
-next-page-item-text: "<#777777>Next page"
-next-page-text: "<#777777>Page "
+next-page-item-text: "<#c0c0c0>Next page"
+next-page-text: "<#c0c0c0>Page "
 no-next-pages-text: "<#cc2b2b>You can't go further!"
-previous-page-item-text: "<#777777>Previous page"
-previous-page-text: "<#777777>Page "
+previous-page-item-text: "<#c0c0c0>Previous page"
+previous-page-text: "<#c0c0c0>Page "
 no-previous-page-text: "<#cc2b2b>You can't go back that far!"
 
 click-to-select: "<#14db4c>Left Click to Select"

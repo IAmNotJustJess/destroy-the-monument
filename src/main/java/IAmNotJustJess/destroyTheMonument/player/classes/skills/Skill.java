@@ -119,7 +119,7 @@ public class Skill {
         if(!active) {
             itemStack = new ItemStack(Material.GRAY_DYE);
             itemMeta = itemStack.getItemMeta().clone();
-            itemMeta.setItemName(MiniMessageSerializers.deserializeToString("<#777777>" + name));
+            itemMeta.setItemName(MiniMessageSerializers.deserializeToString("<#c0c0c0>" + name));
         }
         else {
             switch (skillType) {

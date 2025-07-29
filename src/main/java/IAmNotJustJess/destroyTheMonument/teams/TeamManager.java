@@ -1,6 +1,7 @@
 package IAmNotJustJess.destroyTheMonument.teams;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
+import IAmNotJustJess.destroyTheMonument.utility.QuickSendingMethods;
 import org.bukkit.Color;
 import org.bukkit.Material;
 
@@ -12,19 +13,18 @@ public class TeamManager {
 
     public static void createListFromConfig() {
         list = new HashMap<>();
-        for(Object teamObject : MainConfiguration.teamConfiguration.getList("teams")) {
-            String teamString = (String) teamObject;
-            String teamName = MainConfiguration.teamConfiguration.getString("settings."+teamString+".name");
-            String teamTextColour = MainConfiguration.teamConfiguration.getString("settings."+teamString+".text-colour");
-            TeamColour teamColour = TeamColour.valueOf(MainConfiguration.teamConfiguration.getString("settings."+teamString+".team-colour"));
-            Material teamBlockType = Material.valueOf(MainConfiguration.teamConfiguration.getString("settings."+teamString+".block-type"));
+        for(Object teamObject : MainConfiguration.teamConfiguration.getSection("teams").getKeys()) {
+            String teamString = teamObject.toString();
+            String teamName = MainConfiguration.teamConfiguration.getString("teams."+teamString+".name");
+            String teamTextColour = MainConfiguration.teamConfiguration.getString("teams."+teamString+".text-colour");
+            TeamColour teamColour = TeamColour.valueOf(MainConfiguration.teamConfiguration.getString("teams."+teamString+".team-colour"));
+            Material teamBlockType = Material.valueOf(MainConfiguration.teamConfiguration.getString("teams."+teamString+".block-type"));
             Color teamArmourColor = Color.fromRGB(
-                MainConfiguration.teamConfiguration.getInt("settings."+teamString+".armour-colour.r"),
-                MainConfiguration.teamConfiguration.getInt("settings."+teamString+".armour-colour.g"),
-                MainConfiguration.teamConfiguration.getInt("settings."+teamString+".armour-colour.b")
+                MainConfiguration.teamConfiguration.getInt("teams."+teamString+".armour-colour.r"),
+                MainConfiguration.teamConfiguration.getInt("teams."+teamString+".armour-colour.g"),
+                MainConfiguration.teamConfiguration.getInt("teams."+teamString+".armour-colour.b")
             );
-            Team team = new Team(teamName, teamTextColour, teamColour, teamBlockType, teamArmourColor);
-            list.put(teamColour, team);
+            list.put(teamColour, new Team(teamName, teamTextColour, teamColour, teamBlockType, teamArmourColor));
         }
     }
 }

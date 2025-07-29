@@ -42,6 +42,8 @@ public class Upgrade {
         this.shardPricesPerLevelList = new ArrayList<>();
         this.effectsPerLevelList = new ArrayList<>();
         this.effectsSpecialPropertiesPerLevelList = new ArrayList<>();
+        this.cachedGuiDescriptionsForUpgrades = new HashMap<>();
+        this.cachedGuiDescriptionsForClassInfo = new ArrayList<>();
         for(int i = 0; i < maxLevels; i++) {
             this.descriptionTextReplacementList.add(new ArrayList<>());
             this.shardPricesPerLevelList.add(0);
@@ -85,7 +87,9 @@ public class Upgrade {
     public void cacheDescriptions() {
         cachedGuiDescriptionsForClassInfo = getGuiDescriptionForClassInfo();
         for(int i = 0; i <= maxLevels; i++) {
-            cachedGuiDescriptionsForUpgrades.put(i, getDescriptionForUpgrades());
+            if(getDescriptionForUpgrades() != null) {
+                cachedGuiDescriptionsForUpgrades.put(i, getDescriptionForUpgrades());
+            }
         }
     }
 

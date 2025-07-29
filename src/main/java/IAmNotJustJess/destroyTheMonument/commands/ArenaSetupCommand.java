@@ -3,6 +3,10 @@ package IAmNotJustJess.destroyTheMonument.commands;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaInstance;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
+import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
+import IAmNotJustJess.destroyTheMonument.utility.QuickSendingMethods;
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -19,101 +23,101 @@ public class ArenaSetupCommand implements CommandExecutor {
         if(sender instanceof Player player) {
 
             if(args.length < 1) {
-                player.sendMessage("/dtm create <arena> - Creates a new arena instance.");
-                player.sendMessage("/dtm set <arena> team1 <teamColour> - Set first team's colour.");
-                player.sendMessage("/dtm set <arena> team2 <teamColour> - Set second team's colour.");
-                player.sendMessage("/dtm set <arena> spawn <teamColour> add - Add a new spawn to the team at your location.");
-                player.sendMessage("/dtm set <arena> spawn <teamColour> clear - Remove all spawns of the team.");
-                player.sendMessage("/dtm set <arena> monument <teamColour> add - Add a new monument to the team at your location.");
-                player.sendMessage("/dtm set <arena> monument <teamColour> clear - Remove all monument locations of the team.");
-                player.sendMessage("/dtm set <arena> shop add - Add a new shop at your location.");
-                player.sendMessage("/dtm set <arena> shop clear - Clear all shops.");
-                player.sendMessage("/dtm join <arena> - Join an arena.");
-                player.sendMessage("/dtm leave - Leave an arena.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm create <arena> <#c0c0c0>- <#ffffff>Creates a new arena instance.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> team1 <teamColour> <#c0c0c0>- <#ffffff>Set first team's colour.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> team2 <teamColour> <#c0c0c0>- <#ffffff>Set second team's colour.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> spawn <teamColour> add <#c0c0c0>- <#ffffff>Add a new spawn to the team at your location.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> spawn <teamColour> clear <#c0c0c0>- <#ffffff>Remove all spawns of the team.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> monument <teamColour> add <#c0c0c0>- <#ffffff>Add a new monument to the team at your location.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> monument <teamColour> clear <#c0c0c0>- <#ffffff>Remove all monument locations of the team.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> shop add <#c0c0c0>- <#ffffff>Add a new shop at your location.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm set <arena> shop clear <#c0c0c0>- <#ffffff>Clear all shops.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm join <arena> <#c0c0c0>- <#ffffff>Join an arena.");
+                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>/dtm leave <#c0c0c0>- <#ffffff>Leave an arena.");
                 return true;
             }
 
             switch(args[0]) {
                 case "create" -> {
                     if(Objects.isNull(args[1])) {
-                        player.sendMessage("Correct usage: /dtm create <arena>");
+                        QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm create <arena>");
                         return true;
                     }
                     if(ArenaManager.arenaList.containsKey(args[1])) {
-                        player.sendMessage("This arena instance already exists!");
+                        QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>This arena instance already exists!");
                         return true;
                     }
                     ArenaManager.arenaList.put(args[1], new ArenaInstance(args[1]));
-                    player.sendMessage("Created the arena instance " + args[1] + "!");
+                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Created the arena instance <#ffffff>" + args[1] + "<#14db4c>!");
                     return true;
                 }
                 case "set" -> {
                     if(Objects.isNull(args[1])) {
-                        player.sendMessage("Correct usage: /dtm set <arena> <options>");
+                        QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> <options>");
                         return true;
                     }
                     if(!ArenaManager.arenaList.containsKey(args[1])) {
-                        player.sendMessage("This arena doesn't exist!");
+                        QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>This arena doesn't exist!");
                         return true;
                     }
                     switch (args[2]) {
                         case "lobby" -> {
                             ArenaManager.arenaList.get(args[1]).setLobbyLocation(player.getLocation().getBlock().getLocation());
-                            player.sendMessage("Set the lobby location!");
+                            QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the lobby location!");
                         }
                         case "team1" -> {
-                            if(Objects.isNull(args[3])) {
-                                player.sendMessage("Correct usage: /dtm set <arena> team1 <teamColour>");
+                            if(Objects.isNull(args[3]) || args[3].equalsIgnoreCase("none")) {
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> team1 <teamColour>");
                                 return true;
                             }
                             if(ArenaManager.arenaList.get(args[1]).setFirstTeam(TeamColour.valueOf(args[3].toUpperCase()))) {
-                                player.sendMessage("Set the first team's colour to " + args[3] + "!");
+                                QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the first team's colour to " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                             }
                             else {
-                                player.sendMessage("The second team's colour is " + args[3] + "!");
-                                player.sendMessage("You can't set two teams to the same one!");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>The second team's colour is " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#cc2b2b>!");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>You can't set two teams to the same one!");
                             }
 
                         }
                         case "team2" -> {
                             if(Objects.isNull(args[3])) {
-                                player.sendMessage("Correct usage: /dtm set <arena> team1 <teamColour>");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> team1 <teamColour>");
                                 return true;
                             }
                             if(ArenaManager.arenaList.get(args[1]).setSecondTeam(TeamColour.valueOf(args[3].toUpperCase()))){
-                                player.sendMessage("Set the second team's colour to " + args[3] + "!");
+                                QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the second team's colour to " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                             }
                             else {
-                                player.sendMessage("The first team's colour is " + args[3] + "!");
-                                player.sendMessage("You can't set two teams to the same one!");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>The first team's colour is " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#cc2b2b>!");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>You can't set two teams to the same one!");
                             }
 
                         }
                         case "spawn" -> {
                             if(Objects.isNull(args[3]) || Objects.isNull(args[4])) {
-                                player.sendMessage("Correct usage: /dtm set <arena> spawn <teamColour> <add/clear>");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> spawn <teamColour> <add/clear>");
                                 return true;
                             }
                             switch(args[4]) {
                                 case "add" -> {
                                     ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .add(player.getLocation().getBlock().getLocation());
-                                    player.sendMessage("Added a new spawn location of team " + args[3] + "!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new spawn location of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 case "clear" -> {
                                     ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .clear();
-                                    player.sendMessage("Cleared spawn locations of team " + args[3] + "!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared spawn locations of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 default -> {
-                                    player.sendMessage("Correct usage: /dtm set <arena> spawn <teamColour> <add/clear>");
+                                    QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> spawn <teamColour> <add/clear>");
                                 }
                             }
                             return true;
                         }
                         case "monument" -> {
                             if(Objects.isNull(args[3]) || Objects.isNull(args[4])) {
-                                player.sendMessage("Correct usage: /dtm set <arena> monument <teamColour> <add/clear>");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> monument <teamColour> <add/clear>");
                                 return true;
                             }
                             switch(args[4]) {
@@ -121,7 +125,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                                     ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .add(player.getLocation().getBlock().getLocation());
                                     player.getLocation().getBlock().setType(Material.OBSIDIAN);
-                                    player.sendMessage("Added a new monument location of team " + args[3] + "!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new monument location of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 case "clear" -> {
                                     for(Location location : ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))) {
@@ -129,45 +133,45 @@ public class ArenaSetupCommand implements CommandExecutor {
                                     }
                                     ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .clear();
-                                    player.sendMessage("Cleared monument locations of team " + args[3] + "!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared monument locations of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 default -> {
-                                    player.sendMessage("Correct usage: /dtm set <arena> monument <teamColour> <add/clear>");
+                                    QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> monument <teamColour> <add/clear>");
                                 }
                             }
                             return true;
                         }
                         case "shop" -> {
                             if(Objects.isNull(args[3])) {
-                                player.sendMessage("Correct usage: /dtm set <arena> shop <add/clear>");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> shop <add/clear>");
                                 return true;
                             }
                             switch(args[3]) {
                                 case "add" -> {
                                     ArenaManager.arenaList.get(args[1]).getShopLocations()
                                         .add(player.getLocation().getBlock().getLocation());
-                                    player.sendMessage("Added a new shop location!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new shop location!");
                                 }
                                 case "clear" -> {
                                     ArenaManager.arenaList.get(args[1]).getShopLocations()
                                         .clear();
-                                    player.sendMessage("Cleared shop locations!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared shop locations!");
                                 }
                                 default -> {
-                                    player.sendMessage("Correct usage: /dtm set <arena> shop <add/clear>");
+                                    QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> shop <add/clear>");
                                 }
                             }
                             return true;
                         }
                         case null, default -> {
-                            player.sendMessage("Correct usage: /dtm set <arena> <options>");
+                            QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> <options>");
                         }
                     }
                     return true;
                 }
                 case "join" -> {
                     if(Objects.isNull(args[1])) {
-                        player.sendMessage("Correct usage: /dtm join <arena>");
+                        QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm join <arena>");
                         return true;
                     }
                     if(ArenaManager.arenaList.containsKey(args[1])) {

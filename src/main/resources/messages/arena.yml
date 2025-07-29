@@ -38,8 +38,8 @@ starting-tips-subtitles: "<#19a0e3>Destroy the Monument<newline>
 <#14db4c>Have more of them standing!<newline>
 <#19a0e3>You'll need it!"
 
-bossbar-lobby-format: "<#777777>[<#ffffff><players>><#777777>/<#ffffff><maxPlayers><#777777>] <#dbd814>Waiting for more players..."
-bossbar-countdown-format: "<#777777>[<#ffffff><players>><#777777>/<#ffffff><maxPlayers><#777777>] <#14db4c>Arena starts in <#6de38e><seconds><#14db4c>..."
+bossbar-lobby-format: "<#c0c0c0>[<#ffffff><players>><#c0c0c0>/<#ffffff><maxPlayers><#c0c0c0>] <#dbd814>Waiting for more players..."
+bossbar-countdown-format: "<#c0c0c0>[<#ffffff><players>><#c0c0c0>/<#ffffff><maxPlayers><#c0c0c0>] <#14db4c>Arena starts in <#6de38e><seconds><#14db4c>..."
 bossbar-running-format: "<teamColour1><remainingMonuments1> <#ffffff>| <timeRemaining> | <teamColour2><remainingMonuments2>"
 bossbar-ending-format: "<#ffffff>Team <teamName> <#ffffff>has <#6de38e>won<#ffffff>!"
 bossbar-ending-tie-format: "<#ffffff>It's a <#dbd814>tie<#ffffff>!"

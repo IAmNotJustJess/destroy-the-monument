@@ -10,7 +10,7 @@ import IAmNotJustJess.destroyTheMonument.player.classes.items.WeaponType;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.SkillType;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.*;
-import IAmNotJustJess.destroyTheMonument.utility.ConsoleDebugSending;
+import IAmNotJustJess.destroyTheMonument.utility.QuickSendingMethods;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -23,20 +23,20 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerClassDefaultClasses {
-    public static boolean load() {
+    public static void load() {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
 
         File folder = new File(plugin.getDataFolder() + File.separator + "classes");
 
-        if(!Objects.isNull(folder.listFiles()) && Objects.requireNonNull(folder.listFiles()).length > 1) {
-            ConsoleDebugSending.send(
+        if(!Objects.isNull(folder.listFiles()) && Objects.requireNonNull(folder.listFiles()).length > 0) {
+            QuickSendingMethods.sendToConsole(
                 "send-load-messages",
-                "<#14db4c>Located player classes files!"
+                "<#14db4c>Located Player Classes files!"
             );
-            return false;
+            return;
         }
 
-        ConsoleDebugSending.send(
+        QuickSendingMethods.sendToConsole(
             "send-load-messages",
             "<#dbd814>Couldn't locate any player classes files! Creating default configuration."
         );
@@ -510,7 +510,5 @@ public class PlayerClassDefaultClasses {
         PlayerClassManager.getList().add(playerClass);
 
         PlayerClassFileHandler.save();
-
-        return true;
     }
 }
