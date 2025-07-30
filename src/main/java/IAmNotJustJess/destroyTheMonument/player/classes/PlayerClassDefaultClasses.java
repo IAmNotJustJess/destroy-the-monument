@@ -29,10 +29,6 @@ public class PlayerClassDefaultClasses {
         File folder = new File(plugin.getDataFolder() + File.separator + "classes");
 
         if(!Objects.isNull(folder.listFiles()) && Objects.requireNonNull(folder.listFiles()).length > 0) {
-            QuickSendingMethods.sendToConsole(
-                "send-load-messages",
-                "<#14db4c>Located Player Classes files!"
-            );
             return;
         }
 

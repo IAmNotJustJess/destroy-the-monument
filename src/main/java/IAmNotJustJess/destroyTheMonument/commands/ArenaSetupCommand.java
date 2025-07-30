@@ -63,7 +63,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                     switch (args[2]) {
                         case "lobby" -> {
                             ArenaManager.arenaList.get(args[1]).setLobbyLocation(player.getLocation().getBlock().getLocation());
-                            QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the lobby location!");
+                            QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the <#ffffff>lobby location<#14db4c>!");
                         }
                         case "team1" -> {
                             if(Objects.isNull(args[3]) || args[3].equalsIgnoreCase("none")) {
@@ -71,10 +71,10 @@ public class ArenaSetupCommand implements CommandExecutor {
                                 return true;
                             }
                             if(ArenaManager.arenaList.get(args[1]).setFirstTeam(TeamColour.valueOf(args[3].toUpperCase()))) {
-                                QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the first team's colour to " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
+                                QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the <#ffffff>first team's colour<#14db4c> to " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                             }
                             else {
-                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>The second team's colour is " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#cc2b2b>!");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>The <#ffffff>second team's colour<#cc2b2b> is " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#cc2b2b>!");
                                 QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>You can't set two teams to the same one!");
                             }
 
@@ -85,10 +85,10 @@ public class ArenaSetupCommand implements CommandExecutor {
                                 return true;
                             }
                             if(ArenaManager.arenaList.get(args[1]).setSecondTeam(TeamColour.valueOf(args[3].toUpperCase()))){
-                                QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the second team's colour to " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
+                                QuickSendingMethods.sendToPlayer(player, "<#14db4c>Successfully set the <#ffffff>second team's colour<#14db4c> to " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                             }
                             else {
-                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>The first team's colour is " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#cc2b2b>!");
+                                QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>The <#ffffff>first team's colour<#cc2b2b> is " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#cc2b2b>!");
                                 QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>You can't set two teams to the same one!");
                             }
 
@@ -102,12 +102,12 @@ public class ArenaSetupCommand implements CommandExecutor {
                                 case "add" -> {
                                     ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .add(player.getLocation().getBlock().getLocation());
-                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new spawn location of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new <#ffffff>spawn location<#14db4c> of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 case "clear" -> {
                                     ArenaManager.arenaList.get(args[1]).getSpawnLocations().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .clear();
-                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared spawn locations of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared <#ffffff>spawn locations<#14db4c> of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 default -> {
                                     QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> spawn <teamColour> <add/clear>");
@@ -125,7 +125,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                                     ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .add(player.getLocation().getBlock().getLocation());
                                     player.getLocation().getBlock().setType(Material.OBSIDIAN);
-                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new monument location of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new <#ffffff>monument location<#14db4c> of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 case "clear" -> {
                                     for(Location location : ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))) {
@@ -133,7 +133,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                                     }
                                     ArenaManager.arenaList.get(args[1]).getMonumentList().get(TeamColour.valueOf(args[3].toUpperCase()))
                                         .clear();
-                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared monument locations of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared <#ffffff>monument locations<#14db4c> of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
                                 default -> {
                                     QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> monument <teamColour> <add/clear>");
@@ -150,12 +150,12 @@ public class ArenaSetupCommand implements CommandExecutor {
                                 case "add" -> {
                                     ArenaManager.arenaList.get(args[1]).getShopLocations()
                                         .add(player.getLocation().getBlock().getLocation());
-                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new shop location!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Added a new <#ffffff>shop location<#14db4c>!");
                                 }
                                 case "clear" -> {
                                     ArenaManager.arenaList.get(args[1]).getShopLocations()
                                         .clear();
-                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared shop locations!");
+                                    QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared <#ffffff>shop locations<#14db4c>!");
                                 }
                                 default -> {
                                     QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> shop <add/clear>");
