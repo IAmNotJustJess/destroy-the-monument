@@ -37,45 +37,56 @@ public class ArenaFileHandler {
             fileConfiguration.set("teams.1.colour", arenaInstance.getTeamColours().get(1).toString());
 
             int i = 0;
-            for(Location location : arenaInstance.getMonumentList().get(arenaInstance.getTeamColours().getFirst())) {
-                fileConfiguration.set("teams.0.monument-locations." + i, location);
-                i++;
+            if(arenaInstance.getMonumentList().get(arenaInstance.getFirstTeam()) != null) {
+                for(Location location : arenaInstance.getMonumentList().get(arenaInstance.getFirstTeam())) {
+                    fileConfiguration.set("teams.0.monument-locations." + i, location);
+                    i++;
+                }
+            }
+
+
+            i = 0;
+            if(arenaInstance.getMonumentList().get(arenaInstance.getFirstTeam()) != null) {
+                for (Location location : arenaInstance.getMonumentList().get(arenaInstance.getSecondTeam())) {
+                    fileConfiguration.set("teams.1.monument-locations." + i, location);
+                    i++;
+                }
             }
 
             i = 0;
-            for(Location location : arenaInstance.getMonumentList().get(arenaInstance.getTeamColours().get(1))) {
-                fileConfiguration.set("teams.1.monument-locations." + i, location);
-                i++;
+            if(arenaInstance.getMonumentList().get(arenaInstance.getSecondTeam()) != null) {
+                for (Location location : arenaInstance.getSpawnLocations().get(arenaInstance.getFirstTeam())) {
+                    fileConfiguration.set("teams.0.spawn-locations." + i, location);
+                    i++;
+                }
             }
 
             i = 0;
-            for(Location location : arenaInstance.getSpawnLocations().get(arenaInstance.getTeamColours().getFirst())) {
-                fileConfiguration.set("teams.0.spawn-locations." + i, location);
-                i++;
+            if(arenaInstance.getSpawnLocations().get(arenaInstance.getFirstTeam()) != null) {
+                for (Location location : arenaInstance.getSpawnLocations().get(arenaInstance.getSecondTeam())) {
+                    fileConfiguration.set("teams.1.spawn-locations." + i, location);
+                    i++;
+                }
             }
 
             i = 0;
-            for(Location location : arenaInstance.getSpawnLocations().get(arenaInstance.getTeamColours().get(1))) {
-                fileConfiguration.set("teams.1.spawn-locations." + i, location);
-                i++;
-            }
-
-            i = 0;
-            for(Location location : arenaInstance.getShopLocations()) {
-                fileConfiguration.set("shop-locations." + i, location);
-                i++;
+            if(arenaInstance.getSpawnLocations().get(arenaInstance.getSecondTeam()) != null) {
+                for (Location location : arenaInstance.getShopLocations()) {
+                    fileConfiguration.set("shop-locations." + i, location);
+                    i++;
+                }
             }
 
             try {
                 fileConfiguration.save(configFile);
                 QuickSendingMethods.sendToConsole(
                     "send-save-messages",
-                    "<#14db4c>Successfully saved the<#ffffff>" + arenaInstance.getArenaName() + "<#14db4c>arena instance!"
+                    "<#14db4c>Successfully saved the <#ffffff>" + arenaInstance.getArenaName() + " <#14db4c>arena instance!"
                 );
             } catch (IOException e) {
                 QuickSendingMethods.sendToConsole(
                     "send-save-messages",
-                    "<#cc2b2b>Failed to save the<#ffffff>" + arenaInstance.getArenaName() + "<#cc2b2b>arena instance!"
+                    "<#cc2b2b>Failed to save the <#ffffff>" + arenaInstance.getArenaName() + " <#cc2b2b>arena instance!"
                 );
                 throw new RuntimeException(e);
             }
@@ -110,6 +121,8 @@ public class ArenaFileHandler {
             TeamColour teamColour0 = TeamColour.valueOf(fileConfiguration.getString("teams.0.colour"));
             TeamColour teamColour1 = TeamColour.valueOf(fileConfiguration.getString("teams.1.colour"));
 
+            arenaInstance.setFirstTeam(teamColour0);
+            arenaInstance.setSecondTeam(teamColour1);
             arenaInstance.setLobbyLocation(fileConfiguration.getLocation("lobby-location"));
 
             arenaInstance.getTeamColours().add(teamColour0);

@@ -4,6 +4,7 @@ import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
+import IAmNotJustJess.destroyTheMonument.utility.PipedDeepCopy;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -37,7 +38,7 @@ public class PlayerClassGuiItem extends AbstractItem {
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
         switch(clickType) {
-            case LEFT -> PlayerCharacterManager.getList().get(player).setChosenClass((PlayerClass) playerClass.clone());
+            case LEFT -> PlayerCharacterManager.getList().get(player).setChosenClass((PlayerClass) PipedDeepCopy.copy(playerClass));
             case RIGHT -> {
 
             }

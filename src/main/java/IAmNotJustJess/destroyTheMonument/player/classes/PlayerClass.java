@@ -5,7 +5,11 @@ import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
 import com.google.gson.Gson;
 import org.bukkit.Material;
 
-public class PlayerClass implements Cloneable {
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+
+public class PlayerClass {
 
     public String name;
     public String description;
@@ -32,16 +36,4 @@ public class PlayerClass implements Cloneable {
         this.upgradeTree = upgradeTree;
         this.guiMaterial = guiMaterial;
     }
-
-    @Override
-    public Object clone(){
-        try {
-            Object o = super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-        Gson gson = new Gson();
-        return gson.fromJson(gson.toJson(this), PlayerClass.class);
-    }
-
 }

@@ -9,9 +9,7 @@ import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
 import IAmNotJustJess.destroyTheMonument.teams.Team;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
-import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
-import IAmNotJustJess.destroyTheMonument.utility.RandomElementPicker;
+import IAmNotJustJess.destroyTheMonument.utility.*;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.TextComponent;
@@ -352,7 +350,7 @@ public class ArenaInstance {
     public void addPlayerToArena(Player player) {
         if(arenaState != ArenaState.LOBBY) return;
         playerList.add(player);
-        PlayerCharacterManager.getList().put(player, new PlayerCharacter(player, (PlayerClass) RandomElementPicker.getRandomElement(PlayerClassManager.getList()).clone(), TeamColour.NONE, 1.0f));
+        PlayerCharacterManager.getList().put(player, new PlayerCharacter(player, (PlayerClass) RandomElementPicker.getRandomElement(ObjectConverter.convertObjectToList(PipedDeepCopy.copy(PlayerClassManager.getList()))), TeamColour.NONE, 1.0f));
         checkPlayerCount();
         updateBossBar();
         ((Audience) player).showBossBar(bossbar);

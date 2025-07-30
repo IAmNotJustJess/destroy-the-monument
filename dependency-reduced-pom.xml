@@ -110,12 +110,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.13.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>xyz.xenondevs.invui</groupId>
       <artifactId>invui</artifactId>
       <version>1.45</version>

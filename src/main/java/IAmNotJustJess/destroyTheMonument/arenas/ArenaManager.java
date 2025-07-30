@@ -5,6 +5,7 @@ import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
+import IAmNotJustJess.destroyTheMonument.utility.PipedDeepCopy;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class ArenaManager {
         ArenaInstance arenaInstance = arenaList.get(id);
         PlayerCharacterManager.getList().put(player, new PlayerCharacter(
                 player,
-                (PlayerClass) PlayerClassManager.getList().getFirst().clone(),
+                (PlayerClass) PipedDeepCopy.copy(PlayerClassManager.getList().getFirst()),
                 TeamColour.NONE,
                 1.0f
         ));
