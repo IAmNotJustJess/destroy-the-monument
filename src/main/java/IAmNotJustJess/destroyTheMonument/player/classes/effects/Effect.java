@@ -89,29 +89,15 @@ public class Effect {
             public void run() {
                 EffectSerializers.soundDeserialize(soundSerializedString, caster.getPlayer().getLocation());
                 switch(particleSpawnLocation) {
-                    case USER -> {
-                        EffectSerializers.particleDeserialize(particleSerializedString, caster.getPlayer().getLocation());
-                    }
-                    case LOCATION -> {
-                        EffectSerializers.particleDeserialize(particleSerializedString, location);
-                    }
+                    case USER -> EffectSerializers.particleDeserialize(particleSerializedString, caster.getPlayer().getLocation());
+                    case LOCATION -> EffectSerializers.particleDeserialize(particleSerializedString, location);
                 }
                 switch (effectApplicationType) {
-                    case APPLY_SELF -> {
-                        activateAbilityOnSelf(caster);
-                    }
-                    case APPLY_ENEMIES_IN_RANGE -> {
-                        activateAbilityOnEnemies(caster, location);
-                    }
-                    case APPLY_ENEMIES_IN_RANGE_OF_CASTER -> {
-                        activateAbilityOnEnemies(caster, caster.getPlayer().getLocation());
-                    }
-                    case APPLY_TEAMMATES_IN_RANGE -> {
-                        activateAbilityOnTeammates(caster, location);
-                    }
-                    case APPLY_TEAMMATES_IN_RANGE_OF_CASTER -> {
-                        activateAbilityOnTeammates(caster, caster.getPlayer().getLocation());
-                    }
+                    case APPLY_SELF -> activateAbilityOnSelf(caster);
+                    case APPLY_ENEMIES_IN_RANGE -> activateAbilityOnEnemies(caster, location);
+                    case APPLY_ENEMIES_IN_RANGE_OF_CASTER -> activateAbilityOnEnemies(caster, caster.getPlayer().getLocation());
+                    case APPLY_TEAMMATES_IN_RANGE -> activateAbilityOnTeammates(caster, location);
+                    case APPLY_TEAMMATES_IN_RANGE_OF_CASTER -> activateAbilityOnTeammates(caster, caster.getPlayer().getLocation());
                 }
             }
         }.runTaskLaterAsynchronously(JavaPlugin.getProvidingPlugin(DestroyTheMonument.class), delay);
@@ -158,22 +144,14 @@ public class Effect {
 
     private void activateAbilityOnPlayer(PlayerCharacter caster, PlayerCharacter affectedPlayer) {
         switch (effectType) {
-            case PUSH_UP -> {
-                affectedPlayer.getPlayer().getVelocity().add(new Vector(0, 1, 0).normalize().multiply(strength));
-            }
+            case PUSH_UP -> affectedPlayer.getPlayer().getVelocity().add(new Vector(0, 1, 0).normalize().multiply(strength));
             case PUSH_AWAY -> {
                 Vector vector = caster.getPlayer().getLocation().toVector().subtract(affectedPlayer.getPlayer().getLocation().toVector()).normalize().multiply(strength);
                 affectedPlayer.getPlayer().getVelocity().add(vector);
             }
-            case HEAL_FLAT -> {
-                affectedPlayer.heal((int) strength);
-            }
-            case HEAL_PERCENTAGE -> {
-                affectedPlayer.heal((int) (affectedPlayer.getMaxHealth() * strength));
-            }
-            case POTION_EFFECT -> {
-                affectedPlayer.getPlayer().addPotionEffect(potionEffect);
-            }
+            case HEAL_FLAT -> affectedPlayer.heal((int) strength);
+            case HEAL_PERCENTAGE -> affectedPlayer.heal((int) (affectedPlayer.getMaxHealth() * strength));
+            case POTION_EFFECT -> affectedPlayer.getPlayer().addPotionEffect(potionEffect);
             case DEAL_DAMAGE_FLAT -> {
                 affectedPlayer.dealDamage((int) strength);
                 affectedPlayer.getPlayer().damage(0.0, caster.getPlayer());

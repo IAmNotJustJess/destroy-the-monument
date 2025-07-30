@@ -4,22 +4,21 @@ import IAmNotJustJess.destroyTheMonument.arenas.ArenaInstance;
 import IAmNotJustJess.destroyTheMonument.arenas.ArenaManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
-import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import IAmNotJustJess.destroyTheMonument.utility.QuickSendingMethods;
-import net.kyori.adventure.audience.Audience;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class ArenaSetupCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if(sender instanceof Player player) {
 
             if(args.length < 1) {
@@ -109,9 +108,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                                         .clear();
                                     QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared <#ffffff>spawn locations<#14db4c> of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
-                                default -> {
-                                    QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> spawn <teamColour> <add/clear>");
-                                }
+                                default -> QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> spawn <teamColour> <add/clear>");
                             }
                             return true;
                         }
@@ -135,9 +132,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                                         .clear();
                                     QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared <#ffffff>monument locations<#14db4c> of team " + TeamManager.list.get(TeamColour.valueOf(args[3].toUpperCase())).textColour + args[3] + "<#14db4c>!");
                                 }
-                                default -> {
-                                    QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> monument <teamColour> <add/clear>");
-                                }
+                                default -> QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> monument <teamColour> <add/clear>");
                             }
                             return true;
                         }
@@ -157,15 +152,11 @@ public class ArenaSetupCommand implements CommandExecutor {
                                         .clear();
                                     QuickSendingMethods.sendToPlayer(player, "<#14db4c>Cleared <#ffffff>shop locations<#14db4c>!");
                                 }
-                                default -> {
-                                    QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> shop <add/clear>");
-                                }
+                                default -> QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> shop <add/clear>");
                             }
                             return true;
                         }
-                        case null, default -> {
-                            QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> <options>");
-                        }
+                        case null, default -> QuickSendingMethods.sendToPlayer(player, "<#cc2b2b>Correct usage: <#ffffff>/dtm set <arena> <options>");
                     }
                     return true;
                 }

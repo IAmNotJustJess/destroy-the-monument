@@ -123,12 +123,8 @@ public class Skill {
         }
         else {
             switch (skillType) {
-                case ACTIVE, ACTIVATING_ON_DEATH, ACTIVATING_ON_HIT -> {
-                    itemStack = new ItemStack(Material.LIME_DYE);
-                }
-                case ULTIMATE, ULTIMATE_ON_DEATH, ULTIMATE_ON_HIT -> {
-                    itemStack = new ItemStack(Material.NETHER_STAR);
-                }
+                case ACTIVE, ACTIVATING_ON_DEATH, ACTIVATING_ON_HIT -> itemStack = new ItemStack(Material.LIME_DYE);
+                case ULTIMATE, ULTIMATE_ON_DEATH, ULTIMATE_ON_HIT -> itemStack = new ItemStack(Material.NETHER_STAR);
                 default -> {
                     itemStack = new ItemStack(Material.AIR);
                     return itemStack;

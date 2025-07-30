@@ -1,7 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.teams;
 
 import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
-import IAmNotJustJess.destroyTheMonument.utility.QuickSendingMethods;
 import org.bukkit.Color;
 import org.bukkit.Material;
 

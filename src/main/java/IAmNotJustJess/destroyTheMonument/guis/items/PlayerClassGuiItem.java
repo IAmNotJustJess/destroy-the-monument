@@ -37,9 +37,7 @@ public class PlayerClassGuiItem extends AbstractItem {
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
         switch(clickType) {
-            case LEFT -> {
-                PlayerCharacterManager.getList().get(player).setChosenClass((PlayerClass) playerClass.clone());
-            }
+            case LEFT -> PlayerCharacterManager.getList().get(player).setChosenClass((PlayerClass) playerClass.clone());
             case RIGHT -> {
 
             }

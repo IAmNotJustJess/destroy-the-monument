@@ -36,15 +36,9 @@ public class ChooseClassItem extends AbstractItem {
             set = true;
         }
         switch(playerClass.playerClassType) {
-            case ATTACK -> {
-                lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("attack-class")));
-            }
-            case SUPPORT -> {
-                lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("support-class")));
-            }
-            case DEFENCE -> {
-                lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("defence-class")));
-            }
+            case ATTACK -> lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("attack-class")));
+            case SUPPORT -> lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("support-class")));
+            case DEFENCE -> lore.add(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("defence-class")));
         }
         lore.add(" ");
         lore.addAll(MiniMessageSerializers.deserializeMultilineToString(playerClass.description));

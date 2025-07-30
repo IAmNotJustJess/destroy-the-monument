@@ -35,6 +35,11 @@ public class PlayerClass implements Cloneable {
 
     @Override
     public Object clone(){
+        try {
+            Object o = super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
         Gson gson = new Gson();
         return gson.fromJson(gson.toJson(this), PlayerClass.class);
     }

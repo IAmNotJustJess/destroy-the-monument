@@ -297,9 +297,7 @@ public class PlayerCharacter {
                     }
                 }
 
-                case ULTIMATE_ADD_NEW_EFFECT -> {
-                    chosenPlayerClass.ultimateSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
-                }
+                case ULTIMATE_ADD_NEW_EFFECT -> chosenPlayerClass.ultimateSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
 
                 case ACTIVE_EFFECT_STRENGTH -> {
                     switch (upgradeType) {
@@ -371,9 +369,7 @@ public class PlayerCharacter {
                     }
                 }
 
-                case ACTIVE_ADD_NEW_EFFECT -> {
-                    chosenPlayerClass.activeSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
-                }
+                case ACTIVE_ADD_NEW_EFFECT -> chosenPlayerClass.activeSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
 
                 case PASSIVE_EFFECT_STRENGTH -> {
                     switch (upgradeType) {
@@ -445,9 +441,7 @@ public class PlayerCharacter {
                     }
                 }
 
-                case PASSIVE_ADD_NEW_EFFECT -> {
-                    chosenPlayerClass.passiveSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
-                }
+                case PASSIVE_ADD_NEW_EFFECT -> chosenPlayerClass.passiveSkill.effectList.addAll(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()));
 
                 case MAIN_WEAPON_DAMAGE -> {
                     switch (upgradeType) {
@@ -687,12 +681,8 @@ public class PlayerCharacter {
 
                     case MOVEMENT_SPEED -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                movementSpeed += (float) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                movementSpeed += (float) (value * movementSpeedAfterUpgrades);
-                            }
+                            case STACKING_FLAT_PER_KILL -> movementSpeed += (float) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> movementSpeed += (float) (value * movementSpeedAfterUpgrades);
                         }
                         updatePlayerSpeed();
                     }
@@ -750,18 +740,12 @@ public class PlayerCharacter {
 
                     case ULTIMATE_COOLDOWN -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.ultimateSkill.cooldown += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.ultimateSkill.cooldown += (int) (value * chosenPlayerClass.ultimateSkill.baseCooldown);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.ultimateSkill.cooldown += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.ultimateSkill.cooldown += (int) (value * chosenPlayerClass.ultimateSkill.baseCooldown);
                         }
                     }
 
-                    case ULTIMATE_ADD_NEW_EFFECT -> {
-                        chosenPlayerClass.ultimateSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
-                    }
+                    case ULTIMATE_ADD_NEW_EFFECT -> chosenPlayerClass.ultimateSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
 
                     case ACTIVE_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
@@ -816,18 +800,12 @@ public class PlayerCharacter {
 
                     case ACTIVE_COOLDOWN -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.activeSkill.cooldown += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.activeSkill.cooldown += (int) (value * chosenPlayerClass.activeSkill.baseCooldown);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.activeSkill.cooldown += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.activeSkill.cooldown += (int) (value * chosenPlayerClass.activeSkill.baseCooldown);
                         }
                     }
 
-                    case ACTIVE_ADD_NEW_EFFECT -> {
-                        chosenPlayerClass.activeSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
-                    }
+                    case ACTIVE_ADD_NEW_EFFECT -> chosenPlayerClass.activeSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
 
                     case PASSIVE_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
@@ -882,44 +860,28 @@ public class PlayerCharacter {
 
                     case PASSIVE_COOLDOWN -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.passiveSkill.cooldown += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.passiveSkill.cooldown += (int) (value * chosenPlayerClass.passiveSkill.baseCooldown);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.passiveSkill.cooldown += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.passiveSkill.cooldown += (int) (value * chosenPlayerClass.passiveSkill.baseCooldown);
                         }
                     }
 
-                    case PASSIVE_ADD_NEW_EFFECT -> {
-                        chosenPlayerClass.passiveSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
-                    }
+                    case PASSIVE_ADD_NEW_EFFECT -> chosenPlayerClass.passiveSkill.effectList.add(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
 
                     case MAIN_WEAPON_DAMAGE -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.loadout.mainWeapon.damage += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.loadout.mainWeapon.damage += (int) (value * chosenPlayerClass.loadout.mainWeapon.baseDamage);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.loadout.mainWeapon.damage += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.loadout.mainWeapon.damage += (int) (value * chosenPlayerClass.loadout.mainWeapon.baseDamage);
                         }
                     }
 
                     case MAIN_WEAPON_COOLDOWN -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.loadout.mainWeapon.cooldown += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.loadout.mainWeapon.cooldown += (int) (value * chosenPlayerClass.loadout.mainWeapon.baseCooldown);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.loadout.mainWeapon.cooldown += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.loadout.mainWeapon.cooldown += (int) (value * chosenPlayerClass.loadout.mainWeapon.baseCooldown);
                         }
                     }
 
-                    case MAIN_WEAPON_ADD_NEW_EFFECT -> {
-                        chosenPlayerClass.loadout.mainWeapon.addEffect(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()), upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
-                    }
+                    case MAIN_WEAPON_ADD_NEW_EFFECT -> chosenPlayerClass.loadout.mainWeapon.addEffect(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()), upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
 
                     case MAIN_WEAPON_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
@@ -974,29 +936,19 @@ public class PlayerCharacter {
 
                     case SECONDARY_WEAPON_DAMAGE -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.loadout.secondaryWeapon.damage += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.loadout.secondaryWeapon.damage += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.baseDamage);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.loadout.secondaryWeapon.damage += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.loadout.secondaryWeapon.damage += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.baseDamage);
                         }
                     }
 
                     case SECONDARY_WEAPON_COOLDOWN -> {
                         switch (upgradeType) {
-                            case STACKING_FLAT_PER_KILL -> {
-                                chosenPlayerClass.loadout.secondaryWeapon.cooldown += (int) value;
-                            }
-                            case STACKING_PERCENTAGE_PER_KILL -> {
-                                chosenPlayerClass.loadout.secondaryWeapon.cooldown += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.baseCooldown);
-                            }
+                            case STACKING_FLAT_PER_KILL -> chosenPlayerClass.loadout.secondaryWeapon.cooldown += (int) value;
+                            case STACKING_PERCENTAGE_PER_KILL -> chosenPlayerClass.loadout.secondaryWeapon.cooldown += (int) (value * chosenPlayerClass.loadout.secondaryWeapon.baseCooldown);
                         }
                     }
 
-                    case SECONDARY_WEAPON_ADD_NEW_EFFECT -> {
-                        chosenPlayerClass.loadout.secondaryWeapon.addEffect(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()), upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
-                    }
+                    case SECONDARY_WEAPON_ADD_NEW_EFFECT -> chosenPlayerClass.loadout.secondaryWeapon.addEffect(upgrade.effectsPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()), upgrade.effectsSpecialPropertiesPerLevelList.get(upgrade.getCurrentLevel()).get(upgrade.getStackCount()));
 
                     case SECONDARY_WEAPON_EFFECT_STRENGTH -> {
                         switch (upgradeType) {
@@ -1142,12 +1094,8 @@ public class PlayerCharacter {
 
             if(effect.longevity % effect.tickEveryServerTicks == 0) {
                 switch (effect.effectType) {
-                    case HEAL_OVER_TIME_FLAT -> {
-                        this.heal((int) effect.strength);
-                    }
-                    case HEAL_OVER_TIME_PERCENTAGE -> {
-                        this.heal((int) effect.strength * this.maxHealth);
-                    }
+                    case HEAL_OVER_TIME_FLAT -> this.heal((int) effect.strength);
+                    case HEAL_OVER_TIME_PERCENTAGE -> this.heal((int) effect.strength * this.maxHealth);
                     case DAMAGE_OVER_TIME_FLAT -> {
                         this.dealDamage((int) effect.strength);
                         getPlayer().damage(0.0);
@@ -1178,18 +1126,10 @@ public class PlayerCharacter {
 
         for(Effect effect : this.getEffectList()) {
             switch(effect.effectType) {
-                case DAMAGE_INCREASE_FLAT -> {
-                    this.flatDealDamageIncrease += (int) effect.strength;
-                }
-                case DAMAGE_VULNERABILITY_FLAT -> {
-                    this.flatTakeDamageIncrease += (int) effect.strength;
-                }
-                case DAMAGE_INCREASE_MULTIPLIER -> {
-                    this.dealDamageMultiplier *= effect.strength;
-                }
-                case DAMAGE_VULNERABILITY_MULTIPLIER -> {
-                    this.takeDamageMultiplier *= effect.strength;
-                }
+                case DAMAGE_INCREASE_FLAT -> this.flatDealDamageIncrease += (int) effect.strength;
+                case DAMAGE_VULNERABILITY_FLAT -> this.flatTakeDamageIncrease += (int) effect.strength;
+                case DAMAGE_INCREASE_MULTIPLIER -> this.dealDamageMultiplier *= effect.strength;
+                case DAMAGE_VULNERABILITY_MULTIPLIER -> this.takeDamageMultiplier *= effect.strength;
                 default -> {
                     break;
                 }

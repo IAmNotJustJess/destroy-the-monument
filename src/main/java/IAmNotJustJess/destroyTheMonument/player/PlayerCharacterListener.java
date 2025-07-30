@@ -54,15 +54,9 @@ public class PlayerCharacterListener implements Listener {
                 String weaponTypeString = Objects.requireNonNull(Objects.requireNonNull(damager.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "weaponType"), PersistentDataType.STRING));
                 WeaponType weaponType = WeaponType.valueOf(weaponTypeString);
                 switch (weaponType) {
-                    case MAIN_MELEE -> {
-                        damage = damagerCharacter.getChosenClass().loadout.mainWeapon.damage;
-                    }
-                    case SECONDARY_MELEE -> {
-                        damage = damagerCharacter.getChosenClass().loadout.secondaryWeapon.damage;
-                    }
-                    default -> {
-                        damage = 1;
-                    }
+                    case MAIN_MELEE -> damage = damagerCharacter.getChosenClass().loadout.mainWeapon.damage;
+                    case SECONDARY_MELEE -> damage = damagerCharacter.getChosenClass().loadout.secondaryWeapon.damage;
+                    default -> damage = 1;
                 }
                 event.setDamage(0.0);
                 victimCharacter.setLastAttacked(PlayerCharacterManager.getList().get(damager));
@@ -74,15 +68,9 @@ public class PlayerCharacterListener implements Listener {
                 String weaponTypeString = Objects.requireNonNull(Objects.requireNonNull(damager.getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "weaponType"), PersistentDataType.STRING));
                 WeaponType weaponType = WeaponType.valueOf(weaponTypeString);
                 switch (weaponType) {
-                    case MAIN_MELEE -> {
-                        damage = damagerCharacter.getChosenClass().loadout.mainWeapon.damage;
-                    }
-                    case SECONDARY_MELEE -> {
-                        damage = damagerCharacter.getChosenClass().loadout.secondaryWeapon.damage;
-                    }
-                    default -> {
-                        damage = 1;
-                    }
+                    case MAIN_MELEE -> damage = damagerCharacter.getChosenClass().loadout.mainWeapon.damage;
+                    case SECONDARY_MELEE -> damage = damagerCharacter.getChosenClass().loadout.secondaryWeapon.damage;
+                    default -> damage = 1;
                 }
                 event.setDamage(0.0);
                 victimCharacter.setLastAttacked(PlayerCharacterManager.getList().get(damager));
@@ -104,12 +92,8 @@ public class PlayerCharacterListener implements Listener {
         String abilityType = Objects.requireNonNull(event.getItem().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "abilityType"), PersistentDataType.STRING);
 
         switch (abilityType) {
-            case "active" -> {
-                playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
-            }
-            case "ultimate" -> {
-                playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
-            }
+            case "active" -> playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
+            case "ultimate" -> playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
             case null, default -> {}
         }
     }
@@ -132,12 +116,8 @@ public class PlayerCharacterListener implements Listener {
         String abilityType = Objects.requireNonNull(event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "abilityType"), PersistentDataType.STRING));
 
         switch (abilityType) {
-            case "active" -> {
-                playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, location);
-            }
-            case "ultimate" -> {
-                playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, location);
-            }
+            case "active" -> playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, location);
+            case "ultimate" -> playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, location);
         }
     }
 

@@ -347,7 +347,7 @@ public class ArenaInstance {
                 if(timer <= 0) advanceState();
             }
         }.runTaskTimerAsynchronously(JavaPlugin.getPlugin(DestroyTheMonument.class), 0L, 20L);
-    };
+    }
 
     public void addPlayerToArena(Player player) {
         if(arenaState != ArenaState.LOBBY) return;
@@ -366,9 +366,7 @@ public class ArenaInstance {
         updateBossBar();
         ((Audience) player).hideBossBar(bossbar);
         switch(arenaState) {
-            case STARTING, RUNNING -> {
-                checkForArenaEnd();
-            }
+            case STARTING, RUNNING -> checkForArenaEnd();
         }
     }
 
@@ -565,9 +563,7 @@ public class ArenaInstance {
                 this.arenaState = ArenaState.CLEARING;
                 resetArena();
             }
-            case CLEARING -> {
-                this.arenaState = ArenaState.LOBBY;
-            }
+            case CLEARING -> this.arenaState = ArenaState.LOBBY;
         }
     }
 

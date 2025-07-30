@@ -1,7 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.configuration;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
-import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
 import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
