@@ -33,7 +33,7 @@ public class PlayerClassFileHandler {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
         QuickSendingMethods.sendToConsole(
             "send-save-messages",
-            "<#dbd814>Saving Player Classes..."
+            "<#dbd814>Saving player classes..."
         );
 
         for(PlayerClass playerClass : PlayerClassManager.getList()) {
@@ -222,7 +222,7 @@ public class PlayerClassFileHandler {
 
         QuickSendingMethods.sendToConsole(
             "send-load-messages",
-            "<#dbd814>Loading Player Classes..."
+            "<#dbd814>Loading player classes..."
         );
 
         File[] configFolder = new File(plugin.getDataFolder() + File.separator + "classes").listFiles();

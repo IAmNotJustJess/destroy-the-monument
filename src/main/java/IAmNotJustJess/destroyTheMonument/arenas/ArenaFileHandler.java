@@ -23,7 +23,7 @@ public class ArenaFileHandler {
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
         QuickSendingMethods.sendToConsole(
             "send-save-messages",
-            "<#dbd814>Saving Arena Instances..."
+            "<#dbd814>Saving arena instances..."
         );
 
         for(ArenaInstance arenaInstance : ArenaManager.arenaList.values()) {
@@ -44,7 +44,6 @@ public class ArenaFileHandler {
                 }
             }
 
-
             i = 0;
             if(arenaInstance.getMonumentList().get(arenaInstance.getFirstTeam()) != null) {
                 for (Location location : arenaInstance.getMonumentList().get(arenaInstance.getSecondTeam())) {
@@ -54,7 +53,7 @@ public class ArenaFileHandler {
             }
 
             i = 0;
-            if(arenaInstance.getMonumentList().get(arenaInstance.getSecondTeam()) != null) {
+            if(arenaInstance.getSpawnLocations().get(arenaInstance.getSecondTeam()) != null) {
                 for (Location location : arenaInstance.getSpawnLocations().get(arenaInstance.getFirstTeam())) {
                     fileConfiguration.set("teams.0.spawn-locations." + i, location);
                     i++;
@@ -70,7 +69,7 @@ public class ArenaFileHandler {
             }
 
             i = 0;
-            if(arenaInstance.getSpawnLocations().get(arenaInstance.getSecondTeam()) != null) {
+            if(!arenaInstance.getShopLocations().isEmpty()) {
                 for (Location location : arenaInstance.getShopLocations()) {
                     fileConfiguration.set("shop-locations." + i, location);
                     i++;
@@ -100,7 +99,7 @@ public class ArenaFileHandler {
 
         QuickSendingMethods.sendToConsole(
             "send-load-messages",
-            "<#dbd814>Loading Arena Instances..."
+            "<#dbd814>Loading arena instances..."
         );
 
         try {
@@ -134,33 +133,43 @@ public class ArenaFileHandler {
             arenaInstance.getSpawnLocations().put(teamColour0, new ArrayList<>());
             arenaInstance.getSpawnLocations().put(teamColour1, new ArrayList<>());
 
-            if(!Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.0.monument-locations")).getKeys(false).isEmpty()) {
-                for(String path : Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.0.monument-locations")).getKeys(false)) {
-                    arenaInstance.getMonumentList().get(teamColour0).add(fileConfiguration.getLocation("teams.0.monument-locations."+path));
+            if(fileConfiguration.getConfigurationSection("teams.0.monument-locations") != null) {
+                if (!fileConfiguration.getConfigurationSection("teams.0.monument-locations").getKeys(false).isEmpty()) {
+                    for (String path : fileConfiguration.getConfigurationSection("teams.0.monument-locations").getKeys(false)) {
+                        arenaInstance.getMonumentList().get(teamColour0).add(fileConfiguration.getLocation("teams.0.monument-locations." + path));
+                    }
                 }
             }
 
-            if(!Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.1.monument-locations")).getKeys(false).isEmpty()) {
-                for(String path : Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.1.monument-locations")).getKeys(false)) {
-                    arenaInstance.getMonumentList().get(teamColour1).add(fileConfiguration.getLocation("teams.1.monument-locations."+path));
+            if(fileConfiguration.getConfigurationSection("teams.1.monument-locations") != null) {
+                if (!fileConfiguration.getConfigurationSection("teams.1.monument-locations").getKeys(false).isEmpty()) {
+                    for (String path : fileConfiguration.getConfigurationSection("teams.1.monument-locations").getKeys(false)) {
+                        arenaInstance.getMonumentList().get(teamColour1).add(fileConfiguration.getLocation("teams.1.monument-locations." + path));
+                    }
                 }
             }
 
-            if(!Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.0.spawn-locations")).getKeys(false).isEmpty()) {
-                for(String path : Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.0.spawn-locations")).getKeys(false)) {
-                    arenaInstance.getMonumentList().get(teamColour0).add(fileConfiguration.getLocation("teams.0.spawn-locations."+path));
+            if(fileConfiguration.getConfigurationSection("teams.0.spawn-locations") != null) {
+                if (!fileConfiguration.getConfigurationSection("teams.0.spawn-locations").getKeys(false).isEmpty()) {
+                    for (String path : fileConfiguration.getConfigurationSection("teams.0.spawn-locations").getKeys(false)) {
+                        arenaInstance.getSpawnLocations().get(teamColour0).add(fileConfiguration.getLocation("teams.0.spawn-locations." + path));
+                    }
                 }
             }
 
-            if(!Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.1.spawn-locations")).getKeys(false).isEmpty()) {
-                for(String path : Objects.requireNonNull(fileConfiguration.getConfigurationSection("teams.1.spawn-locations")).getKeys(false)) {
-                    arenaInstance.getMonumentList().get(teamColour1).add(fileConfiguration.getLocation("teams.1.spawn-locations."+path));
+            if(fileConfiguration.getConfigurationSection("teams.1.spawn-locations") != null) {
+                if (!fileConfiguration.getConfigurationSection("teams.1.spawn-locations").getKeys(false).isEmpty()) {
+                    for (String path : fileConfiguration.getConfigurationSection("teams.1.spawn-locations").getKeys(false)) {
+                        arenaInstance.getSpawnLocations().get(teamColour1).add(fileConfiguration.getLocation("teams.1.spawn-locations." + path));
+                    }
                 }
             }
 
-            if(!Objects.requireNonNull(fileConfiguration.getConfigurationSection("shop-locations")).getKeys(false).isEmpty()) {
-                for(String path : Objects.requireNonNull(fileConfiguration.getConfigurationSection("shop-locations")).getKeys(false)) {
-                    arenaInstance.getShopLocations().add(fileConfiguration.getLocation("shop-locations."+path));
+            if(fileConfiguration.getConfigurationSection("shop-locations") != null) {
+                if (!fileConfiguration.getConfigurationSection("shop-locations").getKeys(false).isEmpty()) {
+                    for (String path : fileConfiguration.getConfigurationSection("shop-locations").getKeys(false)) {
+                        arenaInstance.getShopLocations().add(fileConfiguration.getLocation("shop-locations." + path));
+                    }
                 }
             }
 

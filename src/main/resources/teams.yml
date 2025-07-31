@@ -2,7 +2,7 @@ file-version: 1
 
 teams:
   none:
-    name: ""
+    name: "none - has to be replaced"
     text-colour: ""
     team-colour: NONE
     block-type: AIR

@@ -11,6 +11,10 @@ public class QuickSendingMethods {
         ((Audience) player).sendMessage(MiniMessageSerializers.deserializeToComponent(string));
     }
 
+    public static void sendToConsole(String message) {
+        ((Audience) Bukkit.getConsoleSender()).sendMessage(MiniMessageSerializers.deserializeToComponent("<#c0c0c0>[DTM] " + message));
+    }
+
     public static void sendToConsole(String comparableConfigString, String message) {
         if(MainConfiguration.mainConfiguration.getBoolean("debug." + comparableConfigString)) {
             ((Audience) Bukkit.getConsoleSender()).sendMessage(MiniMessageSerializers.deserializeToComponent("<#c0c0c0>[DTM] " + message));

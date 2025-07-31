@@ -2,10 +2,7 @@ package IAmNotJustJess.destroyTheMonument.arenas;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
-import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
-import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClass;
-import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
 import IAmNotJustJess.destroyTheMonument.teams.Team;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
@@ -48,35 +45,37 @@ public class ArenaInstance {
     private String bossbarFormat;
     private BossBar bossbar;
 
-    public boolean checkArenaAvailabilityState() {
-        boolean arenaAvailability = true;
-
+    public boolean checkArenaJoinAvailabilityState() {
+        
         if(teamColours.get(0) == TeamColour.NONE) {
-            arenaAvailability = false;
+            return false;
         }
         if(teamColours.get(1) == TeamColour.NONE) {
-            arenaAvailability = false;
+            return false;
         }
         if(monumentList.get(teamColours.get(0)).isEmpty()) {
-            arenaAvailability = false;
+            return false;
         }
         if(monumentList.get(teamColours.get(1)).isEmpty()) {
-            arenaAvailability = false;
+            return false;
         }
         if(spawnLocations.get(teamColours.get(0)).isEmpty()) {
-            arenaAvailability = false;
+            return false;
         }
         if(spawnLocations.get(teamColours.get(1)).isEmpty()) {
-            arenaAvailability = false;
+            return false;
         }
         if(shopLocations.isEmpty()) {
-            arenaAvailability = false;
+            return false;
         }
         if(lobbyLocation == null) {
-            arenaAvailability = false;
+            return false;
+        }
+        if(playerList.size() == ArenaSettings.maxPlayersPerTeam * 2) {
+            return false;
         }
 
-        return arenaAvailability;
+        return true;
     }
 
     public boolean setFirstTeam(TeamColour teamColour) {
@@ -333,8 +332,8 @@ public class ArenaInstance {
                         advanceState();
                         return;
                     }
-                    if(timer % 60 * ArenaSettings.boostShardsEveryTimeInMinutes == 0) {
-                        shardsPerMinute += ArenaSettings.boostShardsBy;
+                    if(timer % 60 * ArenaSettings.shardsBoostEveryMinutes == 0) {
+                        shardsPerMinute += ArenaSettings.shardsAwardPerMinuteBoost;
                     }
                     if(timer % 60 == 0) {
                         for(Player player : playerList) {
@@ -350,7 +349,6 @@ public class ArenaInstance {
     public void addPlayerToArena(Player player) {
         if(arenaState != ArenaState.LOBBY) return;
         playerList.add(player);
-        PlayerCharacterManager.getList().put(player, new PlayerCharacter(player, (PlayerClass) RandomElementPicker.getRandomElement(ObjectConverter.convertObjectToList(PipedDeepCopy.copy(PlayerClassManager.getList()))), TeamColour.NONE, 1.0f));
         checkPlayerCount();
         updateBossBar();
         ((Audience) player).showBossBar(bossbar);
@@ -421,14 +419,14 @@ public class ArenaInstance {
     }
 
     private void checkPlayerCount() {
-        double playerRatio = (double) playerList.size() / (ArenaSettings.maxPlayersPerTeam * teamColours.size());
-        if(arenaState == ArenaState.LOBBY && playerRatio >= ArenaSettings.startCountdownPlayerPercentageRequirement) {
+        double playerRatio = (double) playerList.size() / (ArenaSettings.maxPlayersPerTeam * 2);
+        if(arenaState == ArenaState.LOBBY && playerRatio >= ArenaSettings.arenaStartCountdownPlayerRequirement) {
             advanceState();
         }
-        else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio >= ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
-            timer = ArenaSettings.arenaCutDownCountdownInSeconds;
+        else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutCountdownToInSeconds && playerRatio >= ArenaSettings.arenaCutCountdownPlayerRequirement) {
+            timer = ArenaSettings.arenaCutCountdownToInSeconds;
         }
-        else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutDownCountdownInSeconds && playerRatio < ArenaSettings.cutDownCountdownPlayerPercentageRequirement) {
+        else if (arenaState == ArenaState.COUNTDOWN && timer > ArenaSettings.arenaCutCountdownToInSeconds && playerRatio < ArenaSettings.arenaCutCountdownPlayerRequirement) {
             timer = -1;
             tickTask.cancel();
         }
@@ -549,7 +547,7 @@ public class ArenaInstance {
             }
             case STARTING -> {
                 this.arenaState = ArenaState.RUNNING;
-                this.shardsPerMinute = ArenaSettings.shardsPerMinute;
+                this.shardsPerMinute = ArenaSettings.shardsAwardedPerMinutePlayed;
                 bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-running-format");
                 timer = (int) (ArenaSettings.arenaLengthInMinutes * 60);
             }
@@ -625,6 +623,18 @@ public class ArenaInstance {
 
     public HashMap<Location, BlockData> getPlayerDestroyedBlocksData() {
         return playerDestroyedBlocksData;
+    }
+
+    public HashSet<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public String getTimerString() {
+        return timerString;
     }
 
     public String getArenaName() {

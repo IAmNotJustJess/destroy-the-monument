@@ -18,8 +18,10 @@ public class ArenaManager {
     public static void playerJoin(Player player, String id) {
         if(!arenaList.containsKey(id)) return;
 
-        playerArenaIdList.put(player, id);
         ArenaInstance arenaInstance = arenaList.get(id);
+        if(!arenaInstance.checkArenaJoinAvailabilityState()) return;
+
+        playerArenaIdList.put(player, id);
         PlayerCharacterManager.getList().put(player, new PlayerCharacter(
                 player,
                 (PlayerClass) PipedDeepCopy.copy(PlayerClassManager.getList().getFirst()),

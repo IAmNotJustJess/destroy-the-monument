@@ -6,16 +6,16 @@ rules:
   max-players-per-team: 16
 
   # How many seconds must pass before the arena starts.
-  arena-begin-countdown: 60
+  arena-begin-countdown-in-seconds: 60
 
   # The percentage of players required to start the countdown. (0-1)
   arena-start-countdown-percentage-requirement: 0.125
 
   # The amount of seconds the countdown will be cut to when the percentage of players is met.
-  arena-cut-countdown-to: 10
+  arena-cut-countdown-to-in-seconds: 10
 
   # The percentage of players required to cut down on the countdown. (0-1)
-  arena=cut-countdown-percentage-requirement: 0.5
+  arena-cut-countdown-percentage-requirement: 0.5
 
   # The length of the arena in minutes.
   arena-length-in-minutes: 60.0

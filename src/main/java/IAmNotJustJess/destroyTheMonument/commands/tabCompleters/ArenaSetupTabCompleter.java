@@ -27,19 +27,22 @@ public class ArenaSetupTabCompleter implements TabCompleter {
                             add("leave");
                             add("create");
                             add("set");
+                            add("info");
+                            add("help");
                         }};
                     }
                     else {
                         return new ArrayList<>() {{
                             add("join");
                             add("leave");
+                            add("help");
                         }};
                     }
                 }
                 case 2 -> {
                     if(sender.hasPermission("dtm.admin")) {
                         switch(args[0]) {
-                            case "join", "set" -> {
+                            case "join", "set", "info" -> {
                                 return new ArrayList<>() {{
                                     addAll(ArenaManager.arenaList.keySet());
                                 }};

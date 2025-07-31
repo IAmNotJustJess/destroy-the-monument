@@ -638,11 +638,11 @@ public class PlayerCharacter {
 
     public void onEnemyKill(Player enemy) {
 
-        this.shards += ArenaSettings.shardsPerKill;
+        this.shards += ArenaSettings.shardsAwardedPerKill;
         player.sendMessage(MiniMessageSerializers.deserializeToString(
                 MessagesConfiguration.playerMessagesConfiguration.getString("assist-shards")
                         .replace("<player>", enemy.getName())
-                        .replace("<award>", String.valueOf(ArenaSettings.shardsPerKill))
+                        .replace("<award>", String.valueOf(ArenaSettings.shardsAwardedPerKill))
                         .replace("<totalShards>", String.valueOf(this.shards))
         ));
 
@@ -1009,11 +1009,11 @@ public class PlayerCharacter {
 
     public void onAssist(Player enemy) {
 
-        this.shards += ArenaSettings.shardsPerAssist;
+        this.shards += ArenaSettings.shardsAwardedPerAssist;
         player.sendMessage(MiniMessageSerializers.deserializeToString(
                 MessagesConfiguration.playerMessagesConfiguration.getString("assist-shards")
                         .replace("<player>", enemy.getName())
-                        .replace("<award>", String.valueOf(ArenaSettings.shardsPerAssist))
+                        .replace("<award>", String.valueOf(ArenaSettings.shardsAwardedPerAssist))
                         .replace("<totalShards>", String.valueOf(this.shards))
         ));
     }
