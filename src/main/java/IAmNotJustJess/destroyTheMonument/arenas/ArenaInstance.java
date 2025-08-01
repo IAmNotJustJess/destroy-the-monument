@@ -6,7 +6,9 @@ import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.teams.Team;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
-import IAmNotJustJess.destroyTheMonument.utility.*;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
+import IAmNotJustJess.destroyTheMonument.utility.MinutesTimerConverter;
+import IAmNotJustJess.destroyTheMonument.utility.RandomElementPicker;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.TextComponent;
@@ -580,6 +582,7 @@ public class ArenaInstance {
         this.playerDestroyedBlocksData = new HashMap<>();
         this.playerDestroyedBlocksLocations = new HashMap<>();
         this.arenaState = ArenaState.LOBBY;
+        this.bossbar = BossBar.bossBar(MiniMessageSerializers.deserializeToComponent(""), 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
     public HashMap<TeamColour, Integer> getMonumentRemainingCount() {
         return monumentRemainingCount;

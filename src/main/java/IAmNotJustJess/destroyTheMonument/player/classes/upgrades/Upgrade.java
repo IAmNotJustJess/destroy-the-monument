@@ -216,4 +216,61 @@ public class Upgrade {
     public void setGuiMaterial(Material guiMaterial) {
         this.guiMaterial = guiMaterial;
     }
+
+    public Upgrade clone() {
+
+        Upgrade upgrade;
+
+        try {
+            upgrade = (Upgrade) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            upgrade = new Upgrade(
+                name,
+                description,
+                maxLevels,
+                upgradeAffection,
+                upgradeType,
+                maxStacks,
+                guiMaterial
+            );
+        }
+
+        for(Integer integer : cachedGuiDescriptionsForUpgrades.keySet()) {
+            upgrade.cachedGuiDescriptionsForUpgrades.put(integer, new ArrayList<>() {{
+                addAll(cachedGuiDescriptionsForUpgrades.get(integer));
+            }});
+        }
+
+        upgrade.cachedGuiDescriptionsForClassInfo.addAll(cachedGuiDescriptionsForClassInfo);
+
+        for(ArrayList<String> arrayList : descriptionTextReplacementList) {
+            upgrade.descriptionTextReplacementList.add(new ArrayList<>() {{
+                addAll(arrayList);
+            }});
+        }
+
+        for(ArrayList<Double> arrayList : strengthPerLevelList) {
+            upgrade.strengthPerLevelList.add(new ArrayList<>() {{
+                addAll(arrayList);
+            }});
+        }
+
+        upgrade.strengthPerLevelList.addAll(strengthPerLevelList);
+
+        for(ArrayList<Effect> arrayList : effectsPerLevelList) {
+            upgrade.effectsPerLevelList.add(new ArrayList<>() {{
+                for(Effect effect : arrayList) {
+                    add(effect.clone());
+                }
+            }});
+        }
+
+        for(ArrayList<UpgradeSpecialEffectProperty> arrayList : effectsSpecialPropertiesPerLevelList) {
+            upgrade.effectsSpecialPropertiesPerLevelList.add(new ArrayList<>() {{
+                addAll(arrayList);
+            }});
+        }
+
+        return upgrade;
+    }
 }

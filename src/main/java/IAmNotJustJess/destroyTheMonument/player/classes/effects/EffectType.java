@@ -1,6 +1,8 @@
 package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 
-public enum EffectType {
+import java.io.Serializable;
+
+public enum EffectType implements Serializable {
     DAMAGE_INCREASE_FLAT,
     DAMAGE_INCREASE_MULTIPLIER,
     DEAL_DAMAGE_FLAT,

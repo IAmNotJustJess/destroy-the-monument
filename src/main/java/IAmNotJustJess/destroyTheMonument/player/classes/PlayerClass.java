@@ -2,12 +2,7 @@ package IAmNotJustJess.destroyTheMonument.player.classes;
 
 import IAmNotJustJess.destroyTheMonument.player.classes.skills.Skill;
 import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeTree;
-import com.google.gson.Gson;
 import org.bukkit.Material;
-
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 
 public class PlayerClass {
 
@@ -35,5 +30,30 @@ public class PlayerClass {
         this.loadout = loadout;
         this.upgradeTree = upgradeTree;
         this.guiMaterial = guiMaterial;
+    }
+
+    public PlayerClass clone() {
+
+        PlayerClass playerClass;
+
+        try {
+            playerClass = (PlayerClass) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            playerClass = new PlayerClass(
+                name,
+                description,
+                playerClassType,
+                healthPoints,
+                movementSpeed,
+                passiveSkill.clone(),
+                activeSkill.clone(),
+                ultimateSkill.clone(),
+                loadout.clone(),
+                upgradeTree.clone(),
+                guiMaterial
+            );
+        }
+
+        return playerClass;
     }
 }

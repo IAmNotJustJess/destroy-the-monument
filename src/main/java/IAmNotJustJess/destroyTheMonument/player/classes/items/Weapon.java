@@ -123,4 +123,45 @@ public class Weapon {
         return itemStack;
     }
 
+    public Weapon clone() {
+
+        Weapon weapon;
+
+        try {
+            weapon = (Weapon) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            weapon = new Weapon(
+                name,
+                description,
+                weaponType,
+                new ItemStack(item.getType(), item.getAmount()),
+                damage,
+                baseCooldown
+            );
+        }
+
+        weapon.effectList = new ArrayList<>() {{
+            for(Effect effect : effectList) {
+                add(effect.clone());
+            }
+        }};
+
+        weapon.upgradeAffectingWhichEffectList = new HashMap<>() {{
+            for(UpgradeTreeLocation upgradeTreeLocation : upgradeAffectingWhichEffectList.keySet()) {
+                put(
+                    upgradeTreeLocation,
+                    new ArrayList<>() {{
+                        this.addAll(upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    }}
+                );
+            }
+        }};
+
+        weapon.specialEffectPropertyList = new ArrayList<>() {{
+            this.addAll(specialEffectPropertyList);
+        }};
+
+        return weapon;
+    }
+
 }

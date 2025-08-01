@@ -1,6 +1,8 @@
 package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 
-public enum EffectApplicationType {
+import java.io.Serializable;
+
+public enum EffectApplicationType implements Serializable {
     APPLY_SELF,
     APPLY_ENEMIES_IN_RANGE,
     APPLY_ENEMIES_IN_RANGE_OF_CASTER,

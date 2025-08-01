@@ -14,4 +14,4 @@ commands:
   dtm:
     description: Main DTM command
     usage: /<command> <options>
-    permission: dtm.admin
+    permission: dtm.command

@@ -1,6 +1,8 @@
 package IAmNotJustJess.destroyTheMonument.player.classes.effects;
 
-public enum EffectParticleSpawnLocation {
+import java.io.Serializable;
+
+public enum EffectParticleSpawnLocation implements Serializable {
     USER,
     LOCATION,
     AFFECTED

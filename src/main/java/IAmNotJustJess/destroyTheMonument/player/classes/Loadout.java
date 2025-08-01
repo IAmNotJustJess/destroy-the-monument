@@ -28,4 +28,30 @@ public class Loadout {
         this.blockAmount = blockAmount;
 
     }
+
+    public Loadout clone() {
+        Loadout loadout;
+
+        try {
+            loadout = (Loadout) super.clone();
+        }
+        catch (CloneNotSupportedException exception) {
+            loadout = new Loadout(
+                new ItemStack(helmet.getType(), helmet.getAmount()),
+                new ItemStack(chestplate.getType(), chestplate.getAmount()),
+                new ItemStack(leggings.getType(), leggings.getAmount()),
+                new ItemStack(boots.getType(), boots.getAmount()),
+                mainWeapon.clone(),
+                secondaryWeapon.clone(),
+                new ArrayList<>() {{
+                    for(ItemStack itemStack : additionalItems) {
+                        add(new ItemStack(itemStack.getType(), itemStack.getAmount()));
+                    }
+                }},
+                blockAmount
+            );
+        }
+
+        return loadout;
+    }
 }

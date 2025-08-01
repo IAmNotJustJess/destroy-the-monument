@@ -169,4 +169,39 @@ public class Skill {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Skill clone() {
+
+        Skill skill;
+
+        try {
+            skill = (Skill) super.clone();
+        } catch (CloneNotSupportedException exception) {
+            skill = new Skill(
+                name,
+                description,
+                skillType,
+                baseCooldown
+            );
+        }
+
+        skill.effectList = new ArrayList<>() {{
+            for(Effect effect : effectList) {
+                add(effect.clone());
+            }
+        }};
+
+        skill.upgradeAffectingWhichEffectList = new HashMap<>() {{
+            for(UpgradeTreeLocation upgradeTreeLocation : upgradeAffectingWhichEffectList.keySet()) {
+                put(
+                    upgradeTreeLocation,
+                    new ArrayList<>() {{
+                        this.addAll(upgradeAffectingWhichEffectList.get(upgradeTreeLocation));
+                    }}
+                );
+            }
+        }};
+
+        return skill;
+    }
 }

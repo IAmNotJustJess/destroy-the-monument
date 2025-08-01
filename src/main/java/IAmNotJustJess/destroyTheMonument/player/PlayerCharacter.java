@@ -14,7 +14,6 @@ import IAmNotJustJess.destroyTheMonument.player.classes.upgrades.UpgradeType;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
 import IAmNotJustJess.destroyTheMonument.teams.TeamManager;
 import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
-import IAmNotJustJess.destroyTheMonument.utility.PipedDeepCopy;
 import IAmNotJustJess.destroyTheMonument.utility.UpgradeTreeLocationConverter;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.GameMode;
@@ -106,7 +105,7 @@ public class PlayerCharacter {
     }
 
     public void setChosenClass(PlayerClass chosenPlayerClass) {
-        this.chosenPlayerClass = (PlayerClass) PipedDeepCopy.copy(chosenPlayerClass);
+        this.chosenPlayerClass = chosenPlayerClass.clone();
     }
 
     public TeamColour getTeam() {
@@ -1074,7 +1073,7 @@ public class PlayerCharacter {
                 }
             }
 
-            chosenPlayerClass = (PlayerClass) PipedDeepCopy.copy(changeClassTo);
+            chosenPlayerClass = changeClassTo.clone();
             changeClassOnRespawn = false;
         }
 

@@ -16,8 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public class ArenaSetupCommand implements CommandExecutor {
 
     private void sendCommandList(Player player) {
@@ -141,23 +139,6 @@ public class ArenaSetupCommand implements CommandExecutor {
                                 QuickSendingMethods.sendToPlayer(player, "<#19a0e3>Their <#ffffff>spawn <#19a0e3>locations:");
                                 int j = 0;
                                 for(Location location : arenaInstance.getSpawnLocations().get(teamColour)) {
-                                    QuickSendingMethods.sendToPlayer(player, "<#19a0e3> <number><#ffffff>- x: <x> y:<y> z:<z> in <world>"
-                                        .replace("<number>", Integer.toString(j))
-                                        .replace("<x>", Double.toString(location.getX()))
-                                        .replace("<y>", Double.toString(location.getY()))
-                                        .replace("<z>", Double.toString(location.getZ()))
-                                        .replace("<world>", location.getWorld().getName())
-                                    );
-                                    j++;
-                                }
-                            }
-                            else {
-                                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>Their <#ffffff>spawn <#19a0e3>locations: <#cc2b2b>unset");
-                            }
-                            if(!arenaInstance.getMonumentList().get(teamColour).isEmpty()) {
-                                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>Their <#ffffff>spawn <#19a0e3>locations:");
-                                int j = 0;
-                                for(Location location : arenaInstance.getMonumentList().get(teamColour)) {
                                     QuickSendingMethods.sendToPlayer(player, "<#19a0e3><number> <#ffffff>- x: <x> y:<y> z:<z> in <world>"
                                         .replace("<number>", Integer.toString(j))
                                         .replace("<x>", Double.toString(location.getX()))
@@ -171,6 +152,23 @@ public class ArenaSetupCommand implements CommandExecutor {
                             else {
                                 QuickSendingMethods.sendToPlayer(player, "<#19a0e3>Their <#ffffff>spawn <#19a0e3>locations: <#cc2b2b>unset");
                             }
+                            if(!arenaInstance.getMonumentList().get(teamColour).isEmpty()) {
+                                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>Their <#ffffff>monument <#19a0e3>locations:");
+                                int j = 0;
+                                for(Location location : arenaInstance.getMonumentList().get(teamColour)) {
+                                    QuickSendingMethods.sendToPlayer(player, "<#19a0e3><number> <#ffffff>- x: <x> y:<y> z:<z> in <world>"
+                                        .replace("<number>", Integer.toString(j))
+                                        .replace("<x>", Double.toString(location.getX()))
+                                        .replace("<y>", Double.toString(location.getY()))
+                                        .replace("<z>", Double.toString(location.getZ()))
+                                        .replace("<world>", location.getWorld().getName())
+                                    );
+                                    j++;
+                                }
+                            }
+                            else {
+                                QuickSendingMethods.sendToPlayer(player, "<#19a0e3>Their <#ffffff>monument <#19a0e3>locations: <#cc2b2b>unset");
+                            }
                         }
                         teamColour = arenaInstance.getSecondTeam();
                     }
@@ -178,7 +176,7 @@ public class ArenaSetupCommand implements CommandExecutor {
                         QuickSendingMethods.sendToPlayer(player, "<#ffffff>Shop <#19a0e3>locations:");
                         int j = 0;
                         for(Location location : arenaInstance.getShopLocations()) {
-                            QuickSendingMethods.sendToPlayer(player, "<#19a0e3><number><#ffffff>- x: <x> y:<y> z:<z> in <world>"
+                            QuickSendingMethods.sendToPlayer(player, "<#19a0e3><number> <#ffffff>- x: <x> y:<y> z:<z> in <world>"
                                 .replace("<number>", Integer.toString(j))
                                 .replace("<x>", Double.toString(location.getX()))
                                 .replace("<y>", Double.toString(location.getY()))

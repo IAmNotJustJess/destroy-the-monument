@@ -166,4 +166,41 @@ public class Effect {
             }
         }
     }
+
+    public Effect clone() {
+
+        Effect effect = null;
+
+        try {
+            effect = (Effect) super.clone();
+        }
+        catch (CloneNotSupportedException exception) {
+            effect = new Effect(
+                effectType,
+                effectApplicationType,
+                strength,
+                range,
+                tickEveryServerTicks,
+                longevity,
+                delay,
+                removeOnDeath,
+                soundSerializedString,
+                particleSerializedString,
+                particleSpawnLocation
+            );
+        }
+
+        if(potionEffect != null) {
+            effect.potionEffect = new PotionEffect(
+                potionEffect.getType(),
+                potionEffect.getDuration(),
+                potionEffect.getAmplifier(),
+                potionEffect.isAmbient(),
+                potionEffect.hasParticles(),
+                potionEffect.hasIcon()
+            );
+        }
+
+        return effect;
+    }
 }
