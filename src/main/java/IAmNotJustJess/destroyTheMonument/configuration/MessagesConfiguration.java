@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MessagesConfiguration {
 
@@ -22,7 +23,7 @@ public class MessagesConfiguration {
         JavaPlugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
 
         try {
-            MessagesConfiguration.upgradesMessagesConfiguration = YamlDocument.create(new File(plugin.getDataFolder()+File.separator+"messages", "upgrades.yml"), plugin.getResource("upgrades.yml"),
+            MessagesConfiguration.upgradesMessagesConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "messages/upgrades.yml"), Objects.requireNonNull(plugin.getResource("messages/upgrades.yml")),
                     GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
         }
         catch (IOException exception) {
@@ -30,7 +31,7 @@ public class MessagesConfiguration {
         }
 
         try {
-            MessagesConfiguration.playerMessagesConfiguration = YamlDocument.create(new File(plugin.getDataFolder()+File.separator+"messages", "players.yml"), plugin.getResource("players.yml"),
+            MessagesConfiguration.playerMessagesConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "messages/players.yml"), Objects.requireNonNull(plugin.getResource("messages/players.yml")),
                     GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
         }
         catch (IOException exception) {
@@ -38,7 +39,7 @@ public class MessagesConfiguration {
         }
 
         try {
-            MessagesConfiguration.arenaMessagesConfiguration = YamlDocument.create(new File(plugin.getDataFolder()+File.separator+"messages", "arena.yml"), plugin.getResource("arena.yml"),
+            MessagesConfiguration.arenaMessagesConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "messages/arena.yml"), Objects.requireNonNull(plugin.getResource("messages/arena.yml")),
                 GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
         }
         catch (IOException exception) {

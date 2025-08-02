@@ -380,6 +380,7 @@ public class ArenaInstance {
         else {
             switch(getArenaState()) {
                 case LOBBY -> {
+                    bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-lobby-format");
                     TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
                         .replace("<players>", Integer.toString(playerList.size()))
                         .replace("<maxPlayers>", Integer.toString(ArenaSettings.maxPlayersPerTeam * 2)));
@@ -387,6 +388,7 @@ public class ArenaInstance {
                     bossbar.progress(1.0f);
                 }
                 case COUNTDOWN -> {
+                    bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-lobby-format");
                     TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
                         .replace("<players>", Integer.toString(playerList.size()))
                         .replace("<maxPlayers>", Integer.toString(ArenaSettings.maxPlayersPerTeam * 2))
@@ -395,6 +397,7 @@ public class ArenaInstance {
                     bossbar.progress((float) timer / ArenaSettings.arenaBeginCountdownInSeconds);
                 }
                 case RUNNING -> {
+                    bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-running-format");
                     TextComponent text = (TextComponent) MiniMessageSerializers.deserializeToComponent(bossbarFormat
                         .replace("<teamColour1>", TeamManager.list.get(teamColours.getFirst()).textColour)
                         .replace("<teamColour2>", TeamManager.list.get(teamColours.get(1)).textColour)
@@ -582,6 +585,7 @@ public class ArenaInstance {
         this.playerDestroyedBlocksData = new HashMap<>();
         this.playerDestroyedBlocksLocations = new HashMap<>();
         this.arenaState = ArenaState.LOBBY;
+        this.bossbarFormat = MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-lobby-format");
         this.bossbar = BossBar.bossBar(MiniMessageSerializers.deserializeToComponent(""), 1.0f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
     }
     public HashMap<TeamColour, Integer> getMonumentRemainingCount() {

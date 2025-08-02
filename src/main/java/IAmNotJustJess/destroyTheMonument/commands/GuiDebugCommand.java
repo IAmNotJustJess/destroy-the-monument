@@ -1,5 +1,6 @@
 package IAmNotJustJess.destroyTheMonument.commands;
 
+import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
 import IAmNotJustJess.destroyTheMonument.guis.TestGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +13,7 @@ public class GuiDebugCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if(sender instanceof Player player) {
+            player.sendMessage(MessagesConfiguration.arenaMessagesConfiguration.getString("bossbar-lobby-format"));
             TestGui.openTestGUI(player);
             return true;
         }

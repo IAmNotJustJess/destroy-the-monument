@@ -18,7 +18,7 @@ breaking-enemy-monument-message: "<teamColour><player> <#ffffff>has destroyed th
 <enemyTeam> Team <#ffffff>has <enemyTeamColour><remainingMonuments> <#ffffff>monuments left!"
 
 player-killed-title: "<#cc2b2b>You died!"
-player-killed-subtitle: "<#ffffff>Respawning in <transition:#cc2b2b:#dbd814:#14db4c:<phase>><seconds></transition>..."
+player-killed-subtitle: "<#ffffff>Respawning in <transition:#cc2b2b:#dbd814:#14db4c:<phase><seconds></transition>..."
 player-killed-message: "<teamColour><player> <#ffffff>has been killed by <enemyTeamColour><enemyPlayer><#ffffff>!"
 player-died: "<teamColour><player> <#ffffff>has died!"
 
@@ -38,8 +38,8 @@ starting-tips-subtitles: "<#19a0e3>Destroy the Monument<newline>
 <#14db4c>Have more of them standing!<newline>
 <#19a0e3>You'll need it!"
 
-bossbar-lobby-format: "<#c0c0c0>[<#ffffff><players>><#c0c0c0>/<#ffffff><maxPlayers><#c0c0c0>] <#dbd814>Waiting for more players..."
-bossbar-countdown-format: "<#c0c0c0>[<#ffffff><players>><#c0c0c0>/<#ffffff><maxPlayers><#c0c0c0>] <#14db4c>Arena starts in <#6de38e><seconds><#14db4c>..."
+bossbar-lobby-format: "<#c0c0c0>[<#ffffff><players><#c0c0c0>/<#ffffff><maxPlayers><#c0c0c0>] <#dbd814>Waiting for more players..."
+bossbar-countdown-format: "<#c0c0c0>[<#ffffff><players><#c0c0c0>/<#ffffff><maxPlayers><#c0c0c0>] <#14db4c>Arena starts in <#6de38e><seconds><#14db4c>..."
 bossbar-running-format: "<teamColour1><remainingMonuments1> <#ffffff>| <timeRemaining> | <teamColour2><remainingMonuments2>"
 bossbar-ending-format: "<#ffffff>Team <teamName> <#ffffff>has <#6de38e>won<#ffffff>!"
 bossbar-ending-tie-format: "<#ffffff>It's a <#dbd814>tie<#ffffff>!"

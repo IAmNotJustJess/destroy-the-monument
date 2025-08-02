@@ -33,7 +33,7 @@ public class MainConfiguration {
         }
 
         try {
-            globalGameRulesConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "rules.yml"), plugin.getResource("rules.yml"),
+            globalGameRulesConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "rules.yml"), Objects.requireNonNull(plugin.getResource("rules.yml")),
                 GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
         }
         catch (IOException exception) {
@@ -41,7 +41,7 @@ public class MainConfiguration {
         }
 
         try {
-            guiConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "gui.yml"), plugin.getResource("gui.yml"),
+            guiConfiguration = YamlDocument.create(new File(plugin.getDataFolder(), "gui.yml"), Objects.requireNonNull(plugin.getResource("gui.yml")),
                 GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
         }
         catch (IOException exception) {
