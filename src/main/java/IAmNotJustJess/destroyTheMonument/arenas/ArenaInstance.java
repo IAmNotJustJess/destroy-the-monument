@@ -351,6 +351,7 @@ public class ArenaInstance {
     public void addPlayerToArena(Player player) {
         if(arenaState != ArenaState.LOBBY) return;
         playerList.add(player);
+        player.teleport(lobbyLocation);
         checkPlayerCount();
         updateBossBar();
         ((Audience) player).showBossBar(bossbar);
