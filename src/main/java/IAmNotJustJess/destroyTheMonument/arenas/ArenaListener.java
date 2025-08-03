@@ -2,6 +2,7 @@ package IAmNotJustJess.destroyTheMonument.arenas;
 
 import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
 import IAmNotJustJess.destroyTheMonument.configuration.MessagesConfiguration;
+import IAmNotJustJess.destroyTheMonument.guis.ChooseClassGui;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
@@ -17,8 +18,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -117,6 +121,37 @@ public class ArenaListener implements Listener {
                 }
             }
             default -> {}
+        }
+    }
+
+    @EventHandler
+    public void onAbilityUse(PlayerInteractEvent event) {
+
+        if(!PlayerCharacterManager.getList().containsKey(event.getPlayer())) return;
+
+        PlayerCharacter playerCharacter = PlayerCharacterManager.getList().get(event.getPlayer());
+        Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+
+        if (event.getItem() == null || event.getItem().getType() == Material.AIR) return;
+
+        PersistentDataContainer persistentDataContainer = event.getItem().getItemMeta().getPersistentDataContainer();
+
+        String onClickProperty = persistentDataContainer.get(new NamespacedKey(plugin, "specialOnClickProperty"), PersistentDataType.STRING);
+
+        switch (onClickProperty) {
+            case "active" -> {
+                playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
+            }
+            case "ultimate" -> {
+                playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
+            }
+            case "chooseClass" -> {
+                ChooseClassGui.openGUI(playerCharacter, null);
+            }
+            case "leave" -> {
+                ArenaManager.playerLeave(event.getPlayer());
+            }
+            case null, default -> {}
         }
     }
 

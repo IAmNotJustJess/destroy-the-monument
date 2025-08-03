@@ -1,13 +1,22 @@
 package IAmNotJustJess.destroyTheMonument.arenas;
 
+import IAmNotJustJess.destroyTheMonument.DestroyTheMonument;
+import IAmNotJustJess.destroyTheMonument.configuration.MainConfiguration;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacter;
 import IAmNotJustJess.destroyTheMonument.player.PlayerCharacterManager;
 import IAmNotJustJess.destroyTheMonument.player.classes.PlayerClassManager;
 import IAmNotJustJess.destroyTheMonument.teams.TeamColour;
+import IAmNotJustJess.destroyTheMonument.utility.MiniMessageSerializers;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -34,6 +43,34 @@ public class ArenaManager {
         }});
 
         playerGameModeBeforeJoiningArena.put(player, player.getGameMode());
+
+        player.setGameMode(GameMode.ADVENTURE);
+        for(int i = 0; i <= 41; i++) {
+            player.getInventory().setItem(0, new ItemStack(Material.AIR));
+        }
+
+        Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
+
+        ItemStack itemStack = new ItemStack(Material.valueOf(MainConfiguration.guiConfiguration.getString("choose-class-item")), 1);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        itemMeta.setItemName(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("choose-class-item-name")));
+        itemMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "specialOnClickProperty"), PersistentDataType.STRING, "chooseClass");
+
+        itemStack.setItemMeta(itemMeta);
+
+        player.getInventory().setItem(1, itemStack);
+
+        itemStack = new ItemStack(Material.valueOf(MainConfiguration.guiConfiguration.getString("leave-game-item")), 1);
+
+        itemMeta = itemStack.getItemMeta();
+
+        itemMeta.setItemName(MiniMessageSerializers.deserializeToString(MainConfiguration.guiConfiguration.getString("leave-game-item-name")));
+        itemMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "specialOnClickProperty"), PersistentDataType.STRING, "leave");
+
+        itemStack.setItemMeta(itemMeta);
+
+        player.getInventory().setItem(7, itemStack);
 
         playerArenaIdList.put(player, id);
         PlayerCharacterManager.getList().put(player, new PlayerCharacter(

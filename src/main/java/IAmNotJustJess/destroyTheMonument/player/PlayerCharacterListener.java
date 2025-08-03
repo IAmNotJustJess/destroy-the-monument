@@ -80,25 +80,6 @@ public class PlayerCharacterListener implements Listener {
     }
 
     @EventHandler
-    public void onAbilityUse(PlayerInteractEvent event) {
-
-        if(!PlayerCharacterManager.getList().containsKey(event.getPlayer())) return;
-
-        PlayerCharacter playerCharacter = PlayerCharacterManager.getList().get(event.getPlayer());
-        Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
-
-        if (event.getItem() == null) return;
-
-        String abilityType = Objects.requireNonNull(event.getItem().getItemMeta()).getPersistentDataContainer().get(new NamespacedKey(plugin, "abilityType"), PersistentDataType.STRING);
-
-        switch (abilityType) {
-            case "active" -> playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
-            case "ultimate" -> playerCharacter.getChosenClass().ultimateSkill.useSkill(playerCharacter, event.getPlayer().getLocation());
-            case null, default -> {}
-        }
-    }
-
-    @EventHandler
     public void onProjectileAbilityUse(ProjectileHitEvent event) {
 
         if(!(event.getEntity().getShooter() instanceof Player player)) return;
@@ -113,7 +94,7 @@ public class PlayerCharacterListener implements Listener {
         PlayerCharacter playerCharacter = PlayerCharacterManager.getList().get(player);
         Plugin plugin = JavaPlugin.getPlugin(DestroyTheMonument.class);
 
-        String abilityType = Objects.requireNonNull(event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "abilityType"), PersistentDataType.STRING));
+        String abilityType = Objects.requireNonNull(event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "specialOnClickProperty"), PersistentDataType.STRING));
 
         switch (abilityType) {
             case "active" -> playerCharacter.getChosenClass().activeSkill.useSkill(playerCharacter, location);

@@ -30,3 +30,9 @@ support-class: "<#56e2b8><b>SUPPORT</b>"
 defence-class: "<5674e2><b>DEFENCE</b>"
 selected-class: "<#14db4c><b>SELECTED</b>"
 selection-info-1: ""
+
+choose-class-item: DIAMOND
+choose-class-item-name: "<#dbd814>RMB <#d9d775>to choose a class."
+
+leave-game-item: IRON_DOOR
+leave-game-item-name: "<#dbd814>RMB <#d9d775>to leave the lobby. "

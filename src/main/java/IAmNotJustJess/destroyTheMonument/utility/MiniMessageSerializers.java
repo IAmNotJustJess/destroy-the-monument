@@ -10,7 +10,7 @@ import java.util.List;
 public class MiniMessageSerializers {
 
     public static String deserializeToString(String string) {
-        return LegacyComponentSerializer.legacyAmpersand().serialize(MiniMessage.miniMessage().deserialize(string));
+        return LegacyComponentSerializer.legacySection().serialize(MiniMessage.miniMessage().deserialize(string));
     }
 
     public static List<String> deserializeMultilineToString(String string) {
